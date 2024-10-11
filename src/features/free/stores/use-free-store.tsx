@@ -27,6 +27,8 @@ interface CardStore {
   setFormData: (data: Partial<FormData>) => void
   layout: Layout
   setLayout: (layout: Layout) => void
+  vcf: string
+  setVcf: (vcf: string) => void
 }
 
 const useCardStore = create<CardStore>()(
@@ -48,6 +50,8 @@ const useCardStore = create<CardStore>()(
         set((state) => ({ formData: { ...state.formData, ...data } })),
       layout: Layout.left,
       setLayout: (layout) => set({ layout }),
+      vcf: "",
+      setVcf: (vcf) => set({ vcf }),
     }),
     {
       name: "card-storage",

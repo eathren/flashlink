@@ -27,7 +27,9 @@ const PreviewDialog: React.FC<PreviewDialogProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button className="w-full">Preview</Button>
+        <Button variant="default" className="w-full">
+          Review
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -9,12 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
 import PreviewDialog from "@/features/free/components/preview-dialog"
 import { useState } from "react"
-
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 function CreateFreeCard() {
-  const { formData, setFormData, setLayout } = useCardStore()
+  const { formData, setFormData, setLayout, setVcf } = useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
 
   const onOpenChange = () => {
@@ -24,13 +24,25 @@ function CreateFreeCard() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log(e.target.name, e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleCreateCard = (e: React.FormEvent) => {
-    e.preventDefault() // Prevent the default form submission
-    onOpenChange() // Open the preview dialog
+    e.preventDefault()
+    onOpenChange()
+  }
+
+  const generateVcf = (formData) => {
+    const contact = `BEGIN:VCARD
+VERSION:3.0
+FN:${formData.name}
+ORG:${formData.company}
+EMAIL:${formData.email}
+TEL:${formData.phone}
+ADR:${formData.address}
+END:VCARD`.trim()
+    console.log("Generated VCF:", contact)
+    return contact
   }
 
   return (
@@ -99,6 +111,10 @@ function CreateFreeCard() {
             value={formData.qrCode}
             onChange={handleChange}
           />
+          <span className="space-x-2">
+            <Checkbox onClick={() => setVcf(generateVcf(formData))}></Checkbox>
+            <Label htmlFor="vcf">Create Code for Scannable Contact</Label>
+          </span>
           <Select onValueChange={(value) => setLayout(value as Layout)}>
             <SelectTrigger>
               <SelectValue placeholder="Choose Layout" />
@@ -114,9 +130,6 @@ function CreateFreeCard() {
       <div className="my-4">
         <PreviewDialog isOpen={isDialogOpen} onOpenChange={onOpenChange} />
       </div>
-      <Button type="submit" className="mt-4 w-full bg-blue-600">
-        Review
-      </Button>
     </form>
   )
 }

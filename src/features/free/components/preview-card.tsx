@@ -7,7 +7,7 @@ import { QRCodeSVG } from "qrcode.react"
 
 const PreviewCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
-  const { formData, layout } = useCardStore()
+  const { formData, vcf, layout } = useCardStore()
 
   const downloadCard = () => {
     if (cardRef.current) {
@@ -73,9 +73,9 @@ const PreviewCard = () => {
                 </div>
               )}
               <p className="mt-4 text-gray-700">{formData.bio}</p>
-              {formData.qrCode && (
+              {vcf && (
                 <div className="pt-4 flex text-center  mx-auto">
-                  <QRCodeSVG value={formData.qrCode} size={260} />
+                  <QRCodeSVG value={vcf} size={260} />
                 </div>
               )}
             </div>
