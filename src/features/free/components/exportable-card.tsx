@@ -31,7 +31,7 @@ const ExportableCard = () => {
 
   return (
     <>
-      <div ref={cardRef} className="w-full bg-white max-w-xs mt-4">
+      <div ref={cardRef} className="w-full bg-white max-w-xs ">
         <Card
           className="h-full w-full bg-white rounded-md shadow-none"
           style={{ minHeight: "600px" }}

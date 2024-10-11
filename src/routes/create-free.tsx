@@ -1,5 +1,4 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router"
-import CreateFreeCard from "@/features/free/components/create-free-card"
 import ExportableCard from "@/features/free/components/exportable-card"
 
 const CreateFree = () => {
@@ -25,7 +24,7 @@ const CreateFree = () => {
           </li>
           <li>
             <Link
-              to="/create-free/option2"
+              to="/create-free/qr-code"
               className="block p-2 hover:bg-gray-700 rounded"
             >
               QR Code
@@ -33,9 +32,9 @@ const CreateFree = () => {
           </li>
         </ul>
       </nav>
-      <main className="flex-1 ml-32 p-4 flex">
+      <main className="flex-1 ml-32 p-4 gap-4 grid grid-cols-1 sm:grid-cols-2">
         <Outlet />
-        <div className="ml-8 w-full max-w-xs">
+        <div className="w-full max-w-xs">
           <ExportableCard />
         </div>
       </main>
