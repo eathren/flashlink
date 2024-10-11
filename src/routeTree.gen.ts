@@ -11,9 +11,15 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as CreateFreeImport } from './routes/create-free'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const CreateFreeRoute = CreateFreeImport.update({
+  path: '/create-free',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
@@ -31,6 +37,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/create-free': {
+      id: '/create-free'
+      path: '/create-free'
+      fullPath: '/create-free'
+      preLoaderRoute: typeof CreateFreeImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -38,32 +51,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create-free': typeof CreateFreeRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create-free': typeof CreateFreeRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/create-free': typeof CreateFreeRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/create-free'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/create-free'
+  id: '__root__' | '/' | '/create-free'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateFreeRoute: typeof CreateFreeRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateFreeRoute: CreateFreeRoute,
 }
 
 export const routeTree = rootRoute
@@ -78,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/create-free"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/create-free": {
+      "filePath": "create-free.tsx"
     }
   }
 }
