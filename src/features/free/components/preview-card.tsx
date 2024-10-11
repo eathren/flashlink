@@ -75,7 +75,7 @@ const PreviewCard = () => {
               <p className="mt-4 text-gray-700">{formData.bio}</p>
               {formData.qrCode && (
                 <div className="pt-4 flex text-center  mx-auto">
-                  <QRCodeSVG value={formData.qrCode} size={200} />
+                  <QRCodeSVG value={formData.qrCode} size={260} />
                 </div>
               )}
             </div>
