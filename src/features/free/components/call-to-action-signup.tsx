@@ -7,3 +7,5 @@ const CallToActionSignup = () => {
     </div>
   )
 }
+
+export default CallToActionSignup

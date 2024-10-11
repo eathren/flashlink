@@ -128,17 +128,11 @@ function CreateFreeCard() {
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           />
-          <Input
-            type="text"
-            name="qrCode"
-            placeholder="QR Code Link"
-            value={formData.qrCode}
-            onChange={handleChange}
-          />
+
           <span className="space-x-2">
             <Checkbox
               checked={vcfChecked}
-              onCheckedChange={(checked) => setVcfChecked(checked)}
+              onCheckedChange={(checked) => setVcfChecked(!!checked as boolean)}
             ></Checkbox>
             <Label htmlFor="vcf">Create Code for Scannable Contact</Label>
           </span>

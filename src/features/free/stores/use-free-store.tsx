@@ -53,7 +53,7 @@ const useCardStore = create<CardStore>()(
       layout: Layout.left,
       setLayout: (layout) => set({ layout }),
       vcfChecked: false,
-      setVcfChecked: (checked) => set({ vcfChecked: checked }), // Adjusted to accept boolean
+      setVcfChecked: (checked) => set({ vcfChecked: checked }),
     }),
     {
       name: "card-storage",
