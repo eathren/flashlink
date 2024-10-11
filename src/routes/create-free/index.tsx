@@ -1,13 +1,11 @@
+import { Loader } from "@/components/ui/spinner"
+import CreateFreeCard from "@/features/free/components/create-free-card"
 import { createFileRoute } from "@tanstack/react-router"
-import { lazy, Suspense } from "react"
-
-const CreateFreeCard = lazy(
-  () => import("@/features/free/components/create-free-card")
-)
+import { Suspense } from "react"
 
 function CreateFree() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <CreateFreeCard />
     </Suspense>
   )
