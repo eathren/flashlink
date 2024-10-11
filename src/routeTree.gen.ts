@@ -13,6 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as CreateFreeImport } from './routes/create-free'
 import { Route as IndexImport } from './routes/index'
+import { Route as CreateFreeIndexImport } from './routes/create-free/index'
+import { Route as CreateFreeQrCodeImport } from './routes/create-free/qr-code'
+import { Route as CreateFreeLinksImport } from './routes/create-free/links'
 
 // Create/Update Routes
 
@@ -24,6 +27,21 @@ const CreateFreeRoute = CreateFreeImport.update({
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const CreateFreeIndexRoute = CreateFreeIndexImport.update({
+  path: '/',
+  getParentRoute: () => CreateFreeRoute,
+} as any)
+
+const CreateFreeQrCodeRoute = CreateFreeQrCodeImport.update({
+  path: '/qr-code',
+  getParentRoute: () => CreateFreeRoute,
+} as any)
+
+const CreateFreeLinksRoute = CreateFreeLinksImport.update({
+  path: '/links',
+  getParentRoute: () => CreateFreeRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -44,44 +62,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFreeImport
       parentRoute: typeof rootRoute
     }
+    '/create-free/links': {
+      id: '/create-free/links'
+      path: '/links'
+      fullPath: '/create-free/links'
+      preLoaderRoute: typeof CreateFreeLinksImport
+      parentRoute: typeof CreateFreeImport
+    }
+    '/create-free/qr-code': {
+      id: '/create-free/qr-code'
+      path: '/qr-code'
+      fullPath: '/create-free/qr-code'
+      preLoaderRoute: typeof CreateFreeQrCodeImport
+      parentRoute: typeof CreateFreeImport
+    }
+    '/create-free/': {
+      id: '/create-free/'
+      path: '/'
+      fullPath: '/create-free/'
+      preLoaderRoute: typeof CreateFreeIndexImport
+      parentRoute: typeof CreateFreeImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface CreateFreeRouteChildren {
+  CreateFreeLinksRoute: typeof CreateFreeLinksRoute
+  CreateFreeQrCodeRoute: typeof CreateFreeQrCodeRoute
+  CreateFreeIndexRoute: typeof CreateFreeIndexRoute
+}
+
+const CreateFreeRouteChildren: CreateFreeRouteChildren = {
+  CreateFreeLinksRoute: CreateFreeLinksRoute,
+  CreateFreeQrCodeRoute: CreateFreeQrCodeRoute,
+  CreateFreeIndexRoute: CreateFreeIndexRoute,
+}
+
+const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
+  CreateFreeRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/create-free': typeof CreateFreeRoute
+  '/create-free': typeof CreateFreeRouteWithChildren
+  '/create-free/links': typeof CreateFreeLinksRoute
+  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/create-free': typeof CreateFreeRoute
+  '/create-free/links': typeof CreateFreeLinksRoute
+  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free': typeof CreateFreeIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/create-free': typeof CreateFreeRoute
+  '/create-free': typeof CreateFreeRouteWithChildren
+  '/create-free/links': typeof CreateFreeLinksRoute
+  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-free'
+  fullPaths:
+    | '/'
+    | '/create-free'
+    | '/create-free/links'
+    | '/create-free/qr-code'
+    | '/create-free/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-free'
-  id: '__root__' | '/' | '/create-free'
+  to: '/' | '/create-free/links' | '/create-free/qr-code' | '/create-free'
+  id:
+    | '__root__'
+    | '/'
+    | '/create-free'
+    | '/create-free/links'
+    | '/create-free/qr-code'
+    | '/create-free/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CreateFreeRoute: typeof CreateFreeRoute
+  CreateFreeRoute: typeof CreateFreeRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CreateFreeRoute: CreateFreeRoute,
+  CreateFreeRoute: CreateFreeRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -104,7 +178,24 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/create-free": {
-      "filePath": "create-free.tsx"
+      "filePath": "create-free.tsx",
+      "children": [
+        "/create-free/links",
+        "/create-free/qr-code",
+        "/create-free/"
+      ]
+    },
+    "/create-free/links": {
+      "filePath": "create-free/links.tsx",
+      "parent": "/create-free"
+    },
+    "/create-free/qr-code": {
+      "filePath": "create-free/qr-code.tsx",
+      "parent": "/create-free"
+    },
+    "/create-free/": {
+      "filePath": "create-free/index.tsx",
+      "parent": "/create-free"
     }
   }
 }
