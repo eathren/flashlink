@@ -3,6 +3,7 @@ import html2canvas from "html2canvas"
 import { useRef } from "react"
 import useCardStore, { Layout } from "@/features/free/stores/use-free-store"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { QRCodeCanvas } from "qrcode.react"
 
 const ExportableCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -57,6 +58,9 @@ const ExportableCard = () => {
                 <p>{formData.website}</p>
               </div>
               <p className="mt-4">{formData.bio}</p>
+            </div>
+            <div className="mt-2">
+              <QRCodeCanvas value={JSON.stringify(formData)} size={256} />
             </div>
           </CardContent>
         </Card>
