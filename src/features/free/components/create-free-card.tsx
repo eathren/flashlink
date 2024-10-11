@@ -16,17 +16,27 @@ import { useState } from "react"
 function CreateFreeCard() {
   const { formData, setFormData, setLayout } = useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
+
   const onOpenChange = () => {
     setDialogOpen((prev) => !prev)
   }
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const handleCreateCard = (e: React.FormEvent) => {
+    e.preventDefault() // Prevent the default form submission
+    onOpenChange() // Open the preview dialog
+  }
+
   return (
-    <form className="w-full max-w-xs m-auto mt-20">
+    <form className="w-full max-w-xs m-auto mt-20" onSubmit={handleCreateCard}>
+      <h1 className="text-2xl font-semibold text-center mb-4">
+        Create Your Card
+      </h1>
       <Card>
         <CardHeader>
           <CardTitle hidden={true}>Create Your Card</CardTitle>
@@ -93,8 +103,12 @@ function CreateFreeCard() {
           </Select>
         </CardContent>
       </Card>
-      <PreviewDialog isOpen={isDialogOpen} onOpenChange={onOpenChange} />
-      <Button className="mt-4 w-full"> Create Card </Button>
+      <div className="my-4">
+        <PreviewDialog isOpen={isDialogOpen} onOpenChange={onOpenChange} />
+      </div>
+      <Button type="submit" className="mt-4 w-full bg-blue-600">
+        Create Card
+      </Button>
     </form>
   )
 }
