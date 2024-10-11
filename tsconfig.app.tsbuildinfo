@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/firebase.ts","./src/main.tsx","./src/routeTree.gen.ts","./src/vite-env.d.ts","./src/hooks/use-auth.ts","./src/hooks/use-firestore.ts","./src/lib/utils.ts","./src/routes/__root.tsx","./src/routes/index.tsx"],"version":"5.6.3"}
