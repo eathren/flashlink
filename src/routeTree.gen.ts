@@ -14,8 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as CreateFreeImport } from './routes/create-free'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateFreeIndexImport } from './routes/create-free/index'
-import { Route as CreateFreeQrCodeImport } from './routes/create-free/qr-code'
-import { Route as CreateFreeLinksImport } from './routes/create-free/links'
+import { Route as CreateFreePreviewImport } from './routes/create-free/preview'
 
 // Create/Update Routes
 
@@ -34,13 +33,8 @@ const CreateFreeIndexRoute = CreateFreeIndexImport.update({
   getParentRoute: () => CreateFreeRoute,
 } as any)
 
-const CreateFreeQrCodeRoute = CreateFreeQrCodeImport.update({
-  path: '/qr-code',
-  getParentRoute: () => CreateFreeRoute,
-} as any)
-
-const CreateFreeLinksRoute = CreateFreeLinksImport.update({
-  path: '/links',
+const CreateFreePreviewRoute = CreateFreePreviewImport.update({
+  path: '/preview',
   getParentRoute: () => CreateFreeRoute,
 } as any)
 
@@ -62,18 +56,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFreeImport
       parentRoute: typeof rootRoute
     }
-    '/create-free/links': {
-      id: '/create-free/links'
-      path: '/links'
-      fullPath: '/create-free/links'
-      preLoaderRoute: typeof CreateFreeLinksImport
-      parentRoute: typeof CreateFreeImport
-    }
-    '/create-free/qr-code': {
-      id: '/create-free/qr-code'
-      path: '/qr-code'
-      fullPath: '/create-free/qr-code'
-      preLoaderRoute: typeof CreateFreeQrCodeImport
+    '/create-free/preview': {
+      id: '/create-free/preview'
+      path: '/preview'
+      fullPath: '/create-free/preview'
+      preLoaderRoute: typeof CreateFreePreviewImport
       parentRoute: typeof CreateFreeImport
     }
     '/create-free/': {
@@ -89,14 +76,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface CreateFreeRouteChildren {
-  CreateFreeLinksRoute: typeof CreateFreeLinksRoute
-  CreateFreeQrCodeRoute: typeof CreateFreeQrCodeRoute
+  CreateFreePreviewRoute: typeof CreateFreePreviewRoute
   CreateFreeIndexRoute: typeof CreateFreeIndexRoute
 }
 
 const CreateFreeRouteChildren: CreateFreeRouteChildren = {
-  CreateFreeLinksRoute: CreateFreeLinksRoute,
-  CreateFreeQrCodeRoute: CreateFreeQrCodeRoute,
+  CreateFreePreviewRoute: CreateFreePreviewRoute,
   CreateFreeIndexRoute: CreateFreeIndexRoute,
 }
 
@@ -107,15 +92,13 @@ const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-free': typeof CreateFreeRouteWithChildren
-  '/create-free/links': typeof CreateFreeLinksRoute
-  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/create-free/links': typeof CreateFreeLinksRoute
-  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free': typeof CreateFreeIndexRoute
 }
 
@@ -123,27 +106,20 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/create-free': typeof CreateFreeRouteWithChildren
-  '/create-free/links': typeof CreateFreeLinksRoute
-  '/create-free/qr-code': typeof CreateFreeQrCodeRoute
+  '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/create-free'
-    | '/create-free/links'
-    | '/create-free/qr-code'
-    | '/create-free/'
+  fullPaths: '/' | '/create-free' | '/create-free/preview' | '/create-free/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-free/links' | '/create-free/qr-code' | '/create-free'
+  to: '/' | '/create-free/preview' | '/create-free'
   id:
     | '__root__'
     | '/'
     | '/create-free'
-    | '/create-free/links'
-    | '/create-free/qr-code'
+    | '/create-free/preview'
     | '/create-free/'
   fileRoutesById: FileRoutesById
 }
@@ -180,17 +156,12 @@ export const routeTree = rootRoute
     "/create-free": {
       "filePath": "create-free.tsx",
       "children": [
-        "/create-free/links",
-        "/create-free/qr-code",
+        "/create-free/preview",
         "/create-free/"
       ]
     },
-    "/create-free/links": {
-      "filePath": "create-free/links.tsx",
-      "parent": "/create-free"
-    },
-    "/create-free/qr-code": {
-      "filePath": "create-free/qr-code.tsx",
+    "/create-free/preview": {
+      "filePath": "create-free/preview.tsx",
       "parent": "/create-free"
     },
     "/create-free/": {

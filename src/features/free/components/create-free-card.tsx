@@ -1,5 +1,5 @@
 import useCardStore, { Layout } from "@/features/free/stores/use-free-store"
-import { InputWithLabel } from "@/components/ui/input-w-label"
+import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Select,
@@ -8,10 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import PreviewDialog from "@/features/free/components/preview-dialog"
+import { useState } from "react"
 
 function CreateFreeCard() {
   const { formData, setFormData, setLayout } = useCardStore()
-
+  const [isDialogOpen, setDialogOpen] = useState(false)
+  const onOpenChange = () => {
+    setDialogOpen((prev) => !prev)
+  }
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -19,78 +26,55 @@ function CreateFreeCard() {
   }
 
   return (
-    <form className="w-full max-w-xs">
+    <form className="w-full max-w-xs m-auto mt-20">
       <Card>
         <CardHeader>
-          <CardTitle>Create Your Card</CardTitle>
+          <CardTitle hidden={true}>Create Your Card</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-2">
-          <InputWithLabel
+          <Input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <Input
             type="text"
             name="name"
             placeholder="Your Name"
-            label="Name"
             value={formData.name}
             onChange={handleChange}
           />
-          <InputWithLabel
+          <Input
             type="email"
             name="email"
             placeholder="Email"
-            label="Email"
             value={formData.email}
             onChange={handleChange}
           />
-          <InputWithLabel
+          <Input
             type="tel"
             name="phone"
             placeholder="Phone"
-            label="Phone"
             value={formData.phone}
             onChange={handleChange}
           />
-          <InputWithLabel
-            type="text"
-            name="linkedin"
-            placeholder="/in/name"
-            label="LinkedIn"
-            value={formData.linkedin ?? ""}
-            onChange={handleChange}
-          />
-          <InputWithLabel
-            type="text"
-            name="discord"
-            placeholder="Discord"
-            label="Discord"
-            value={formData.discord ?? ""}
-            onChange={handleChange}
-          />
-          <InputWithLabel
-            type="text"
-            name="website"
-            placeholder="Website"
-            label="Website"
-            value={formData.website ?? ""}
-            onChange={handleChange}
-          />
-          <InputWithLabel
+          <Input
             type="text"
             name="address"
             placeholder="Address"
-            label="Address"
             value={formData.address ?? ""}
             onChange={handleChange}
           />
-          <InputWithLabel
+          <Input
             type="text"
             name="company"
             placeholder="Company"
-            label="Company"
             value={formData.company ?? ""}
             onChange={handleChange}
           />
-          <label className="text-sm font-medium">Bio</label>
-          <textarea
+          <Textarea
             name="bio"
             placeholder="Short Bio"
             value={formData.bio}
@@ -98,10 +82,10 @@ function CreateFreeCard() {
             className="w-full px-3 py-2 border rounded-md"
           />
           <Select onValueChange={(value) => setLayout(value as Layout)}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger>
               <SelectValue placeholder="Choose Layout" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent defaultValue={Layout.left}>
               <SelectItem value={Layout.left}>Left</SelectItem>
               <SelectItem value={Layout.center}>Center</SelectItem>
               <SelectItem value={Layout.right}>Right</SelectItem>
@@ -109,6 +93,8 @@ function CreateFreeCard() {
           </Select>
         </CardContent>
       </Card>
+      <PreviewDialog isOpen={isDialogOpen} onOpenChange={onOpenChange} />
+      <Button className="mt-4 w-full"> Create Card </Button>
     </form>
   )
 }

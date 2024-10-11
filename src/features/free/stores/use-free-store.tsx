@@ -5,6 +5,7 @@ interface FormData {
   name: string
   email: string
   phone: string
+  title?: string
   linkedin?: string
   discord?: string
   website?: string
