@@ -33,7 +33,7 @@ const Links = () => {
         Add Link
       </Button>
       <ul className="mt-4 space-y-2">
-        {formData.links?.map((link, index) => (
+        {formData.links?.map((link: string, index: number) => (
           <li key={index} className="text-sm">
             {link}
           </li>

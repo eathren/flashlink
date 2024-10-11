@@ -11,6 +11,7 @@ interface FormData {
   address?: string
   company?: string
   bio?: string
+  links?: string[]
 }
 
 export enum Layout {

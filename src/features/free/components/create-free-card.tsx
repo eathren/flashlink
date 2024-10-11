@@ -54,7 +54,7 @@ function CreateFreeCard() {
             name="linkedin"
             placeholder="/in/name"
             label="LinkedIn"
-            value={formData.linkedin}
+            value={formData.linkedin ?? ""}
             onChange={handleChange}
           />
           <InputWithLabel
@@ -62,7 +62,7 @@ function CreateFreeCard() {
             name="discord"
             placeholder="Discord"
             label="Discord"
-            value={formData.discord}
+            value={formData.discord ?? ""}
             onChange={handleChange}
           />
           <InputWithLabel
@@ -70,7 +70,7 @@ function CreateFreeCard() {
             name="website"
             placeholder="Website"
             label="Website"
-            value={formData.website}
+            value={formData.website ?? ""}
             onChange={handleChange}
           />
           <InputWithLabel
@@ -78,7 +78,7 @@ function CreateFreeCard() {
             name="address"
             placeholder="Address"
             label="Address"
-            value={formData.address}
+            value={formData.address ?? ""}
             onChange={handleChange}
           />
           <InputWithLabel
@@ -86,7 +86,7 @@ function CreateFreeCard() {
             name="company"
             placeholder="Company"
             label="Company"
-            value={formData.company}
+            value={formData.company ?? ""}
             onChange={handleChange}
           />
           <label className="text-sm font-medium">Bio</label>
