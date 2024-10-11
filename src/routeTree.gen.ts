@@ -11,12 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PricingImport } from './routes/pricing'
 import { Route as CreateFreeImport } from './routes/create-free'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateFreeIndexImport } from './routes/create-free/index'
 import { Route as CreateFreePreviewImport } from './routes/create-free/preview'
 
 // Create/Update Routes
+
+const PricingRoute = PricingImport.update({
+  path: '/pricing',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const CreateFreeRoute = CreateFreeImport.update({
   path: '/create-free',
@@ -56,6 +62,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFreeImport
       parentRoute: typeof rootRoute
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingImport
+      parentRoute: typeof rootRoute
+    }
     '/create-free/preview': {
       id: '/create-free/preview'
       path: '/preview'
@@ -92,12 +105,14 @@ const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-free': typeof CreateFreeRouteWithChildren
+  '/pricing': typeof PricingRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free': typeof CreateFreeIndexRoute
 }
@@ -106,19 +121,26 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/create-free': typeof CreateFreeRouteWithChildren
+  '/pricing': typeof PricingRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create-free' | '/create-free/preview' | '/create-free/'
+  fullPaths:
+    | '/'
+    | '/create-free'
+    | '/pricing'
+    | '/create-free/preview'
+    | '/create-free/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create-free/preview' | '/create-free'
+  to: '/' | '/pricing' | '/create-free/preview' | '/create-free'
   id:
     | '__root__'
     | '/'
     | '/create-free'
+    | '/pricing'
     | '/create-free/preview'
     | '/create-free/'
   fileRoutesById: FileRoutesById
@@ -127,11 +149,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateFreeRoute: typeof CreateFreeRouteWithChildren
+  PricingRoute: typeof PricingRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateFreeRoute: CreateFreeRouteWithChildren,
+  PricingRoute: PricingRoute,
 }
 
 export const routeTree = rootRoute
@@ -147,7 +171,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/create-free"
+        "/create-free",
+        "/pricing"
       ]
     },
     "/": {
@@ -159,6 +184,9 @@ export const routeTree = rootRoute
         "/create-free/preview",
         "/create-free/"
       ]
+    },
+    "/pricing": {
+      "filePath": "pricing.tsx"
     },
     "/create-free/preview": {
       "filePath": "create-free/preview.tsx",

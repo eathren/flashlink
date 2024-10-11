@@ -3,6 +3,7 @@ import html2canvas from "html2canvas"
 import { useRef } from "react"
 import useCardStore, { Layout } from "@/features/free/stores/use-free-store"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { QRCodeSVG } from "qrcode.react"
 
 const PreviewCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -72,6 +73,11 @@ const PreviewCard = () => {
                 </div>
               )}
               <p className="mt-4 text-gray-700">{formData.bio}</p>
+              {formData.qrCode && (
+                <div className="pt-4 flex text-center  mx-auto">
+                  <QRCodeSVG value={formData.qrCode} size={200} />
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -80,7 +86,7 @@ const PreviewCard = () => {
         onClick={downloadCard}
         className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
       >
-        Download Card
+        Download PNG
       </Button>
     </>
   )

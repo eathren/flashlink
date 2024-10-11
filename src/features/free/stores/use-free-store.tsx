@@ -12,6 +12,7 @@ interface FormData {
   address?: string
   company?: string
   bio?: string
+  qrCode?: string
   links?: string[]
 }
 
@@ -40,6 +41,7 @@ const useCardStore = create<CardStore>()(
         website: "",
         address: "",
         company: "",
+        qrCode: "",
         bio: "",
       },
       setFormData: (data) =>

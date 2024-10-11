@@ -24,6 +24,7 @@ function CreateFreeCard() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    console.log(e.target.name, e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
@@ -33,7 +34,7 @@ function CreateFreeCard() {
   }
 
   return (
-    <form className="w-full max-w-xs m-auto mt-20" onSubmit={handleCreateCard}>
+    <form className="w-full max-w-xs m-auto mt-10" onSubmit={handleCreateCard}>
       <h1 className="text-2xl font-semibold text-center mb-4">
         Create Your Card
       </h1>
@@ -91,6 +92,13 @@ function CreateFreeCard() {
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           />
+          <Input
+            type="text"
+            name="qrCode"
+            placeholder="QR Code Link"
+            value={formData.qrCode}
+            onChange={handleChange}
+          />
           <Select onValueChange={(value) => setLayout(value as Layout)}>
             <SelectTrigger>
               <SelectValue placeholder="Choose Layout" />
@@ -107,7 +115,7 @@ function CreateFreeCard() {
         <PreviewDialog isOpen={isDialogOpen} onOpenChange={onOpenChange} />
       </div>
       <Button type="submit" className="mt-4 w-full bg-blue-600">
-        Create Card
+        Review
       </Button>
     </form>
   )

@@ -12,7 +12,10 @@ export const Route = createRootRoute({
             </Link>
           </div>
           <nav className="flex gap-4">
-            <Link className="text-gray-700 hover:text-blue-500 transition-colors">
+            <Link
+              to="/pricing"
+              className="text-gray-700 hover:text-blue-500 transition-colors"
+            >
               Pricing
             </Link>
             <Link className="text-gray-700 hover:text-blue-500 transition-colors">
