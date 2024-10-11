@@ -1,4 +1,7 @@
-import useCardStore, { Layout } from "@/features/free/stores/use-free-store"
+import useCardStore, {
+  FormData,
+  Layout,
+} from "@/features/free/stores/use-free-store"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -13,12 +16,18 @@ import PreviewDialog from "@/features/free/components/preview-dialog"
 import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+
 function CreateFreeCard() {
-  const { formData, setFormData, setLayout, setVcf } = useCardStore()
+  const { formData, setFormData, setLayout, setVcfChecked, vcfChecked } =
+    useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
 
   const onOpenChange = () => {
     setDialogOpen((prev) => !prev)
+    if (!isDialogOpen) {
+      const vcfData = generateVcf(formData)
+      setFormData({ ...formData, vcf: vcfData })
+    }
   }
 
   const handleChange = (
@@ -32,15 +41,30 @@ function CreateFreeCard() {
     onOpenChange()
   }
 
-  const generateVcf = (formData) => {
+  const generateVcf = (formData: FormData) => {
+    const fields = []
+
+    if (formData.name) {
+      fields.push(`FN:${formData.name}`)
+    }
+    if (formData.company) {
+      fields.push(`ORG:${formData.company}`)
+    }
+    if (formData.email) {
+      fields.push(`EMAIL:${formData.email}`)
+    }
+    if (formData.phone) {
+      fields.push(`TEL:${formData.phone}`)
+    }
+    if (formData.address) {
+      fields.push(`ADR:${formData.address}`)
+    }
+
     const contact = `BEGIN:VCARD
-VERSION:3.0
-FN:${formData.name}
-ORG:${formData.company}
-EMAIL:${formData.email}
-TEL:${formData.phone}
-ADR:${formData.address}
-END:VCARD`.trim()
+  VERSION:3.0
+  ${fields.join("\n")}
+  END:VCARD`.trim()
+
     console.log("Generated VCF:", contact)
     return contact
   }
@@ -112,7 +136,10 @@ END:VCARD`.trim()
             onChange={handleChange}
           />
           <span className="space-x-2">
-            <Checkbox onClick={() => setVcf(generateVcf(formData))}></Checkbox>
+            <Checkbox
+              checked={vcfChecked}
+              onCheckedChange={(checked) => setVcfChecked(checked)}
+            ></Checkbox>
             <Label htmlFor="vcf">Create Code for Scannable Contact</Label>
           </span>
           <Select onValueChange={(value) => setLayout(value as Layout)}>
