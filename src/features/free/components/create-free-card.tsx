@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import vCard from "vcf"
 import { Textarea } from "@/components/ui/textarea"
 import PreviewDialog from "@/features/free/components/preview-dialog"
 import { useState } from "react"
@@ -42,33 +43,32 @@ function CreateFreeCard() {
   }
 
   const generateVcf = (formData: FormData) => {
-    const fields = []
+    const card = new vCard()
 
     if (formData.name) {
-      fields.push(`FN:${formData.name}`)
+      card.set("fn", formData.name)
     }
+
     if (formData.company) {
-      fields.push(`ORG:${formData.company}`)
+      card.set("org", formData.company)
     }
+
     if (formData.email) {
-      fields.push(`EMAIL:${formData.email}`)
+      card.set("email", formData.email)
     }
+
     if (formData.phone) {
-      fields.push(`TEL:${formData.phone}`)
+      card.set("tel", formData.phone)
     }
+
     if (formData.address) {
-      fields.push(`ADR:${formData.address}`)
+      card.set("adr", formData.address)
     }
 
-    const contact = `BEGIN:VCARD
-  VERSION:3.0
-  ${fields.join("\n")}
-  END:VCARD`.trim()
-
+    const contact = card.toString("4.0")
     console.log("Generated VCF:", contact)
     return contact
   }
-
   return (
     <form className="w-full max-w-xs m-auto mt-10" onSubmit={handleCreateCard}>
       <h1 className="text-2xl font-semibold text-center mb-4">

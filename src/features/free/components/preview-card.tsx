@@ -75,7 +75,7 @@ const PreviewCard = () => {
               <p className="mt-4 text-gray-700">{formData.bio}</p>
               {vcfChecked && formData.vcf && (
                 <div className="pt-4 flex text-center  mx-auto">
-                  <QRCodeSVG value={formData.vcf} size={260} />
+                  <QRCodeSVG value={formData.vcf} size={160} />
                 </div>
               )}
             </div>
