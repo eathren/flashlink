@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import useCardStore from "@/features/free/stores/use-free-store" // Import your Zustand store
+import useCardStore from "@/features/free/stores/use-free-store"
 
 type LinksDialogProps = {
   isOpen: boolean
@@ -26,12 +26,15 @@ const LinksDialog = ({ isOpen, onOpenChange }: LinksDialogProps) => {
 
   const handleChange = (type: string, value: string) => {
     setFormData({
+      ...formData,
       links: {
         ...formData.links,
         [type]: value,
       },
     })
   }
+
+  const links = formData.links || {}
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -45,18 +48,17 @@ const LinksDialog = ({ isOpen, onOpenChange }: LinksDialogProps) => {
           <DialogTitle>Add Links</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4">
-          {formData.links &&
-            linkTypes?.map(({ label, key }) => (
-              <div key={key} className="flex flex-col">
-                <input
-                  type="text"
-                  placeholder={`Enter your ${label} URL`}
-                  className="border border-gray-300 p-2 rounded"
-                  value={formData.links[key] || ""}
-                  onChange={(e) => handleChange(key, e.target.value)}
-                />
-              </div>
-            ))}
+          {linkTypes.map(({ label, key }) => (
+            <div key={key} className="flex flex-col">
+              <input
+                type="text"
+                placeholder={`Enter your ${label} URL`}
+                className="border border-gray-300 p-2 rounded"
+                value={links[key] || ""}
+                onChange={(e) => handleChange(key, e.target.value)}
+              />
+            </div>
+          ))}
         </div>
         <Button variant="outline" onClick={onOpenChange} className="mt-4">
           Save Links
