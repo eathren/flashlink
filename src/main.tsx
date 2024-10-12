@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client"
 import "./index.css"
 import App from "@/App"
 import { Loader } from "./components/ui/spinner"
+import { Toaster } from "react-hot-toast"
 
 const rootElement = document.getElementById("root")!
 if (!rootElement.innerHTML) {
@@ -10,6 +11,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <Suspense fallback={<Loader />}>
+        <Toaster position="top-right" />
         <App />
       </Suspense>
     </StrictMode>
