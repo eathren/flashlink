@@ -1,20 +1,20 @@
 import { Button } from "@/components/ui/button"
 import html2canvas from "html2canvas"
 import { useRef } from "react"
-import useCardStore, { Layout } from "@/features/free/stores/use-free-store"
+import useCardStore from "@/features/free/stores/use-free-store"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { QRCodeSVG } from "qrcode.react"
 
 const PreviewCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
-  const { formData, color, vcfChecked, layout } = useCardStore()
+  const { formData, color, vcfChecked } = useCardStore()
 
   const downloadCard = () => {
     if (cardRef.current) {
       html2canvas(cardRef.current, {
         backgroundColor: "#FFFFFF",
-        height: 600,
-        width: 350,
+        height: cardRef.current.offsetHeight,
+        width: cardRef.current.offsetWidth,
       }).then((canvas) => {
         const link = document.createElement("a")
         link.href = canvas.toDataURL("image/png")
@@ -24,56 +24,56 @@ const PreviewCard = () => {
     }
   }
 
-  const layoutClasses: Record<Layout, string> = {
-    [Layout.left]: "items-start text-left",
-    [Layout.center]: "items-center text-center",
-    [Layout.right]: "items-end text-right",
-  }
-
   return (
     <>
-      <div
-        ref={cardRef}
-        className="w-[350px] m-auto h-[600px] rounded-none overflow-hidden mx-auto sm:w-[90%] md:w-[60%] lg:w-[40%] xl:w-[350px]"
-      >
-        <Card
-          className="h-full w-full border-2 bg-white rounded-none shadow-none"
-          style={{
-            backgroundColor: color,
-            minHeight: "600px",
-            width: "350px",
-          }}
+      <div className="p-0 m-0 border-2">
+        <div
+          ref={cardRef}
+          className="w-full  max-w-[400px] h-[200px] rounded-None overflow-hidden mx-auto"
         >
-          <CardHeader className={`p-4 ${layoutClasses[layout]}`}>
-            <CardTitle className="text-xl sm:text-2xl font-semibold">
-              {formData.name}
-            </CardTitle>
-            <p className="text-lg">{formData.title}</p>
-          </CardHeader>
-          <CardContent className="p-4 flex flex-col justify-between">
-            <div className={`flex flex-col ${layoutClasses[layout]} space-y-2`}>
-              <p>{formData.email}</p>
-              <p>{formData.address}</p>
-              <p>{formData.phone}</p>
-              {formData.linkedin && <p>{formData.linkedin}</p>}
-              {formData.discord && <p>{formData.discord}</p>}
-              {formData.website && <p>{formData.website}</p>}
-              <p className="mt-4 text-gray-700">{formData.bio}</p>
+          <Card
+            className="h-full border-none w-full border-2 bg-white rounded-lg shadow-None flex"
+            style={{
+              backgroundColor: color,
+            }}
+          >
+            <div className="flex-1 p-6">
+              <CardHeader className="p-0 flex flex-col">
+                <CardTitle className="text-xl sm:text-2xl font-semibold">
+                  {formData.name}
+                </CardTitle>
+                <p className="text-lg">{formData.title}</p>
+              </CardHeader>
+              <CardContent className="flex flex-col p-0 space-y-1">
+                <p className="text-sm">{formData.email}</p>
+                <p className="text-sm">{formData.phone}</p>
+                <p className="text-sm">{formData.address}</p>
+                {formData?.links?.linkedin && (
+                  <p className="text-sm">{formData?.links?.linkedin}</p>
+                )}
+                {formData?.links?.discord && (
+                  <p className="text-sm">{formData?.links?.discord}</p>
+                )}
+                {formData?.links?.website && (
+                  <p className="text-sm">{formData?.links?.website}</p>
+                )}
+                <p className="mt-2 text-gray-700 text-sm">{formData.bio}</p>
+              </CardContent>
             </div>
             {vcfChecked && formData.vcf && (
-              <div className="pt-4 flex justify-center">
-                <QRCodeSVG bgColor={color} value={formData.vcf} size={128} />
+              <div className="flex justify-center items-center p-4">
+                <QRCodeSVG bgColor={color} value={formData.vcf} size={70} />
               </div>
             )}
-          </CardContent>
-        </Card>
+          </Card>
+        </div>
+        <Button
+          onClick={downloadCard}
+          className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+        >
+          Download PNG
+        </Button>
       </div>
-      <Button
-        onClick={downloadCard}
-        className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-      >
-        Download PNG
-      </Button>
     </>
   )
 }

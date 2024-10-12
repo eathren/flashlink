@@ -18,6 +18,7 @@ import PreviewDialog from "@/features/free/components/preview-dialog"
 import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import LinksDialog from "./links-dialog"
 
 function CreateFreeCard() {
   const {
@@ -30,6 +31,7 @@ function CreateFreeCard() {
     vcfChecked,
   } = useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
+  const [isLinksDialogOpen, setLinksDialogOpen] = useState(false)
 
   const onOpenChange = () => {
     setDialogOpen((prev) => !prev)
@@ -37,6 +39,10 @@ function CreateFreeCard() {
       const vcfData = generateVcf(formData)
       setFormData({ ...formData, vcf: vcfData })
     }
+  }
+
+  const onLinksOpenChange = () => {
+    setLinksDialogOpen((prev) => !prev)
   }
 
   const handleChange = (
@@ -79,7 +85,7 @@ function CreateFreeCard() {
   }
 
   return (
-    <form className="w-full max-w-xs m-auto mt-10" onSubmit={handleCreateCard}>
+    <form className="w-full max-w-md m-auto mt-10" onSubmit={handleCreateCard}>
       <h1 className="text-2xl font-semibold text-center mb-4">
         Create Your Card
       </h1>
@@ -90,16 +96,16 @@ function CreateFreeCard() {
         <CardContent className="grid grid-cols-1 gap-2">
           <Input
             type="text"
-            name="title"
-            placeholder="Title"
-            value={formData.title}
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
             onChange={handleChange}
           />
           <Input
             type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
+            name="title"
+            placeholder="Job Title"
+            value={formData.title}
             onChange={handleChange}
           />
           <Input
@@ -137,6 +143,10 @@ function CreateFreeCard() {
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           />
+          <LinksDialog
+            isOpen={isLinksDialogOpen}
+            onOpenChange={onLinksOpenChange}
+          />
 
           <div className="m-auto py-2 text-center">
             <HexColorPicker color={color} onChange={setColor} />
@@ -153,7 +163,7 @@ function CreateFreeCard() {
               checked={vcfChecked}
               onCheckedChange={(checked) => setVcfChecked(!!checked as boolean)}
             ></Checkbox>
-            <Label htmlFor="vcf">Create Code for Scannable Contact</Label>
+            <Label htmlFor="vcf">Create QR Code for Scannable Contact</Label>
           </span>
           <Select onValueChange={(value) => setLayout(value as Layout)}>
             <SelectTrigger>

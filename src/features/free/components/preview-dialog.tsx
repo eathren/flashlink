@@ -7,7 +7,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import PreviewCard from "@/features/free/components/preview-card"
-import { useEffect } from "react"
 
 interface PreviewDialogProps {
   isOpen: boolean
@@ -18,12 +17,6 @@ const PreviewDialog: React.FC<PreviewDialogProps> = ({
   isOpen,
   onOpenChange,
 }) => {
-  useEffect(() => {
-    if (isOpen) {
-      //
-    }
-  }, [isOpen])
-
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
@@ -31,7 +24,7 @@ const PreviewDialog: React.FC<PreviewDialogProps> = ({
           Review
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-md sm:max-w-lg lg:max-w-2xl mx-auto p-4">
         <DialogHeader>
           <DialogTitle hidden={true}>Preview</DialogTitle>
         </DialogHeader>

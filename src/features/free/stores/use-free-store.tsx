@@ -6,15 +6,19 @@ export interface FormData {
   email?: string
   phone?: string
   title?: string
-  linkedin?: string
-  discord?: string
-  website?: string
   address?: string
   company?: string
   bio?: string
-  qrCode?: string
   vcf?: string
-  links?: string[]
+  showIcons?: boolean
+  links?: {
+    linkedin?: string
+    discord?: string
+    website?: string
+    twitter?: string
+    github?: string
+    [key: string]: string | undefined
+  }
 }
 
 export enum Layout {
@@ -32,6 +36,8 @@ interface CardStore {
   setVcfChecked: (checked: boolean) => void
   color: string
   setColor: (color: string) => void
+  showIcons: boolean
+  setShowIcons: (showIcons: boolean) => void
 }
 
 const useCardStore = create<CardStore>()(
@@ -41,14 +47,17 @@ const useCardStore = create<CardStore>()(
         name: "",
         email: "",
         phone: "",
-        linkedin: "",
-        discord: "",
-        website: "",
         address: "",
         company: "",
-        qrCode: "",
         bio: "",
         vcf: "",
+        links: {
+          linkedin: "",
+          discord: "",
+          website: "",
+          twitter: "",
+          github: "",
+        },
       },
       setFormData: (data) =>
         set((state) => ({ formData: { ...state.formData, ...data } })),
@@ -56,8 +65,10 @@ const useCardStore = create<CardStore>()(
       setLayout: (layout) => set({ layout }),
       vcfChecked: false,
       setVcfChecked: (checked) => set({ vcfChecked: checked }),
-      color: "#2563EB",
+      color: "#ffffff",
       setColor: (color) => set({ color }),
+      showIcons: false,
+      setShowIcons: (showIcons) => set({ showIcons }),
     }),
     {
       name: "card-storage",
