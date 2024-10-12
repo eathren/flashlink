@@ -30,6 +30,8 @@ interface CardStore {
   setLayout: (layout: Layout) => void
   vcfChecked: boolean
   setVcfChecked: (checked: boolean) => void
+  color: string
+  setColor: (color: string) => void
 }
 
 const useCardStore = create<CardStore>()(
@@ -54,6 +56,8 @@ const useCardStore = create<CardStore>()(
       setLayout: (layout) => set({ layout }),
       vcfChecked: false,
       setVcfChecked: (checked) => set({ vcfChecked: checked }),
+      color: "#2563EB",
+      setColor: (color) => set({ color }),
     }),
     {
       name: "card-storage",

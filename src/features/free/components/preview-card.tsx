@@ -7,7 +7,7 @@ import { QRCodeSVG } from "qrcode.react"
 
 const PreviewCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
-  const { formData, vcfChecked, layout } = useCardStore()
+  const { formData, color, vcfChecked, layout } = useCardStore()
 
   const downloadCard = () => {
     if (cardRef.current) {
@@ -34,48 +34,35 @@ const PreviewCard = () => {
     <>
       <div
         ref={cardRef}
-        className="w-full max-w-[350px] bg-gradient-to-r from-blue-500 to-blue-300 rounded-lg overflow-hidden mx-auto"
+        className="w-full   max-w-[350px]  rounded-none overflow-hidden mx-auto"
       >
         <Card
-          className="h-full w-full bg-white rounded-lg border shadow-none border-gray-300"
-          style={{ minHeight: "600px", height: "600px", width: "350px" }}
+          className="h-full  w-full  border-2 bg-white rounded-none  shadow-none  "
+          style={{
+            minHeight: "600px",
+            height: "600px",
+            width: "350px",
+            backgroundColor: color,
+          }}
         >
-          <CardHeader className="p-4">
-            <CardTitle className="text-2xl font-semibold text-blue-600">
+          <CardHeader className="p-4   ">
+            <CardTitle className="text-2xl font-semibold">
               {formData.name}
             </CardTitle>
-            <p className="text-lg text-gray-600">{formData.title}</p>
+            <p className="text-lg ">{formData.title}</p>
           </CardHeader>
           <CardContent className="p-4">
             <div className={`flex flex-col ${layoutClasses[layout]} space-y-2`}>
-              <div className="">
-                <p className="text-gray-800">{formData.email}</p>
-              </div>
-              <div className="">
-                <p className="text-gray-800">{formData.address}</p>
-              </div>
-              <div className="">
-                <p className="text-gray-800">{formData.phone}</p>
-              </div>
-              {formData.linkedin && (
-                <div className="">
-                  <p className="text-gray-800">{formData.linkedin}</p>
-                </div>
-              )}
-              {formData.discord && (
-                <div className="">
-                  <p className="text-gray-800">{formData.discord}</p>
-                </div>
-              )}
-              {formData.website && (
-                <div className="">
-                  <p className="text-gray-800">{formData.website}</p>
-                </div>
-              )}
+              <p>{formData.email}</p>
+              <p>{formData.address}</p>
+              <p>{formData.phone}</p>
+              {formData.linkedin && <p>{formData.linkedin}</p>}
+              {formData.discord && <p>{formData.discord}</p>}
+              {formData.website && <p>{formData.website}</p>}
               <p className="mt-4 text-gray-700">{formData.bio}</p>
               {vcfChecked && formData.vcf && (
                 <div className="pt-4 flex text-center  mx-auto">
-                  <QRCodeSVG value={formData.vcf} size={160} />
+                  <QRCodeSVG bgColor={color} value={formData.vcf} size={160} />
                 </div>
               )}
             </div>

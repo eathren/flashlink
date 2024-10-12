@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { HexColorPicker } from "react-colorful"
 import vCard from "vcf"
 import { Textarea } from "@/components/ui/textarea"
 import PreviewDialog from "@/features/free/components/preview-dialog"
@@ -19,8 +20,15 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
 function CreateFreeCard() {
-  const { formData, setFormData, setLayout, setVcfChecked, vcfChecked } =
-    useCardStore()
+  const {
+    formData,
+    setFormData,
+    setLayout,
+    color,
+    setColor,
+    setVcfChecked,
+    vcfChecked,
+  } = useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
 
   const onOpenChange = () => {
@@ -69,6 +77,7 @@ function CreateFreeCard() {
     console.log("Generated VCF:", contact)
     return contact
   }
+
   return (
     <form className="w-full max-w-xs m-auto mt-10" onSubmit={handleCreateCard}>
       <h1 className="text-2xl font-semibold text-center mb-4">
@@ -128,6 +137,16 @@ function CreateFreeCard() {
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md"
           />
+
+          <div className="m-auto py-2 text-center">
+            <HexColorPicker color={color} onChange={setColor} />
+            <Input
+              type="text"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              className="mt-2"
+            />
+          </div>
 
           <span className="space-x-2">
             <Checkbox
