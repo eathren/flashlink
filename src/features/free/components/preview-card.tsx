@@ -26,13 +26,13 @@ const PreviewCard = () => {
 
   return (
     <>
-      <div className="p-0 m-0 border-2">
+      <div className="p-0 m-0 border-2 border-gray-300 rounded-lg">
         <div
           ref={cardRef}
-          className="w-full  max-w-[400px] h-[200px] rounded-None overflow-hidden mx-auto"
+          className="w-full max-w-[400px] max-h-[200px] overflow-hidden mx-auto"
         >
           <Card
-            className="h-full border-none w-full border-2 bg-white rounded-lg shadow-None flex"
+            className="h-full border-none w-full bg-white shadow-none flex"
             style={{
               backgroundColor: color,
             }}
@@ -67,9 +67,11 @@ const PreviewCard = () => {
             )}
           </Card>
         </div>
+      </div>
+      <div className="mt-2">
         <Button
           onClick={downloadCard}
-          className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+          className="w-full mt-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
         >
           Download PNG
         </Button>
