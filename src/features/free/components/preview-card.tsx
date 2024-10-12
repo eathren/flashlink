@@ -34,24 +34,23 @@ const PreviewCard = () => {
     <>
       <div
         ref={cardRef}
-        className="w-full   max-w-[350px]  rounded-none overflow-hidden mx-auto"
+        className="w-[350px] m-auto h-[600px] rounded-none overflow-hidden mx-auto sm:w-[90%] md:w-[60%] lg:w-[40%] xl:w-[350px]"
       >
         <Card
-          className="h-full  w-full  border-2 bg-white rounded-none  shadow-none  "
+          className="h-full w-full border-2 bg-white rounded-none shadow-none"
           style={{
-            minHeight: "600px",
-            height: "600px",
-            width: "350px",
             backgroundColor: color,
+            minHeight: "600px",
+            width: "350px",
           }}
         >
-          <CardHeader className="p-4   ">
-            <CardTitle className="text-2xl font-semibold">
+          <CardHeader className={`p-4 ${layoutClasses[layout]}`}>
+            <CardTitle className="text-xl sm:text-2xl font-semibold">
               {formData.name}
             </CardTitle>
-            <p className="text-lg ">{formData.title}</p>
+            <p className="text-lg">{formData.title}</p>
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-4 flex flex-col justify-between">
             <div className={`flex flex-col ${layoutClasses[layout]} space-y-2`}>
               <p>{formData.email}</p>
               <p>{formData.address}</p>
@@ -60,12 +59,12 @@ const PreviewCard = () => {
               {formData.discord && <p>{formData.discord}</p>}
               {formData.website && <p>{formData.website}</p>}
               <p className="mt-4 text-gray-700">{formData.bio}</p>
-              {vcfChecked && formData.vcf && (
-                <div className="pt-4 flex text-center  mx-auto">
-                  <QRCodeSVG bgColor={color} value={formData.vcf} size={160} />
-                </div>
-              )}
             </div>
+            {vcfChecked && formData.vcf && (
+              <div className="pt-4 flex justify-center">
+                <QRCodeSVG bgColor={color} value={formData.vcf} size={128} />
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
