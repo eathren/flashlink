@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
 import { auth } from "@/firebase"
 import { useState } from "react"
 import { signInWithEmailAndPassword } from "firebase/auth"
@@ -10,6 +10,14 @@ import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
 
 export const Route = createFileRoute("/login")({
+  beforeLoad: () => {
+    const user = auth.currentUser
+    if (user) {
+      throw redirect({
+        to: "/dashboard",
+      })
+    }
+  },
   component: LoginPage,
 })
 
@@ -26,7 +34,9 @@ function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       toast.success("Logged in successfully")
-      navigate({ to: "/" })
+      const searchParams = new URLSearchParams(window.location.search)
+      const redirectUrl = searchParams.get("redirect") || "/dashboard"
+      navigate({ to: redirectUrl })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
