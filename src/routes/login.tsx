@@ -1,4 +1,9 @@
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  redirect,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router"
 import { auth } from "@/firebase"
 import { useState } from "react"
 import { signInWithEmailAndPassword } from "firebase/auth"
@@ -14,7 +19,7 @@ export const Route = createFileRoute("/login")({
     const user = auth.currentUser
     if (user) {
       throw redirect({
-        to: "/dashboard",
+        to: "/",
       })
     }
   },
@@ -26,6 +31,7 @@ function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const search = useSearch({ from: "" })
   const navigate = useNavigate({ from: "/login" })
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -34,8 +40,7 @@ function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       toast.success("Logged in successfully")
-      const searchParams = new URLSearchParams(window.location.search)
-      const redirectUrl = searchParams.get("redirect") || "/dashboard"
+      const redirectUrl = search.redirect || "/"
       navigate({ to: redirectUrl })
     } catch (error) {
       console.error(error)

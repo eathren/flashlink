@@ -6,10 +6,6 @@ const queryClient = new QueryClient()
 
 const router = createRouter({
   routeTree,
-  context: {
-    queryClient: queryClient,
-    auth: undefined!,
-  },
   defaultPreload: "intent",
   // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
