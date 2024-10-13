@@ -15,13 +15,22 @@ import { Spinner } from "@/components/ui/spinner"
 import toast from "react-hot-toast"
 
 export const Route = createFileRoute("/login")({
-  beforeLoad: () => {
-    const user = auth.currentUser
-    if (user) {
-      throw redirect({
-        to: "/",
+  beforeLoad: async () => {
+    return new Promise<void>((resolve, reject) => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          unsubscribe()
+          reject(
+            redirect({
+              to: "/",
+            })
+          )
+        } else {
+          unsubscribe()
+          resolve()
+        }
       })
-    }
+    })
   },
   component: LoginPage,
 })
