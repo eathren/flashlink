@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Link } from "@tanstack/react-router"
 import { Spinner } from "@/components/ui/spinner"
+import toast from "react-hot-toast"
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -24,10 +25,12 @@ function LoginPage() {
     setLoading(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
+      toast.success("Logged in successfully")
       navigate({ to: "/" })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
+        toast.error(error.message)
         setError(error.message)
       } else {
         setError("An unknown error occurred")
@@ -85,7 +88,7 @@ function LoginPage() {
               className="w-full bg-blue-600 text-white hover:bg-blue-700"
               disabled={loading}
             >
-              {loading ? <Spinner /> : "Login"}
+              {loading ? <Spinner height={25} width={25} /> : "Login"}
             </Button>
           </form>
           <p className="mt-4 text-center">

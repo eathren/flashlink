@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut, User } from "firebase/auth"
 import { auth } from "@/firebase"
+import toast from "react-hot-toast"
 const Header = () => {
   const [user, setUser] = useState<User | null>(null)
 
@@ -15,7 +16,9 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth)
+      toast.success("Logged out successfully")
     } catch (error) {
+      toast.error("Error signing out")
       console.error("Error signing out:", error)
     }
   }
