@@ -1,21 +1,24 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '@/firebase'
 import toast from 'react-hot-toast'
+
 const Header = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+  const authInstance = getAuth()
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
-      setUser(user)
+    const unsubscribe = onAuthStateChanged(authInstance, currentUser => {
+      setUser(currentUser)
     })
-    return () => unsubscribe()
-  }, [])
+    return unsubscribe
+  }, [authInstance])
 
   const handleLogout = async () => {
     try {
-      await signOut(auth)
+      await signOut(authInstance)
       toast.success('Logged out successfully')
     } catch (error) {
       toast.error('Error signing out')
@@ -23,13 +26,19 @@ const Header = () => {
     }
   }
 
+  const handleLogoClick = () => {
+    console.log('User:', user)
+    navigate(user ? `/u/${user.uid}` : '/')
+  }
+
   return (
-    <div className="bg-white shadow-md">
+    <header className="bg-white shadow-md">
       <div className="container mx-auto p-4 flex justify-between items-center">
-        <div className="text-xl font-semibold text-blue-600">
-          <Link to="/" className="hover:text-blue-500 transition-colors">
-            FlashLink
-          </Link>
+        <div
+          className="text-xl font-semibold text-blue-600 cursor-pointer hover:text-blue-500 transition-colors"
+          onClick={handleLogoClick}
+        >
+          FlashLink
         </div>
         <nav className="flex gap-4">
           <Link
@@ -63,7 +72,7 @@ const Header = () => {
           )}
         </nav>
       </div>
-    </div>
+    </header>
   )
 }
 

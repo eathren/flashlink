@@ -19,53 +19,65 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateFreeIndexImport } from './routes/create-free/index'
 import { Route as CreateFreePreviewImport } from './routes/create-free/preview'
-import { Route as AuthCCIdImport } from './routes/_auth.c.$cId'
+import { Route as CCIdImport } from './routes/c.$cId'
+import { Route as AuthUUIdImport } from './routes/_auth.u.$uId'
+import { Route as AuthUUIdCCIdEditImport } from './routes/_auth.u.$uId.c.$cId.edit'
 
 // Create/Update Routes
 
 const SignUpRoute = SignUpImport.update({
   path: '/sign-up',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const PricingRoute = PricingImport.update({
   path: '/pricing',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const CreateFreeRoute = CreateFreeImport.update({
   path: '/create-free',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const CreateFreeIndexRoute = CreateFreeIndexImport.update({
   path: '/',
-  getParentRoute: () => CreateFreeRoute
+  getParentRoute: () => CreateFreeRoute,
 } as any)
 
 const CreateFreePreviewRoute = CreateFreePreviewImport.update({
   path: '/preview',
-  getParentRoute: () => CreateFreeRoute
+  getParentRoute: () => CreateFreeRoute,
 } as any)
 
-const AuthCCIdRoute = AuthCCIdImport.update({
+const CCIdRoute = CCIdImport.update({
   path: '/c/$cId',
-  getParentRoute: () => AuthRoute
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthUUIdRoute = AuthUUIdImport.update({
+  path: '/u/$uId',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthUUIdCCIdEditRoute = AuthUUIdCCIdEditImport.update({
+  path: '/c/$cId/edit',
+  getParentRoute: () => AuthUUIdRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -114,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpImport
       parentRoute: typeof rootRoute
     }
+    '/c/$cId': {
+      id: '/c/$cId'
+      path: '/c/$cId'
+      fullPath: '/c/$cId'
+      preLoaderRoute: typeof CCIdImport
+      parentRoute: typeof rootRoute
+    }
     '/create-free/preview': {
       id: '/create-free/preview'
       path: '/preview'
@@ -128,24 +147,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFreeIndexImport
       parentRoute: typeof CreateFreeImport
     }
-    '/_auth/c/$cId': {
-      id: '/_auth/c/$cId'
-      path: '/c/$cId'
-      fullPath: '/c/$cId'
-      preLoaderRoute: typeof AuthCCIdImport
+    '/_auth/u/$uId': {
+      id: '/_auth/u/$uId'
+      path: '/u/$uId'
+      fullPath: '/u/$uId'
+      preLoaderRoute: typeof AuthUUIdImport
       parentRoute: typeof AuthImport
+    }
+    '/_auth/u/$uId/c/$cId/edit': {
+      id: '/_auth/u/$uId/c/$cId/edit'
+      path: '/c/$cId/edit'
+      fullPath: '/u/$uId/c/$cId/edit'
+      preLoaderRoute: typeof AuthUUIdCCIdEditImport
+      parentRoute: typeof AuthUUIdImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthUUIdRouteChildren {
+  AuthUUIdCCIdEditRoute: typeof AuthUUIdCCIdEditRoute
+}
+
+const AuthUUIdRouteChildren: AuthUUIdRouteChildren = {
+  AuthUUIdCCIdEditRoute: AuthUUIdCCIdEditRoute,
+}
+
+const AuthUUIdRouteWithChildren = AuthUUIdRoute._addFileChildren(
+  AuthUUIdRouteChildren,
+)
+
 interface AuthRouteChildren {
-  AuthCCIdRoute: typeof AuthCCIdRoute
+  AuthUUIdRoute: typeof AuthUUIdRouteWithChildren
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdRoute: AuthCCIdRoute
+  AuthUUIdRoute: AuthUUIdRouteWithChildren,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -157,11 +195,11 @@ interface CreateFreeRouteChildren {
 
 const CreateFreeRouteChildren: CreateFreeRouteChildren = {
   CreateFreePreviewRoute: CreateFreePreviewRoute,
-  CreateFreeIndexRoute: CreateFreeIndexRoute
+  CreateFreeIndexRoute: CreateFreeIndexRoute,
 }
 
 const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
-  CreateFreeRouteChildren
+  CreateFreeRouteChildren,
 )
 
 export interface FileRoutesByFullPath {
@@ -171,9 +209,11 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/sign-up': typeof SignUpRoute
+  '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
-  '/c/$cId': typeof AuthCCIdRoute
+  '/u/$uId': typeof AuthUUIdRouteWithChildren
+  '/u/$uId/c/$cId/edit': typeof AuthUUIdCCIdEditRoute
 }
 
 export interface FileRoutesByTo {
@@ -182,9 +222,11 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/sign-up': typeof SignUpRoute
+  '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free': typeof CreateFreeIndexRoute
-  '/c/$cId': typeof AuthCCIdRoute
+  '/u/$uId': typeof AuthUUIdRouteWithChildren
+  '/u/$uId/c/$cId/edit': typeof AuthUUIdCCIdEditRoute
 }
 
 export interface FileRoutesById {
@@ -195,9 +237,11 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/sign-up': typeof SignUpRoute
+  '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
-  '/_auth/c/$cId': typeof AuthCCIdRoute
+  '/_auth/u/$uId': typeof AuthUUIdRouteWithChildren
+  '/_auth/u/$uId/c/$cId/edit': typeof AuthUUIdCCIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -209,9 +253,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/sign-up'
+    | '/c/$cId'
     | '/create-free/preview'
     | '/create-free/'
-    | '/c/$cId'
+    | '/u/$uId'
+    | '/u/$uId/c/$cId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -219,9 +265,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/sign-up'
+    | '/c/$cId'
     | '/create-free/preview'
     | '/create-free'
-    | '/c/$cId'
+    | '/u/$uId'
+    | '/u/$uId/c/$cId/edit'
   id:
     | '__root__'
     | '/'
@@ -230,9 +278,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/sign-up'
+    | '/c/$cId'
     | '/create-free/preview'
     | '/create-free/'
-    | '/_auth/c/$cId'
+    | '/_auth/u/$uId'
+    | '/_auth/u/$uId/c/$cId/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -243,6 +293,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
   SignUpRoute: typeof SignUpRoute
+  CCIdRoute: typeof CCIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -251,7 +302,8 @@ const rootRouteChildren: RootRouteChildren = {
   CreateFreeRoute: CreateFreeRouteWithChildren,
   LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
-  SignUpRoute: SignUpRoute
+  SignUpRoute: SignUpRoute,
+  CCIdRoute: CCIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -271,7 +323,8 @@ export const routeTree = rootRoute
         "/create-free",
         "/login",
         "/pricing",
-        "/sign-up"
+        "/sign-up",
+        "/c/$cId"
       ]
     },
     "/": {
@@ -280,7 +333,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/c/$cId"
+        "/_auth/u/$uId"
       ]
     },
     "/create-free": {
@@ -299,6 +352,9 @@ export const routeTree = rootRoute
     "/sign-up": {
       "filePath": "sign-up.tsx"
     },
+    "/c/$cId": {
+      "filePath": "c.$cId.tsx"
+    },
     "/create-free/preview": {
       "filePath": "create-free/preview.tsx",
       "parent": "/create-free"
@@ -307,9 +363,16 @@ export const routeTree = rootRoute
       "filePath": "create-free/index.tsx",
       "parent": "/create-free"
     },
-    "/_auth/c/$cId": {
-      "filePath": "_auth.c.$cId.tsx",
-      "parent": "/_auth"
+    "/_auth/u/$uId": {
+      "filePath": "_auth.u.$uId.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/u/$uId/c/$cId/edit"
+      ]
+    },
+    "/_auth/u/$uId/c/$cId/edit": {
+      "filePath": "_auth.u.$uId.c.$cId.edit.tsx",
+      "parent": "/_auth/u/$uId"
     }
   }
 }

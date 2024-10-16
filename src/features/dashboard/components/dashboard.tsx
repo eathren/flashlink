@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { getFirestore, collection, query, getDocs } from 'firebase/firestore'
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from 'firebase/firestore'
 import { auth } from '@/firebase'
 import CreateBusinessCard from './create-business-card'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -31,12 +37,14 @@ const Dashboard = () => {
 
         const businessCardsCollectionRef = collection(
           firestore,
-          'users',
-          user.uid,
           'businessCards'
         )
-        const q = query(businessCardsCollectionRef)
+        const q = query(
+          businessCardsCollectionRef,
+          where('userId', '==', user.uid)
+        )
         const querySnapshot = await getDocs(q)
+
         const cards = querySnapshot.docs.map(doc => {
           const data = doc.data()
           return {
@@ -45,6 +53,7 @@ const Dashboard = () => {
             createdAt: data.createdAt.toDate() // assuming createdAt is a Firestore Timestamp
           }
         })
+
         setBusinessCards(cards)
       } catch (error) {
         console.error('Error fetching business cards:', error)
@@ -68,14 +77,18 @@ const Dashboard = () => {
             </p>
           ) : (
             businessCards?.map(card => (
-              <Link to={`/c/${card.id}`} key={card.id}>
-                <Card key={card.id} className="w-full  p-6">
+              <Link to={`/c/${card.id}/edit`} key={card.id}>
+                <Card className="w-full p-6">
                   <CardHeader>
                     <CardTitle>
-                      {card.title ? card.title : 'Business Card'}{' '}
+                      {card.title ? card.title : 'Business Card'}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <p className="text-sm text-gray-500">
+                      Created at: {card.createdAt.toLocaleDateString()}{' '}
+                    </p>
+                  </CardContent>
                 </Card>
               </Link>
             ))

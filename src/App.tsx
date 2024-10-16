@@ -1,18 +1,31 @@
 import { routeTree } from '@/routeTree.gen'
 import { QueryClient } from '@tanstack/react-query'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
+import { AuthProvider, useAuth } from './features/auth/contexts/auth-context'
 
 const queryClient = new QueryClient()
 
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  // This will ensure that the loader is always called when the route is preloaded or visited
-  defaultPreloadStaleTime: 0
+  defaultPreloadStaleTime: 0,
+  context: {
+    queryClient,
+    auth: undefined!
+  }
 })
 
+function InnerApp() {
+  const auth = useAuth()
+  return <RouterProvider router={router} context={{ auth }} />
+}
+
 function App() {
-  return <RouterProvider router={router} context={{ queryClient }} />
+  return (
+    <AuthProvider>
+      <InnerApp />
+    </AuthProvider>
+  )
 }
 
 export default App

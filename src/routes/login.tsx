@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Link } from '@tanstack/react-router'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
+import { useAuth } from '@/features/auth/contexts/auth-context'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async () => {
@@ -42,14 +43,21 @@ function LoginPage() {
   const [loading, setLoading] = useState(false)
   const search = useSearch({ from: '' })
   const navigate = useNavigate({ from: '/login' })
+  const { user } = useAuth()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+      const user = userCredential.user
       await signInWithEmailAndPassword(auth, email, password)
       toast.success('Logged in successfully')
-      const redirectUrl = search.redirect || '/'
+      const redirectUrl = search.redirect || `/u/${user.uid}`
       navigate({ to: redirectUrl })
     } catch (error) {
       console.error(error)
@@ -62,6 +70,11 @@ function LoginPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (user) {
+    navigate({ to: '/' })
+    return null
   }
 
   return (

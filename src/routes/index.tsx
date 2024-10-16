@@ -1,10 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { auth } from '@/firebase'
-import { User, onAuthStateChanged } from 'firebase/auth'
-import { useState, useEffect, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Loader } from '@/components/ui/spinner'
-import Dashboard from '@/features/dashboard/components/dashboard'
 
 const Index = () => {
   return (
@@ -71,6 +68,7 @@ const Index = () => {
 
       {/* Footer Section */}
       <footer className="bg-gray-800 text-white text-center py-4">
+        Currently in development.
         <p>&copy; {new Date().getFullYear()} FlashLink. All Rights Reserved.</p>
       </footer>
     </div>
@@ -78,22 +76,7 @@ const Index = () => {
 }
 
 const Root = () => {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setUser(user)
-      setLoading(false)
-    })
-    return () => unsubscribe()
-  }, [])
-
-  if (loading) {
-    return <Loader />
-  }
-
-  return user ? <Dashboard /> : <Index />
+  return <Index />
 }
 
 export const Route = createFileRoute('/')({

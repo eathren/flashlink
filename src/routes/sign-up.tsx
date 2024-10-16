@@ -8,6 +8,7 @@ import { Link } from '@tanstack/react-router'
 import { auth } from '@/firebase'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
+import { useAuth } from '@/features/auth/contexts/auth-context'
 
 export const Route = createFileRoute('/sign-up')({
   component: SignupPage
@@ -19,6 +20,7 @@ function SignupPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate({ from: '/sign-up' })
+  const { user } = useAuth()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,6 +40,11 @@ function SignupPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (user) {
+    navigate({ to: '/' })
+    return null
   }
 
   return (
