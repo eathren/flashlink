@@ -2,7 +2,10 @@ import { Link } from '@tanstack/react-router'
 import { signOut } from 'firebase/auth'
 import toast from 'react-hot-toast'
 import { auth } from '@/firebase'
+
 const Header = () => {
+  const currentUser = auth.currentUser
+  console.log('currentUser', currentUser)
   const handleLogout = async () => {
     try {
       await signOut(auth)

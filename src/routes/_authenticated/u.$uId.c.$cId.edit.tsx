@@ -7,13 +7,13 @@ interface Params {
   cId: string
 }
 
-export const Route = createFileRoute('/_auth/u/$uId/c/$cId/edit')({
+export const Route = createFileRoute('/_authenticated/u/$uId/c/$cId/edit')({
   beforeLoad: async ({ context }: { context: any }) => {
     const { user, loading } = context.auth
 
     if (loading) {
-      return new Promise<void>(resolve => {
-        const unsubscribe = context.auth.onAuthStateChanged(user => {
+      return new Promise<void>((resolve) => {
+        const unsubscribe = context.auth.onAuthStateChanged((user) => {
           if (user) {
             unsubscribe()
             resolve()
@@ -29,5 +29,5 @@ export const Route = createFileRoute('/_auth/u/$uId/c/$cId/edit')({
       return redirect({ to: '/login' })
     }
   },
-  component: EditCard
+  component: EditCard,
 })
