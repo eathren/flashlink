@@ -1,39 +1,39 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useState } from "react"
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Link } from "@tanstack/react-router"
-import { auth } from "@/firebase"
-import { Spinner } from "@/components/ui/spinner"
-import toast from "react-hot-toast"
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Link } from '@tanstack/react-router'
+import { auth } from '@/firebase'
+import { Spinner } from '@/components/ui/spinner'
+import toast from 'react-hot-toast'
 
-export const Route = createFileRoute("/sign-up")({
-  component: SignupPage,
+export const Route = createFileRoute('/sign-up')({
+  component: SignupPage
 })
 
 function SignupPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate({ from: "/sign-up" })
+  const navigate = useNavigate({ from: '/sign-up' })
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
       await createUserWithEmailAndPassword(auth, email, password)
-      toast.success("Signed up successfully")
-      navigate({ to: "/" })
+      toast.success('Signed up successfully')
+      navigate({ to: '/' })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
         toast.error(error.message)
         setError(error.message)
       } else {
-        setError("An unknown error occurred")
+        setError('An unknown error occurred')
       }
     } finally {
       setLoading(false)
@@ -61,7 +61,7 @@ function SignupPage() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 required
                 className="mt-1 block w-full"
               />
@@ -77,7 +77,7 @@ function SignupPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 required
                 className="mt-1 block w-full"
               />
@@ -88,11 +88,11 @@ function SignupPage() {
               className="w-full bg-blue-600 text-white hover:bg-blue-700"
               disabled={loading}
             >
-              {loading ? <Spinner height={25} width={25} /> : "Sign Up"}
+              {loading ? <Spinner height={25} width={25} /> : 'Sign Up'}
             </Button>
           </form>
           <p className="mt-4 text-center">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link to="/login" className="text-blue-600">
               Login
             </Link>

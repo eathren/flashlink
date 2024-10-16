@@ -25,47 +25,47 @@ import { Route as AuthCCIdImport } from './routes/_auth.c.$cId'
 
 const SignUpRoute = SignUpImport.update({
   path: '/sign-up',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const PricingRoute = PricingImport.update({
   path: '/pricing',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const CreateFreeRoute = CreateFreeImport.update({
   path: '/create-free',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const CreateFreeIndexRoute = CreateFreeIndexImport.update({
   path: '/',
-  getParentRoute: () => CreateFreeRoute,
+  getParentRoute: () => CreateFreeRoute
 } as any)
 
 const CreateFreePreviewRoute = CreateFreePreviewImport.update({
   path: '/preview',
-  getParentRoute: () => CreateFreeRoute,
+  getParentRoute: () => CreateFreeRoute
 } as any)
 
 const AuthCCIdRoute = AuthCCIdImport.update({
   path: '/c/$cId',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRoute
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -145,7 +145,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdRoute: AuthCCIdRoute,
+  AuthCCIdRoute: AuthCCIdRoute
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -157,11 +157,11 @@ interface CreateFreeRouteChildren {
 
 const CreateFreeRouteChildren: CreateFreeRouteChildren = {
   CreateFreePreviewRoute: CreateFreePreviewRoute,
-  CreateFreeIndexRoute: CreateFreeIndexRoute,
+  CreateFreeIndexRoute: CreateFreeIndexRoute
 }
 
 const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
-  CreateFreeRouteChildren,
+  CreateFreeRouteChildren
 )
 
 export interface FileRoutesByFullPath {
@@ -251,7 +251,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreateFreeRoute: CreateFreeRouteWithChildren,
   LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
-  SignUpRoute: SignUpRoute,
+  SignUpRoute: SignUpRoute
 }
 
 export const routeTree = rootRoute

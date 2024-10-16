@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import PreviewCard from "@/features/free/components/preview-card"
+  DialogTrigger
+} from '@/components/ui/dialog'
+import PreviewCard from '@/features/free/components/preview-card'
 
 interface PreviewDialogProps {
   isOpen: boolean
@@ -15,7 +15,7 @@ interface PreviewDialogProps {
 
 const PreviewDialog: React.FC<PreviewDialogProps> = ({
   isOpen,
-  onOpenChange,
+  onOpenChange
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

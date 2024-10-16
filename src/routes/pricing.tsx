@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { Button } from '@/components/ui/button'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/pricing")({
-  component: Pricing,
+export const Route = createFileRoute('/pricing')({
+  component: Pricing
 })
 
 function Pricing() {
@@ -39,7 +39,7 @@ function Pricing() {
           </b>
           <ul className="mb-4 list-inside list-disc">
             <li>
-              {" "}
+              {' '}
               Up to 5 different business cards that all include a QR link
             </li>
             <li> Personalized Profiles </li>

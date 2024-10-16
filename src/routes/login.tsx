@@ -2,27 +2,27 @@ import {
   createFileRoute,
   redirect,
   useNavigate,
-  useSearch,
-} from "@tanstack/react-router"
-import { auth } from "@/firebase"
-import { useState } from "react"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Link } from "@tanstack/react-router"
-import { Spinner } from "@/components/ui/spinner"
-import toast from "react-hot-toast"
+  useSearch
+} from '@tanstack/react-router'
+import { auth } from '@/firebase'
+import { useState } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Link } from '@tanstack/react-router'
+import { Spinner } from '@/components/ui/spinner'
+import toast from 'react-hot-toast'
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute('/login')({
   beforeLoad: async () => {
     return new Promise<void>((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
           unsubscribe()
           reject(
             redirect({
-              to: "/",
+              to: '/'
             })
           )
         } else {
@@ -32,24 +32,24 @@ export const Route = createFileRoute("/login")({
       })
     })
   },
-  component: LoginPage,
+  component: LoginPage
 })
 
 function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const search = useSearch({ from: "" })
-  const navigate = useNavigate({ from: "/login" })
+  const search = useSearch({ from: '' })
+  const navigate = useNavigate({ from: '/login' })
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      toast.success("Logged in successfully")
-      const redirectUrl = search.redirect || "/"
+      toast.success('Logged in successfully')
+      const redirectUrl = search.redirect || '/'
       navigate({ to: redirectUrl })
     } catch (error) {
       console.error(error)
@@ -57,7 +57,7 @@ function LoginPage() {
         toast.error(error.message)
         setError(error.message)
       } else {
-        setError("An unknown error occurred")
+        setError('An unknown error occurred')
       }
     } finally {
       setLoading(false)
@@ -85,7 +85,7 @@ function LoginPage() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 required
                 className="mt-1 block w-full"
               />
@@ -101,7 +101,7 @@ function LoginPage() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 required
                 className="mt-1 block w-full"
               />
@@ -112,11 +112,11 @@ function LoginPage() {
               className="w-full bg-blue-600 text-white hover:bg-blue-700"
               disabled={loading}
             >
-              {loading ? <Spinner height={25} width={25} /> : "Login"}
+              {loading ? <Spinner height={25} width={25} /> : 'Login'}
             </Button>
           </form>
           <p className="mt-4 text-center">
-            Don't have an account?{" "}
+            Don't have an account?{' '}
             <Link to="/sign-up" className="text-blue-600">
               Sign up
             </Link>

@@ -1,13 +1,13 @@
-import { Link } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
-import { onAuthStateChanged, signOut, User } from "firebase/auth"
-import { auth } from "@/firebase"
-import toast from "react-hot-toast"
+import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { onAuthStateChanged, signOut, User } from 'firebase/auth'
+import { auth } from '@/firebase'
+import toast from 'react-hot-toast'
 const Header = () => {
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       setUser(user)
     })
     return () => unsubscribe()
@@ -16,10 +16,10 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth)
-      toast.success("Logged out successfully")
+      toast.success('Logged out successfully')
     } catch (error) {
-      toast.error("Error signing out")
-      console.error("Error signing out:", error)
+      toast.error('Error signing out')
+      console.error('Error signing out:', error)
     }
   }
 

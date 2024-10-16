@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { auth } from "@/firebase"
-import { User, onAuthStateChanged } from "firebase/auth"
-import { useState, useEffect, Suspense } from "react"
-import { Loader } from "@/components/ui/spinner"
-import Dashboard from "@/features/dashboard/components/dashboard"
+import { Button } from '@/components/ui/button'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { auth } from '@/firebase'
+import { User, onAuthStateChanged } from 'firebase/auth'
+import { useState, useEffect, Suspense } from 'react'
+import { Loader } from '@/components/ui/spinner'
+import Dashboard from '@/features/dashboard/components/dashboard'
 
 const Index = () => {
   return (
@@ -82,7 +82,7 @@ const Root = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
       setUser(user)
       setLoading(false)
     })
@@ -96,10 +96,10 @@ const Root = () => {
   return user ? <Dashboard /> : <Index />
 }
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute('/')({
   component: () => (
     <Suspense fallback={<Loader />}>
       <Root />
     </Suspense>
-  ),
+  )
 })

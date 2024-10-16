@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react"
-import { useParams } from "@tanstack/react-router"
-import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore"
-import { auth } from "@/firebase"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Spinner } from "@/components/ui/spinner"
-import toast from "react-hot-toast"
-import { BusinessCard } from "../types/card"
+import { useState, useEffect } from 'react'
+import { useParams } from '@tanstack/react-router'
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { auth } from '@/firebase'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import toast from 'react-hot-toast'
+import { BusinessCard } from '../types/card'
 
 const firestore = getFirestore()
 
 const EditCard = () => {
-  const { cId } = useParams({ from: "/_auth/c/$cId" })
+  const { cId } = useParams({ from: '/_auth/c/$cId' })
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<BusinessCard | undefined>()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -22,28 +22,28 @@ const EditCard = () => {
       try {
         const user = auth.currentUser
         if (!user) {
-          throw new Error("User not authenticated")
+          throw new Error('User not authenticated')
         }
 
         const cardDocRef = doc(
           firestore,
-          "users",
+          'users',
           user.uid,
-          "businessCards",
+          'businessCards',
           cId
         )
         const cardDoc = await getDoc(cardDocRef)
         if (cardDoc.exists()) {
           setFormValues(cardDoc.data() as BusinessCard)
         } else {
-          throw new Error("Card not found")
+          throw new Error('Card not found')
         }
       } catch (error) {
         console.error(error)
         if (error instanceof Error) {
           toast.error(error.message)
         } else {
-          toast.error("An unknown error occurred")
+          toast.error('An unknown error occurred')
         }
       } finally {
         setLoading(false)
@@ -55,20 +55,20 @@ const EditCard = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormValues((prevValues) => ({
+    setFormValues(prevValues => ({
       ...prevValues,
-      [name]: value,
+      [name]: value
     }))
   }
 
   const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormValues((prevValues) => ({
+    setFormValues(prevValues => ({
       ...prevValues,
       links: {
         ...prevValues?.links,
-        [name]: value,
-      },
+        [name]: value
+      }
     }))
   }
 
@@ -78,10 +78,10 @@ const EditCard = () => {
     try {
       const user = auth.currentUser
       if (!user) {
-        throw new Error("User not authenticated")
+        throw new Error('User not authenticated')
       }
       if (!formValues) {
-        throw new Error("Form values are not defined")
+        throw new Error('Form values are not defined')
       }
 
       // Filter out undefined values
@@ -89,15 +89,15 @@ const EditCard = () => {
         Object.entries(formValues).filter(([, v]) => v !== undefined)
       )
 
-      const cardDocRef = doc(firestore, "users", user.uid, "businessCards", cId)
+      const cardDocRef = doc(firestore, 'users', user.uid, 'businessCards', cId)
       await updateDoc(cardDocRef, filteredFormValues)
-      toast.success("Business card updated successfully")
+      toast.success('Business card updated successfully')
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("An unknown error occurred")
+        toast.error('An unknown error occurred')
       }
     } finally {
       setIsSubmitting(false)
@@ -223,7 +223,7 @@ const EditCard = () => {
               className="w-full bg-blue-600 text-white hover:bg-blue-700"
               disabled={isSubmitting}
             >
-              {isSubmitting ? <Spinner height={25} width={25} /> : "Save"}
+              {isSubmitting ? <Spinner height={25} width={25} /> : 'Save'}
             </Button>
           </form>
         </div>

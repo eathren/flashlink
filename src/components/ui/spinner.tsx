@@ -1,4 +1,4 @@
-import { ThreeCircles } from "react-loader-spinner"
+import { ThreeCircles } from 'react-loader-spinner'
 
 interface SpinnerProps {
   height?: number
@@ -9,8 +9,8 @@ export const Spinner = ({ height, width }: SpinnerProps) => {
   return (
     <ThreeCircles
       visible={true}
-      height={height || "50"}
-      width={width || "50"}
+      height={height || '50'}
+      width={width || '50'}
       color="#eeeeee"
       innerCircleColor="#526BD6"
       middleCircleColor="#020C31"

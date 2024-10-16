@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { getFirestore, collection, query, getDocs } from "firebase/firestore"
-import { auth } from "@/firebase"
-import CreateBusinessCard from "./create-business-card"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Spinner } from "@/components/ui/spinner"
-import { Link } from "@tanstack/react-router"
+import { useEffect, useState } from 'react'
+import { getFirestore, collection, query, getDocs } from 'firebase/firestore'
+import { auth } from '@/firebase'
+import CreateBusinessCard from './create-business-card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
+import { Link } from '@tanstack/react-router'
 
 const firestore = getFirestore()
 
@@ -26,28 +26,28 @@ const Dashboard = () => {
       try {
         const user = auth.currentUser
         if (!user) {
-          throw new Error("User not authenticated")
+          throw new Error('User not authenticated')
         }
 
         const businessCardsCollectionRef = collection(
           firestore,
-          "users",
+          'users',
           user.uid,
-          "businessCards"
+          'businessCards'
         )
         const q = query(businessCardsCollectionRef)
         const querySnapshot = await getDocs(q)
-        const cards = querySnapshot.docs.map((doc) => {
+        const cards = querySnapshot.docs.map(doc => {
           const data = doc.data()
           return {
             id: doc.id,
             title: data.title,
-            createdAt: data.createdAt.toDate(), // assuming createdAt is a Firestore Timestamp
+            createdAt: data.createdAt.toDate() // assuming createdAt is a Firestore Timestamp
           }
         })
         setBusinessCards(cards)
       } catch (error) {
-        console.error("Error fetching business cards:", error)
+        console.error('Error fetching business cards:', error)
       } finally {
         setLoading(false)
       }
@@ -67,12 +67,12 @@ const Dashboard = () => {
               No business cards found.
             </p>
           ) : (
-            businessCards?.map((card) => (
+            businessCards?.map(card => (
               <Link to={`/c/${card.id}`} key={card.id}>
                 <Card key={card.id} className="w-full  p-6">
                   <CardHeader>
                     <CardTitle>
-                      {card.title ? card.title : "Business Card"}{" "}
+                      {card.title ? card.title : 'Business Card'}{' '}
                     </CardTitle>
                   </CardHeader>
                   <CardContent></CardContent>

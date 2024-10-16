@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogHeader,
   DialogContent,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import useCardStore from "@/features/free/stores/use-free-store"
+  DialogTrigger
+} from '@/components/ui/dialog'
+import useCardStore from '@/features/free/stores/use-free-store'
 
 type LinksDialogProps = {
   isOpen: boolean
@@ -14,11 +14,11 @@ type LinksDialogProps = {
 }
 
 const linkTypes = [
-  { label: "LinkedIn", key: "linkedin" },
-  { label: "Discord", key: "discord" },
-  { label: "Website", key: "website" },
-  { label: "Twitter", key: "twitter" },
-  { label: "GitHub", key: "github" },
+  { label: 'LinkedIn', key: 'linkedin' },
+  { label: 'Discord', key: 'discord' },
+  { label: 'Website', key: 'website' },
+  { label: 'Twitter', key: 'twitter' },
+  { label: 'GitHub', key: 'github' }
 ]
 
 const LinksDialog = ({ isOpen, onOpenChange }: LinksDialogProps) => {
@@ -29,8 +29,8 @@ const LinksDialog = ({ isOpen, onOpenChange }: LinksDialogProps) => {
       ...formData,
       links: {
         ...formData.links,
-        [type]: value,
-      },
+        [type]: value
+      }
     })
   }
 
@@ -54,8 +54,8 @@ const LinksDialog = ({ isOpen, onOpenChange }: LinksDialogProps) => {
                 type="text"
                 placeholder={`Enter your ${label} URL`}
                 className="border border-gray-300 p-2 rounded"
-                value={links[key] || ""}
-                onChange={(e) => handleChange(key, e.target.value)}
+                value={links[key] || ''}
+                onChange={e => handleChange(key, e.target.value)}
               />
             </div>
           ))}

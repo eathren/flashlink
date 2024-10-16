@@ -1,6 +1,6 @@
-import Header from "@/components/header"
-import { createRootRoute, Outlet } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/router-devtools"
+import Header from '@/components/header'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 export const Route = createRootRoute({
   component: () => (
@@ -10,7 +10,7 @@ export const Route = createRootRoute({
       <div className="p-4">
         <Outlet />
       </div>
-      {process.env.NODE_ENV === "development" && <TanStackRouterDevtools />}
+      {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />}
     </div>
-  ),
+  )
 })

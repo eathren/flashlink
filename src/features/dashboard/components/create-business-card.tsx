@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { getFirestore, doc, setDoc, collection } from "firebase/firestore"
-import { auth } from "@/firebase"
-import toast from "react-hot-toast"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CirclePlus } from "tabler-icons-react"
-import { Spinner } from "@/components/ui/spinner"
+import { useState } from 'react'
+import { getFirestore, doc, setDoc, collection } from 'firebase/firestore'
+import { auth } from '@/firebase'
+import toast from 'react-hot-toast'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CirclePlus } from 'tabler-icons-react'
+import { Spinner } from '@/components/ui/spinner'
 
 const firestore = getFirestore()
 
@@ -16,27 +16,27 @@ const CreateBusinessCard = () => {
     try {
       const user = auth.currentUser
       if (!user) {
-        throw new Error("User not authenticated")
+        throw new Error('User not authenticated')
       }
 
       const businessCardsCollectionRef = collection(
         firestore,
-        "users",
+        'users',
         user.uid,
-        "businessCards"
+        'businessCards'
       )
       const cardDocRef = doc(businessCardsCollectionRef)
       await setDoc(cardDocRef, {
-        createdAt: new Date(),
+        createdAt: new Date()
       })
 
-      toast.success("Business card created successfully")
+      toast.success('Business card created successfully')
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("An unknown error occurred")
+        toast.error('An unknown error occurred')
       }
     } finally {
       setLoading(false)
