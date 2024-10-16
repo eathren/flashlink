@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
-import { auth } from '@/firebase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../types/card'
+import { auth } from '@/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const firestore = getFirestore()
 
@@ -24,26 +25,24 @@ const presetColors = [
 ]
 
 const EditCard = () => {
-  const { cId } = useParams({ from: '/_auth/c/$cId' })
+  const { cId } = useParams({ from: '/_auth/u/$uId/c/$cId/edit' })
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<BusinessCard | undefined>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      setUser(user)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  useEffect(() => {
     const fetchCard = async () => {
       try {
-        const user = auth.currentUser
-        if (!user) {
-          throw new Error('User not authenticated')
-        }
-
-        const cardDocRef = doc(
-          firestore,
-          'users',
-          user.uid,
-          'businessCards',
-          cId
-        )
+        const cardDocRef = doc(firestore, 'businessCards', cId)
         const cardDoc = await getDoc(cardDocRef)
         if (cardDoc.exists()) {
           setFormValues(cardDoc.data() as BusinessCard)
@@ -86,7 +85,6 @@ const EditCard = () => {
     e.preventDefault()
     setIsSubmitting(true)
     try {
-      const user = auth.currentUser
       if (!user) {
         throw new Error('User not authenticated')
       }

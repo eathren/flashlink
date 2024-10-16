@@ -77,7 +77,10 @@ const Dashboard = () => {
             </p>
           ) : (
             businessCards?.map(card => (
-              <Link to={`/c/${card.id}/edit`} key={card.id}>
+              <Link
+                to={`/u/${auth.currentUser?.uid}/c/${card.id}/edit`}
+                key={card.id}
+              >
                 <Card className="w-full p-6">
                   <CardHeader>
                     <CardTitle>

@@ -1,24 +1,11 @@
-import { Link, useNavigate } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
-import { auth } from '@/firebase'
+import { Link } from '@tanstack/react-router'
+import { signOut } from 'firebase/auth'
 import toast from 'react-hot-toast'
-
+import { auth } from '@/firebase'
 const Header = () => {
-  const [user, setUser] = useState(null)
-  const navigate = useNavigate()
-  const authInstance = getAuth()
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(authInstance, currentUser => {
-      setUser(currentUser)
-    })
-    return unsubscribe
-  }, [authInstance])
-
   const handleLogout = async () => {
     try {
-      await signOut(authInstance)
+      await signOut(auth)
       toast.success('Logged out successfully')
     } catch (error) {
       toast.error('Error signing out')
@@ -26,20 +13,16 @@ const Header = () => {
     }
   }
 
-  const handleLogoClick = () => {
-    console.log('User:', user)
-    navigate(user ? `/u/${user.uid}` : '/')
-  }
+  const headerLink = auth.currentUser ? `/u/${auth.currentUser.uid}` : '/'
 
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto p-4 flex justify-between items-center">
-        <div
-          className="text-xl font-semibold text-blue-600 cursor-pointer hover:text-blue-500 transition-colors"
-          onClick={handleLogoClick}
-        >
-          FlashLink
-        </div>
+        <Link to={headerLink}>
+          <div className="text-xl font-semibold text-blue-600 cursor-pointer hover:text-blue-500 transition-colors">
+            FlashLink
+          </div>
+        </Link>
         <nav className="flex gap-4">
           <Link
             to="/pricing"
@@ -47,7 +30,7 @@ const Header = () => {
           >
             Pricing
           </Link>
-          {user ? (
+          {auth.currentUser ? (
             <button
               onClick={handleLogout}
               className="text-gray-700 hover:text-blue-500 transition-colors"

@@ -1,8 +1,17 @@
 import Header from '@/components/header'
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import {
+  createRootRoute,
+  createRootRouteWithContext,
+  Outlet
+} from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { User } from 'firebase/auth'
 
-export const Route = createRootRoute({
+type RouterContext = {
+  auth: User
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <div className="bg-gray-100 min-h-screen">
       <Header />

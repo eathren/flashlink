@@ -4,21 +4,24 @@ import {
   useNavigate,
   useSearch
 } from '@tanstack/react-router'
-import { auth } from '@/firebase'
-import { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { useState, useEffect } from 'react'
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged
+} from 'firebase/auth'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Link } from '@tanstack/react-router'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
-import { useAuth } from '@/features/auth/contexts/auth-context'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async () => {
+    const auth = getAuth()
     return new Promise<void>((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
+      const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
           unsubscribe()
           reject(
@@ -43,19 +46,28 @@ function LoginPage() {
   const [loading, setLoading] = useState(false)
   const search = useSearch({ from: '' })
   const navigate = useNavigate({ from: '/login' })
-  const { user } = useAuth()
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const auth = getAuth()
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      setUser(user)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
+      const auth = getAuth()
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       )
       const user = userCredential.user
-      await signInWithEmailAndPassword(auth, email, password)
       toast.success('Logged in successfully')
       const redirectUrl = search.redirect || `/u/${user.uid}`
       navigate({ to: redirectUrl })

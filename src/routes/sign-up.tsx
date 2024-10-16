@@ -1,14 +1,16 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { useState, useEffect } from 'react'
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged
+} from 'firebase/auth'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Link } from '@tanstack/react-router'
-import { auth } from '@/firebase'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
-import { useAuth } from '@/features/auth/contexts/auth-context'
 
 export const Route = createFileRoute('/sign-up')({
   component: SignupPage
@@ -20,12 +22,22 @@ function SignupPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate({ from: '/sign-up' })
-  const { user } = useAuth()
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const auth = getAuth()
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      setUser(user)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
+      const auth = getAuth()
       await createUserWithEmailAndPassword(auth, email, password)
       toast.success('Signed up successfully')
       navigate({ to: '/' })

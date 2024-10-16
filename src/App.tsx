@@ -1,8 +1,7 @@
 import { routeTree } from '@/routeTree.gen'
 import { QueryClient } from '@tanstack/react-query'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
-import { AuthProvider, useAuth } from './features/auth/contexts/auth-context'
-
+import { auth } from '@/firebase'
 const queryClient = new QueryClient()
 
 const router = createRouter({
@@ -10,22 +9,13 @@ const router = createRouter({
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
   context: {
-    queryClient,
-    auth: undefined!
+    auth
   }
 })
 
-function InnerApp() {
-  const auth = useAuth()
-  return <RouterProvider router={router} context={{ auth }} />
-}
-
 function App() {
-  return (
-    <AuthProvider>
-      <InnerApp />
-    </AuthProvider>
-  )
+  console.log(auth)
+  return <RouterProvider router={router} context={{ auth }} />
 }
 
 export default App
