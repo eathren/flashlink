@@ -24,14 +24,14 @@ export const Route = createFileRoute('/_auth/c/$cId/edit')({
     }
 
     return {
-      card: cardData,
+      card: cardData
     }
   },
-  component: CardPage,
+  component: EditCardPage
 })
 
-function CardPage() {
+function EditCardPage() {
   return <EditCard />
 }
 
-export default CardPage
+export default EditCardPage
