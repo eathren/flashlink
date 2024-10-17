@@ -1,18 +1,18 @@
-import { routeTree } from "@/routeTree.gen"
-import { QueryClient } from "@tanstack/react-query"
-import { createRouter, RouterProvider } from "@tanstack/react-router"
-
-const queryClient = new QueryClient()
+import { routeTree } from "@/routeTree.gen";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { useAuth } from "./hooks/use-auth";
 
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
-})
+  context: { user: undefined!, userLoading: true },
+});
 
 function App() {
-  return <RouterProvider router={router} context={{ queryClient }} />
+  const { user, loading: userLoading } = useAuth();
+  return <RouterProvider router={router} context={{ user, userLoading }} />;
 }
 
-export default App
+export default App;

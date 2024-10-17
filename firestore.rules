@@ -1,0 +1,22 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Match the businessCards collection
+    match /businessCards/{cardId} {
+      // Allow read access to anyone
+      allow read: if true;
+
+      // Allow write access only if the user is authenticated and owns the card
+      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+
+    // Match the users collection
+    match /users/{userId} {
+      // Allow read access to anyone for viewing user accounts
+      allow read: if true;
+
+      // Allow write access only if the user is authenticated and is the account owner
+      allow create, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

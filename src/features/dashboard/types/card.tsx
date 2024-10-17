@@ -1,28 +1,51 @@
+import { Timestamp } from 'firebase/firestore'
+
 export interface BusinessCard {
-  title?: string
-  name?: string
-  email?: string
-  phone?: string
-  countryCode?: string
+  accreditations?: string
   address?: string
-  company?: string
+  companyName?: string
+  companyUrl?: string
+  countryCode?: string
+  createdAt?: Timestamp
+  department?: string
   description?: string
-  imageUrl?: string
-  qrCode?: string
+  email?: string
+  headline?: string
   id?: string
-  vcf?: string
-  createdAt?: number
-  updatedAt?: number
-  userId?: string
+  imageUrl?: string
+  jobTitle?: string
   links?: Links
+  name?: string
+  phone?: string
+  qrCode?: string
+  themeColor?: string
+  title?: string
+  updatedAt?: Timestamp
+  userId?: string
+  vcf?: string
 }
 
 interface Links {
-  linkedIn?: string
-  website?: string
+  calendly?: string
+  cashapp?: string
   discord?: string
-  twitter?: string
   facebook?: string
+  github?: string
   instagram?: string
-  [key: string]: string | undefined // Allow for additional dynamic keys
+  linkedIn?: string
+  paypal?: string
+  signal?: string
+  skype?: string
+  snapchat?: string
+  telegram?: string
+  threads?: string
+  tiktok?: string
+  twitch?: string
+  twitter?: string
+  venmo?: string
+  website?: string
+  whatsapp?: string
+  yelp?: string
+  youtube?: string
+  [key: string]: string | undefined
 }
