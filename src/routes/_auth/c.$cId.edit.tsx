@@ -5,7 +5,7 @@ import EditCard from '@/features/dashboard/components/edit-card'
 
 const firestore = getFirestore()
 
-export const Route = createFileRoute('/_auth/c/$cId')({
+export const Route = createFileRoute('/_auth/c/$cId/edit')({
   loader: async ({ params: { cId } }) => {
     const user = auth.currentUser
     if (!user) {
@@ -24,10 +24,10 @@ export const Route = createFileRoute('/_auth/c/$cId')({
     }
 
     return {
-      card: cardData
+      card: cardData,
     }
   },
-  component: CardPage
+  component: CardPage,
 })
 
 function CardPage() {

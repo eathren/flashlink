@@ -19,7 +19,8 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateFreeIndexImport } from './routes/create-free/index'
 import { Route as CreateFreePreviewImport } from './routes/create-free/preview'
-import { Route as AuthCCIdImport } from './routes/_auth.c.$cId'
+import { Route as AuthCCIdImport } from './routes/_auth/c.$cId'
+import { Route as AuthCCIdEditImport } from './routes/_auth/c.$cId.edit'
 
 // Create/Update Routes
 
@@ -66,6 +67,11 @@ const CreateFreePreviewRoute = CreateFreePreviewImport.update({
 const AuthCCIdRoute = AuthCCIdImport.update({
   path: '/c/$cId',
   getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthCCIdEditRoute = AuthCCIdEditImport.update({
+  path: '/edit',
+  getParentRoute: () => AuthCCIdRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -135,17 +141,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCCIdImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/c/$cId/edit': {
+      id: '/_auth/c/$cId/edit'
+      path: '/edit'
+      fullPath: '/c/$cId/edit'
+      preLoaderRoute: typeof AuthCCIdEditImport
+      parentRoute: typeof AuthCCIdImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthCCIdRouteChildren {
+  AuthCCIdEditRoute: typeof AuthCCIdEditRoute
+}
+
+const AuthCCIdRouteChildren: AuthCCIdRouteChildren = {
+  AuthCCIdEditRoute: AuthCCIdEditRoute,
+}
+
+const AuthCCIdRouteWithChildren = AuthCCIdRoute._addFileChildren(
+  AuthCCIdRouteChildren,
+)
+
 interface AuthRouteChildren {
-  AuthCCIdRoute: typeof AuthCCIdRoute
+  AuthCCIdRoute: typeof AuthCCIdRouteWithChildren
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdRoute: AuthCCIdRoute,
+  AuthCCIdRoute: AuthCCIdRouteWithChildren,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -173,7 +198,8 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof SignUpRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
-  '/c/$cId': typeof AuthCCIdRoute
+  '/c/$cId': typeof AuthCCIdRouteWithChildren
+  '/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRoutesByTo {
@@ -184,7 +210,8 @@ export interface FileRoutesByTo {
   '/sign-up': typeof SignUpRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free': typeof CreateFreeIndexRoute
-  '/c/$cId': typeof AuthCCIdRoute
+  '/c/$cId': typeof AuthCCIdRouteWithChildren
+  '/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRoutesById {
@@ -197,7 +224,8 @@ export interface FileRoutesById {
   '/sign-up': typeof SignUpRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
   '/create-free/': typeof CreateFreeIndexRoute
-  '/_auth/c/$cId': typeof AuthCCIdRoute
+  '/_auth/c/$cId': typeof AuthCCIdRouteWithChildren
+  '/_auth/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -212,6 +240,7 @@ export interface FileRouteTypes {
     | '/create-free/preview'
     | '/create-free/'
     | '/c/$cId'
+    | '/c/$cId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -222,6 +251,7 @@ export interface FileRouteTypes {
     | '/create-free/preview'
     | '/create-free'
     | '/c/$cId'
+    | '/c/$cId/edit'
   id:
     | '__root__'
     | '/'
@@ -233,6 +263,7 @@ export interface FileRouteTypes {
     | '/create-free/preview'
     | '/create-free/'
     | '/_auth/c/$cId'
+    | '/_auth/c/$cId/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -308,8 +339,15 @@ export const routeTree = rootRoute
       "parent": "/create-free"
     },
     "/_auth/c/$cId": {
-      "filePath": "_auth.c.$cId.tsx",
-      "parent": "/_auth"
+      "filePath": "_auth/c.$cId.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/c/$cId/edit"
+      ]
+    },
+    "/_auth/c/$cId/edit": {
+      "filePath": "_auth/c.$cId.edit.tsx",
+      "parent": "/_auth/c/$cId"
     }
   }
 }

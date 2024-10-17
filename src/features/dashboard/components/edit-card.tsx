@@ -149,14 +149,7 @@ const EditCard = () => {
               onChange={handleChange}
               placeholder="Job Title"
             />
-            <Input
-              type="text"
-              id="department"
-              name="department"
-              value={formValues?.department}
-              onChange={handleChange}
-              placeholder="Department"
-            />
+
             <Input
               type="text"
               id="companyName"
