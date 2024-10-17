@@ -1,18 +1,18 @@
-// src/hooks/useAuth.js
-import { useQuery } from "@tanstack/react-query"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { useEffect, useState } from "react";
+import { auth } from "@/firebase";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 export const useAuth = () => {
-  const auth = getAuth()
-  return useQuery({
-    queryKey: ["authUser"],
-    queryFn: () => {
-      return new Promise((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-          unsubscribe()
-          resolve(user)
-        })
-      })
-    },
-  })
-}
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return { user, loading };
+};
