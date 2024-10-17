@@ -1,11 +1,16 @@
 export interface BusinessCard {
   title?: string
   name?: string
+  jobTitle?: string
+  department?: string
+  companyName?: string
+  accreditations?: string
+  headline?: string
   email?: string
   phone?: string
-  countryCode?: string
+  companyUrl?: string
   address?: string
-  company?: string
+  countryCode?: string
   description?: string
   imageUrl?: string
   qrCode?: string
@@ -15,6 +20,7 @@ export interface BusinessCard {
   updatedAt?: number
   userId?: string
   links?: Links
+  themeColor?: string
 }
 
 interface Links {
@@ -24,5 +30,20 @@ interface Links {
   twitter?: string
   facebook?: string
   instagram?: string
-  [key: string]: string | undefined // Allow for additional dynamic keys
+  threads?: string
+  youtube?: string
+  snapchat?: string
+  tiktok?: string
+  twitch?: string
+  yelp?: string
+  whatsapp?: string
+  signal?: string
+  skype?: string
+  telegram?: string
+  github?: string
+  calendly?: string
+  paypal?: string
+  venmo?: string
+  cashapp?: string
+  [key: string]: string | undefined
 }
