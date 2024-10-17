@@ -1,7 +1,7 @@
-import { Loader } from "@/components/ui/spinner"
-import CreateFreeCard from "@/features/free/components/create-free-card"
-import { createFileRoute } from "@tanstack/react-router"
-import { Suspense } from "react"
+import { Loader } from '@/components/ui/spinner'
+import CreateFreeCard from '@/features/free/components/create-free-card'
+import { createFileRoute } from '@tanstack/react-router'
+import { Suspense } from 'react'
 
 function CreateFree() {
   return (
@@ -11,6 +11,6 @@ function CreateFree() {
   )
 }
 
-export const Route = createFileRoute("/create-free/")({
-  component: CreateFree,
+export const Route = createFileRoute('/create-free/')({
+  component: CreateFree
 })

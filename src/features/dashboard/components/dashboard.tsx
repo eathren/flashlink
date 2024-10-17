@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react"
-import { getFirestore, collection, query, getDocs } from "firebase/firestore"
-import { auth } from "@/firebase"
-import CreateBusinessCard from "./create-business-card"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Spinner } from "@/components/ui/spinner"
-import { Link } from "@tanstack/react-router"
+import { useEffect, useState } from 'react'
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  Timestamp
+} from 'firebase/firestore'
+import { auth } from '@/firebase'
+import CreateBusinessCard from './create-business-card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
+import { Link } from '@tanstack/react-router'
 
 const firestore = getFirestore()
 
@@ -21,39 +28,41 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchBusinessCards = async () => {
-      setLoading(true)
-      try {
-        const user = auth.currentUser
-        if (!user) {
-          throw new Error("User not authenticated")
-        }
+    const user = auth.currentUser
+    if (!user) {
+      console.error('User not authenticated')
+      setLoading(false)
+      return
+    }
 
-        const businessCardsCollectionRef = collection(
-          firestore,
-          "users",
-          user.uid,
-          "businessCards"
-        )
-        const q = query(businessCardsCollectionRef)
-        const querySnapshot = await getDocs(q)
-        const cards = querySnapshot.docs.map((doc) => {
+    const businessCardsCollectionRef = collection(firestore, 'businessCards')
+    const q = query(businessCardsCollectionRef, where('userId', '==', user.uid))
+
+    const unsubscribe = onSnapshot(
+      q,
+      querySnapshot => {
+        const cards = querySnapshot.docs.map(doc => {
           const data = doc.data()
           return {
             id: doc.id,
             title: data.title,
-            createdAt: data.createdAt.toDate(), // assuming createdAt is a Firestore Timestamp
+            createdAt:
+              data.createdAt instanceof Timestamp
+                ? data.createdAt.toDate()
+                : new Date(data.createdAt)
           }
         })
+
         setBusinessCards(cards)
-      } catch (error) {
-        console.error("Error fetching business cards:", error)
-      } finally {
+        setLoading(false)
+      },
+      error => {
+        console.error('Error fetching business cards:', error)
         setLoading(false)
       }
-    }
+    )
 
-    fetchBusinessCards()
+    return () => unsubscribe()
   }, [])
 
   return (
@@ -67,15 +76,19 @@ const Dashboard = () => {
               No business cards found.
             </p>
           ) : (
-            businessCards?.map((card) => (
+            businessCards?.map(card => (
               <Link to={`/c/${card.id}`} key={card.id}>
-                <Card key={card.id} className="w-full  p-6">
+                <Card className="w-full p-6">
                   <CardHeader>
                     <CardTitle>
-                      {card.title ? card.title : "Business Card"}{" "}
+                      {card.title ? card.title : 'Business Card'}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <p className="text-sm text-gray-500">
+                      Created at: {card.createdAt.toLocaleDateString()}{' '}
+                    </p>
+                  </CardContent>
                 </Card>
               </Link>
             ))

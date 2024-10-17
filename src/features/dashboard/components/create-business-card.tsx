@@ -1,10 +1,17 @@
-import { useState } from "react"
-import { getFirestore, doc, setDoc, collection } from "firebase/firestore"
-import { auth } from "@/firebase"
-import toast from "react-hot-toast"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CirclePlus } from "tabler-icons-react"
-import { Spinner } from "@/components/ui/spinner"
+import { useState } from 'react'
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  getDoc,
+  Timestamp
+} from 'firebase/firestore'
+import { auth } from '@/firebase'
+import toast from 'react-hot-toast'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CirclePlus } from 'tabler-icons-react'
+import { Spinner } from '@/components/ui/spinner'
 
 const firestore = getFirestore()
 
@@ -16,27 +23,34 @@ const CreateBusinessCard = () => {
     try {
       const user = auth.currentUser
       if (!user) {
-        throw new Error("User not authenticated")
+        throw new Error('User not authenticated')
       }
 
-      const businessCardsCollectionRef = collection(
-        firestore,
-        "users",
-        user.uid,
-        "businessCards"
-      )
+      const userDocRef = doc(firestore, 'users', user.uid)
+      const userDoc = await getDoc(userDocRef)
+
+      // Check if user document exists, if not, create it
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          email: user.email
+        })
+      }
+
+      const businessCardsCollectionRef = collection(firestore, 'businessCards')
       const cardDocRef = doc(businessCardsCollectionRef)
       await setDoc(cardDocRef, {
-        createdAt: new Date(),
+        createdAt: Timestamp.now(),
+        userId: user.uid // Associate the card with the user
       })
 
-      toast.success("Business card created successfully")
+      toast.success('Business card created successfully')
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("An unknown error occurred")
+        toast.error('An unknown error occurred')
       }
     } finally {
       setLoading(false)
@@ -55,7 +69,7 @@ const CreateBusinessCard = () => {
       </CardHeader>
       <CardContent>
         <div className="flex justify-center">
-          <div className="  flex items-center justify-center">
+          <div className="flex items-center justify-center">
             {loading ? <Spinner /> : <CirclePlus className="w-16 h-16" />}
           </div>
         </div>
