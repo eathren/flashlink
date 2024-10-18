@@ -14,6 +14,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { BusinessCard } from '../types/card'
+
 const firestore = getFirestore()
 
 const Dashboard = () => {
@@ -22,6 +23,7 @@ const Dashboard = () => {
   )
   const [loading, setLoading] = useState(true)
   const user = auth.currentUser
+
   useEffect(() => {
     if (!user) {
       console.error('User not authenticated')
@@ -39,7 +41,7 @@ const Dashboard = () => {
           const data = doc.data()
           return {
             id: doc.id,
-            title: data.title,
+            jobTitle: data.jobTitle,
             name: data.name,
             createdAt:
               data.createdAt instanceof Timestamp
@@ -67,11 +69,11 @@ const Dashboard = () => {
     const r = parseInt(hex.substring(0, 2), 16)
     const g = parseInt(hex.substring(2, 4), 16)
     const b = parseInt(hex.substring(4, 6), 16)
-    return `rgba(${r}, ${g}, ${b}, 0.1)`
+    return `rgba(${r}, ${g}, ${b}, 0.7)`
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  ">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
       {loading ? (
         <Spinner />
       ) : (
@@ -84,19 +86,21 @@ const Dashboard = () => {
             businessCards?.map(card => (
               <Card
                 key={card.id}
-                style={{ backgroundColor: rgbaThemeColor(card.themeColor) }}
-                className="shadow-lg  border-gray-300 rounded-lg border-2   hover:shadow-xl transition duration-300"
+                className="shadow-2xl rounded-lg hover:shadow-4xl transition duration-300 flex flex-col"
               >
-                <CardHeader className=" border-b-2 h-[50%]">
+                <CardHeader className="border-b-2 border-gray-200 rounded-t-lg">
                   <CardTitle className="text-center">
                     <h2 className="text-xl font-semibold">{card.name}</h2>
-                    <p className="text-sm text-gray-700 ">
-                      {card.title ? card.title : 'Business Card'}
-                    </p>
+                    <p className="text-sm text-gray-500">{card.jobTitle}</p>
                   </CardTitle>
                 </CardHeader>
 
-                <CardContent className="flex flex-col items-center pt-10 ">
+                <CardContent
+                  className="flex-grow flex flex-col items-center pt-10 rounded-b-lg"
+                  style={{
+                    backgroundColor: rgbaThemeColor(card.themeColor)
+                  }}
+                >
                   <div className="mt-auto flex justify-between w-full">
                     <Link
                       to={`/c/${card.id}/edit`}

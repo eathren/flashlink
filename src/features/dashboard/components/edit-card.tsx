@@ -14,18 +14,18 @@ import CardDelete from './delete-card'
 const firestore = getFirestore()
 const presetColors = [
   '#FFFFFF', // White
-  '#F5F5F5', // White Smoke
-  '#D0E6F5', // Light Sky Blue
-  '#A8E6CF', // Light Mint Green
-  '#FFE5B4', // Light Peach
-  '#FFCCCB', // Light Red
-  '#FFB6C1', // Light Pink
-  '#E6E6FA', // Lavender
-  '#FFFACD', // Lemon Chiffon
-  '#FFD700', // Gold
-  '#F0E68C', // Khaki
-  '#F08080', // Light Coral
-  '#B0E0E6' // Powder Blue
+  '#FF5733', // Red
+  '#33FF57', // Green
+  '#3357FF', // Blue
+  '#FF33A5', // Pink
+  '#33FFA5', // Mint
+  '#FFA533', // Orange
+  '#8E33FF', // Purple
+  '#FF3380', // Magenta
+  '#33FFD7', // Aqua
+  '#FFDA33', // Yellow
+  '#FF5733', // Coral
+  '#33A5FF' // Sky Blue
 ]
 
 const EditCard = () => {
@@ -126,10 +126,7 @@ const EditCard = () => {
     return <Loader />
   }
   return (
-    <Card
-      className="w-full max-w-md p-6 m-auto mt-10 "
-      style={{ backgroundColor: formValues?.themeColor }}
-    >
+    <Card className="w-full max-w-md p-6 m-auto mt-10 ">
       <CardHeader>
         <CardTitle hidden={true} className="text-2xl font-semibold text-center">
           Edit Card

@@ -6,6 +6,27 @@ import { Loader } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../types/card'
 import { QRCodeSVG } from 'qrcode.react'
+import {
+  IconMail,
+  IconPhone,
+  IconLink,
+  IconMapPin,
+  IconBrandLinkedin,
+  IconBrandInstagram,
+  IconBrandFacebook,
+  IconBrandYoutube,
+  IconBrandSnapchat,
+  IconBrandTiktok,
+  IconBrandTwitch,
+  IconBrandWhatsapp,
+  IconBrandDiscord,
+  IconBrandSkype,
+  IconBrandTelegram,
+  IconBrandGithub,
+  IconBrandPaypal,
+  IconCash
+} from '@tabler/icons-react'
+import FieldWithIcon from './field-with-icon'
 
 const firestore = getFirestore()
 
@@ -41,28 +62,8 @@ const CardDetail = () => {
 
   if (loading) return <Loader />
 
-  const renderField = (
-    label: string,
-    value: string | undefined,
-    strong?: boolean
-  ) => {
-    return value ? (
-      <div
-        key={label}
-        className="flex justify-between py-2 border-b border-black border-opacity-10"
-      >
-        <span className={strong ? 'font-semibold' : 'text-gray-700'}>
-          {value}
-        </span>
-      </div>
-    ) : null
-  }
-
   return (
-    <Card
-      className="w-full max-w-md p-6 m-auto mt-10 shadow-xl rounded-lg border border-gray-200"
-      style={{ backgroundColor: formValues?.themeColor || '#ffffff' }}
-    >
+    <Card className="w-full max-w-md p-6 m-auto mt-10 shadow-xl rounded-lg border border-gray-200">
       <CardHeader>
         <CardTitle
           hidden={true}
@@ -76,54 +77,112 @@ const CardDetail = () => {
           <div className="space-y-4">
             <div className="text-center">
               <QRCodeSVG
-                bgColor={formValues.themeColor}
                 value={`https://flashlink.io/c/${cId}`}
                 size={128}
                 className="mx-auto mb-4"
               />
             </div>
-            {renderField('Name', formValues.name, true)}
-            {renderField('Company Name', formValues.companyName)}
-            {renderField('Department', formValues.department)}
-            {renderField('Job Title', formValues.jobTitle)}
-            {renderField('Accreditations', formValues.accreditations)}
-            {renderField('Headline', formValues.headline)}
-
-            {renderField('Email', formValues.email)}
-            {renderField('Phone', formValues.phone)}
-            {renderField('Company URL', formValues.companyUrl)}
-            {renderField('Address', formValues.address)}
-
+            <h1 className="text-2xl font-bold"> {formValues.name} </h1>
+            <h2 className="text-xl font-semibold"> {formValues.jobTitle} </h2>
+            <FieldWithIcon
+              themeColor={formValues.themeColor}
+              icon={<IconMail />}
+              text={formValues.email}
+            />
+            <FieldWithIcon
+              themeColor={formValues.themeColor}
+              icon={<IconPhone />}
+              text={formValues.phone}
+            />
+            <FieldWithIcon
+              themeColor={formValues.themeColor}
+              icon={<IconLink />}
+              text={formValues.companyUrl}
+            />
+            <FieldWithIcon
+              themeColor={formValues.themeColor}
+              icon={<IconMapPin />}
+              text={formValues.address}
+            />
             <div className="mt-4">
-              {renderField('X', formValues.links?.x)}
-              {renderField('Instagram', formValues.links?.instagram)}
-              {renderField('Threads', formValues.links?.threads)}
-              {renderField('LinkedIn', formValues.links?.linkedIn)}
-              {renderField('Facebook', formValues.links?.facebook)}
-              {renderField('YouTube', formValues.links?.youtube)}
-              {renderField('Snapchat', formValues.links?.snapchat)}
-              {renderField('TikTok', formValues.links?.tiktok)}
-              {renderField('Twitch', formValues.links?.twitch)}
-              {renderField('Yelp', formValues.links?.yelp)}
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandLinkedin />}
+                text={formValues.links?.linkedIn}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandInstagram />}
+                text={formValues.links?.instagram}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandFacebook />}
+                text={formValues.links?.facebook}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandYoutube />}
+                text={formValues.links?.youtube}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandSnapchat />}
+                text={formValues.links?.snapchat}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandTiktok />}
+                text={formValues.links?.tiktok}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandTwitch />}
+                text={formValues.links?.twitch}
+              />
             </div>
-
             <div className="mt-4">
-              {renderField('WhatsApp', formValues.links?.whatsapp)}
-              {renderField('Signal', formValues.links?.signal)}
-              {renderField('Discord', formValues.links?.discord)}
-              {renderField('Skype', formValues.links?.skype)}
-              {renderField('Telegram', formValues.links?.telegram)}
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandWhatsapp />}
+                text={formValues.links?.whatsapp}
+              />
+
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandDiscord />}
+                text={formValues.links?.discord}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandSkype />}
+                text={formValues.links?.skype}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandTelegram />}
+                text={formValues.links?.telegram}
+              />
             </div>
-
             <div className="mt-4">
-              {renderField('GitHub', formValues.links?.github)}
-              {renderField('Calendly', formValues.links?.calendly)}
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandGithub />}
+                text={formValues.links?.github}
+              />
             </div>
-
             <div className="mt-4">
-              {renderField('PayPal', formValues.links?.paypal)}
-              {renderField('Venmo', formValues.links?.venmo)}
-              {renderField('Cash App', formValues.links?.cashapp)}
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconBrandPaypal />}
+                text={formValues.links?.paypal}
+              />
+
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconCash />}
+                text={formValues.links?.cashapp}
+              />
             </div>
           </div>
         ) : (

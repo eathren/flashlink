@@ -29,11 +29,9 @@ const Header = () => {
   const getAvatarContent = () => {
     if (user?.photoURL) {
       return <AvatarImage src={user.photoURL} alt="Avatar" />
-    } else if (user?.displayName) {
+    } else if (user?.email) {
       return (
-        <AvatarFallback>
-          {user.displayName.slice(0, 2).toUpperCase()}
-        </AvatarFallback>
+        <AvatarFallback>{user.email.slice(0, 1).toUpperCase()}</AvatarFallback>
       )
     }
     return <AvatarFallback></AvatarFallback>
