@@ -6,8 +6,10 @@ service cloud.firestore {
       // Allow read access to anyone
       allow read: if true;
 
-      // Allow write access only if the user is authenticated and owns the card
-      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      // Allow create, update, and delete access only if the user is authenticated
+      // and the card's userId matches the authenticated user's uid
+      allow create: if request.auth != null; // Anyone authenticated can create a card
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
     }
 
     // Match the users collection
