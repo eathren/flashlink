@@ -63,7 +63,7 @@ const CardDetail = () => {
   if (loading) return <Loader />
 
   return (
-    <Card className="w-full max-w-md   m-auto mt-10 shadow-xl   border border-gray-200 rounded-xl">
+    <Card className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">
       <CardHeader
         style={{ backgroundColor: formValues?.themeColor }}
         className="h-10 mb-10 rounded-t-xl"
@@ -78,44 +78,40 @@ const CardDetail = () => {
       <CardContent>
         {formValues ? (
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid  grid-cols-2 gap-4">
               <div>
-                <div className="mb-4">
-                  <h1 className="text-2xl font-bold"> {formValues.name} </h1>
-                  <h2 className="text-xl font-semibold">
-                    {formValues.jobTitle}
-                  </h2>
-                </div>
-                <FieldWithIcon
-                  themeColor={formValues.themeColor}
-                  icon={<IconMail />}
-                  text={formValues.email}
-                />
-                <FieldWithIcon
-                  themeColor={formValues.themeColor}
-                  icon={<IconPhone />}
-                  text={formValues.phone}
-                />
-                <FieldWithIcon
-                  themeColor={formValues.themeColor}
-                  icon={<IconLink />}
-                  text={formValues.companyUrl}
-                />
-                <FieldWithIcon
-                  themeColor={formValues.themeColor}
-                  icon={<IconMapPin />}
-                  text={formValues.address}
-                />
+                <h1 className="text-2xl font-bold"> {formValues.name} </h1>
+                <h2 className="text-xl font-semibold">{formValues.jobTitle}</h2>
               </div>
-              <div className="text-center md:text-right">
+              <div className="flex justify-end ">
                 <QRCodeSVG
                   value={`https://flashlink.io/c/${cId}`}
-                  size={128}
-                  className="mx-auto md:ml-auto md:mr-0 mb-4"
+                  size={60}
+                  className="mb-4"
                 />
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconMail />}
+                text={formValues.email}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconPhone />}
+                text={formValues.phone}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconLink />}
+                text={formValues.companyUrl}
+              />
+              <FieldWithIcon
+                themeColor={formValues.themeColor}
+                icon={<IconMapPin />}
+                text={formValues.address}
+              />
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandLinkedin />}

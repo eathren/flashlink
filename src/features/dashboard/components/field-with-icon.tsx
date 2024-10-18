@@ -15,11 +15,11 @@ const FieldWithIcon: React.FC<FieldWithIconProps> = ({
   if (!text) return null
 
   return (
-    <div className="flex items-center py-2 border-b border-black border-opacity-10">
+    <div className="flex items-center py-2 border-b border-black border-opacity-10 space-x-4">
       <div
         style={{ backgroundColor: themeColor }}
         className={clsx(
-          'rounded-full p-2 flex items-center justify-center ',
+          'rounded-full p-2 flex items-center justify-center  ',
           themeColor != '#ffffff' && 'text-white'
         )}
       >
