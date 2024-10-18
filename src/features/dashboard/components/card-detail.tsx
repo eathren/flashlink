@@ -81,6 +81,9 @@ const CardDetail = () => {
             <div className="grid  grid-cols-2 gap-4">
               <div>
                 <h1 className="text-2xl font-bold"> {formValues.name} </h1>
+                <h2 className="text-xl font-semibold">
+                  {formValues.companyName}
+                </h2>
                 <h2 className="text-xl font-semibold">{formValues.jobTitle}</h2>
               </div>
               <div className="flex justify-end ">
