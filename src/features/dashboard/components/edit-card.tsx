@@ -9,6 +9,7 @@ import { Loader } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../types/card'
 import { Check } from 'tabler-icons-react'
+import CardDelete from './delete-card'
 
 const firestore = getFirestore()
 const presetColors = [
@@ -405,6 +406,7 @@ const EditCard = () => {
           </form>
         </div>
       </CardContent>
+      <CardDelete />
     </Card>
   )
 }
