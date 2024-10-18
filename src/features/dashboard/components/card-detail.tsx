@@ -61,7 +61,7 @@ const CardDetail = () => {
 
   return (
     <Card
-      className="w-full max-w-md p-6 m-auto mt-20 shadow-xl rounded-lg border border-gray-200"
+      className="w-full max-w-md p-6 m-auto mt-10 shadow-xl rounded-lg border border-gray-200"
       style={{ backgroundColor: formValues?.themeColor || '#ffffff' }}
     >
       <CardHeader>

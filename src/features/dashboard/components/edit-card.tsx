@@ -127,7 +127,7 @@ const EditCard = () => {
   }
   return (
     <Card
-      className="w-full max-w-md p-6 m-auto mt-20 "
+      className="w-full max-w-md p-6 m-auto mt-10 "
       style={{ backgroundColor: formValues?.themeColor }}
     >
       <CardHeader>
