@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
-import { auth } from '@/firebase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Loader } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
