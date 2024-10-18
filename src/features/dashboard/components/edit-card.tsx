@@ -11,18 +11,20 @@ import { BusinessCard } from '../types/card'
 import { Check } from 'tabler-icons-react'
 
 const firestore = getFirestore()
-
 const presetColors = [
-  '#FF5733',
-  '#33FF57',
-  '#3357FF',
-  '#FF33A5',
-  '#33FFA5',
-  '#FFA533',
-  '#8E33FF',
-  '#FF3380',
-  '#33FFD7',
-  '#FFDA33'
+  '#FFFFFF', // White
+  '#F5F5F5', // White Smoke
+  '#D0E6F5', // Light Sky Blue
+  '#A8E6CF', // Light Mint Green
+  '#FFE5B4', // Light Peach
+  '#FFCCCB', // Light Red
+  '#FFB6C1', // Light Pink
+  '#E6E6FA', // Lavender
+  '#FFFACD', // Lemon Chiffon
+  '#FFD700', // Gold
+  '#F0E68C', // Khaki
+  '#F08080', // Light Coral
+  '#B0E0E6' // Powder Blue
 ]
 
 const EditCard = () => {
@@ -123,7 +125,10 @@ const EditCard = () => {
     return <Loader />
   }
   return (
-    <Card className="w-full max-w-md p-6 m-auto mt-20">
+    <Card
+      className="w-full max-w-md p-6 m-auto mt-20 "
+      style={{ backgroundColor: formValues?.themeColor }}
+    >
       <CardHeader>
         <CardTitle hidden={true} className="text-2xl font-semibold text-center">
           Edit Card
