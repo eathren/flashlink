@@ -71,7 +71,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen  ">
       {loading ? (
         <Spinner />
       ) : (
@@ -85,12 +85,12 @@ const Dashboard = () => {
               <Card
                 key={card.id}
                 style={{ backgroundColor: rgbaThemeColor(card.themeColor) }}
-                className="shadow-lg rounded-lg hover:shadow-xl transition duration-300"
+                className="shadow-lg  border-gray-300 rounded-lg border-2   hover:shadow-xl transition duration-300"
               >
-                <CardHeader className="border-gray-600 border-b-2 h-[50%]">
+                <CardHeader className=" border-b-2 h-[50%]">
                   <CardTitle className="text-center">
-                    <p className="text-lg font-semibold">{card.name}</p>
-                    <p className="text-sm ">
+                    <h2 className="text-xl font-semibold">{card.name}</h2>
+                    <p className="text-sm text-gray-700 ">
                       {card.title ? card.title : 'Business Card'}
                     </p>
                   </CardTitle>
@@ -98,13 +98,23 @@ const Dashboard = () => {
 
                 <CardContent className="flex flex-col items-center pt-10 ">
                   <div className="mt-auto flex justify-between w-full">
-                    <Link to={`/c/${card.id}/edit`} className="w-full">
+                    <Link
+                      to={`/c/${card.id}/edit`}
+                      className="w-full"
+                      aria-label="edit card"
+                    >
                       <Button variant="outline" className="w-full">
                         Edit Card
                       </Button>
                     </Link>
-                    <Link to={`/c/${card.id}`} className="ml-2 w-full">
-                      <Button className="w-full">Share Card</Button>
+                    <Link
+                      to={`/c/${card.id}`}
+                      className="ml-2 w-full"
+                      aria-label="share card"
+                    >
+                      <Button variant="outline" className="w-full">
+                        Share Card
+                      </Button>
                     </Link>
                   </div>
                 </CardContent>

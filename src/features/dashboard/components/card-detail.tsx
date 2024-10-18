@@ -51,7 +51,6 @@ const CardDetail = () => {
         key={label}
         className="flex justify-between py-2 border-b border-black border-opacity-10"
       >
-        <span className="text-sm font-medium">{label}:</span>
         <span className={strong ? 'font-semibold' : 'text-gray-700'}>
           {value}
         </span>
@@ -65,7 +64,10 @@ const CardDetail = () => {
       style={{ backgroundColor: formValues?.themeColor || '#ffffff' }}
     >
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-center mb-4">
+        <CardTitle
+          hidden={true}
+          className="text-2xl font-semibold text-center mb-4"
+        >
           {formValues?.name || 'Card Details'}
         </CardTitle>
       </CardHeader>

@@ -3,18 +3,40 @@ import { signOut } from 'firebase/auth'
 import { auth } from '@/firebase'
 import toast from 'react-hot-toast'
 import { useAuth } from '@/hooks/use-auth'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from './dropdown-menu'
+
 const Header = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
+
   const handleLogout = async () => {
     try {
       await signOut(auth)
       navigate({ to: '/login' })
-      toast.success('Logged out ')
+      toast.success('Logged out')
     } catch (error) {
       toast.error('Error signing out')
       console.error('Error signing out:', error)
     }
+  }
+
+  const getAvatarContent = () => {
+    if (user?.photoURL) {
+      return <AvatarImage src={user.photoURL} alt="Avatar" />
+    } else if (user?.displayName) {
+      return (
+        <AvatarFallback>
+          {user.displayName.slice(0, 2).toUpperCase()}
+        </AvatarFallback>
+      )
+    }
+    return <AvatarFallback></AvatarFallback>
   }
 
   return (
@@ -25,14 +47,20 @@ const Header = () => {
             FlashLink
           </Link>
         </div>
-        <nav className="flex gap-4">
+        <nav className="flex gap-4 items-center">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="text-gray-700 hover:text-blue-500 transition-colors"
-            >
-              Logout
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="focus:outline-none">
+                  <Avatar>{getAvatarContent()}</Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleLogout}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <>
               <Link
