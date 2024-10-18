@@ -63,8 +63,11 @@ const CardDetail = () => {
   if (loading) return <Loader />
 
   return (
-    <Card className="w-full max-w-md p-6 m-auto mt-10 shadow-xl rounded-lg border border-gray-200">
-      <CardHeader>
+    <Card className="w-full max-w-md   m-auto mt-10 shadow-xl   border border-gray-200 rounded-xl">
+      <CardHeader
+        style={{ backgroundColor: formValues?.themeColor }}
+        className="h-10 mb-10 rounded-t-xl"
+      >
         <CardTitle
           hidden={true}
           className="text-2xl font-semibold text-center mb-4"
@@ -75,36 +78,44 @@ const CardDetail = () => {
       <CardContent>
         {formValues ? (
           <div className="space-y-4">
-            <div className="text-center">
-              <QRCodeSVG
-                value={`https://flashlink.io/c/${cId}`}
-                size={128}
-                className="mx-auto mb-4"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div className="mb-4">
+                  <h1 className="text-2xl font-bold"> {formValues.name} </h1>
+                  <h2 className="text-xl font-semibold">
+                    {formValues.jobTitle}
+                  </h2>
+                </div>
+                <FieldWithIcon
+                  themeColor={formValues.themeColor}
+                  icon={<IconMail />}
+                  text={formValues.email}
+                />
+                <FieldWithIcon
+                  themeColor={formValues.themeColor}
+                  icon={<IconPhone />}
+                  text={formValues.phone}
+                />
+                <FieldWithIcon
+                  themeColor={formValues.themeColor}
+                  icon={<IconLink />}
+                  text={formValues.companyUrl}
+                />
+                <FieldWithIcon
+                  themeColor={formValues.themeColor}
+                  icon={<IconMapPin />}
+                  text={formValues.address}
+                />
+              </div>
+              <div className="text-center md:text-right">
+                <QRCodeSVG
+                  value={`https://flashlink.io/c/${cId}`}
+                  size={128}
+                  className="mx-auto md:ml-auto md:mr-0 mb-4"
+                />
+              </div>
             </div>
-            <h1 className="text-2xl font-bold"> {formValues.name} </h1>
-            <h2 className="text-xl font-semibold"> {formValues.jobTitle} </h2>
-            <FieldWithIcon
-              themeColor={formValues.themeColor}
-              icon={<IconMail />}
-              text={formValues.email}
-            />
-            <FieldWithIcon
-              themeColor={formValues.themeColor}
-              icon={<IconPhone />}
-              text={formValues.phone}
-            />
-            <FieldWithIcon
-              themeColor={formValues.themeColor}
-              icon={<IconLink />}
-              text={formValues.companyUrl}
-            />
-            <FieldWithIcon
-              themeColor={formValues.themeColor}
-              icon={<IconMapPin />}
-              text={formValues.address}
-            />
-            <div className="mt-4">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandLinkedin />}
@@ -140,14 +151,11 @@ const CardDetail = () => {
                 icon={<IconBrandTwitch />}
                 text={formValues.links?.twitch}
               />
-            </div>
-            <div className="mt-4">
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandWhatsapp />}
                 text={formValues.links?.whatsapp}
               />
-
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandDiscord />}
@@ -163,21 +171,16 @@ const CardDetail = () => {
                 icon={<IconBrandTelegram />}
                 text={formValues.links?.telegram}
               />
-            </div>
-            <div className="mt-4">
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandGithub />}
                 text={formValues.links?.github}
               />
-            </div>
-            <div className="mt-4">
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconBrandPaypal />}
                 text={formValues.links?.paypal}
               />
-
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconCash />}

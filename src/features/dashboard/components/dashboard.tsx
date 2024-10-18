@@ -69,7 +69,7 @@ const Dashboard = () => {
     const r = parseInt(hex.substring(0, 2), 16)
     const g = parseInt(hex.substring(2, 4), 16)
     const b = parseInt(hex.substring(4, 6), 16)
-    return `rgba(${r}, ${g}, ${b}, 0.7)`
+    return `rgba(${r}, ${g}, ${b}, 0.2)`
   }
 
   return (
@@ -83,47 +83,58 @@ const Dashboard = () => {
               No business cards found.
             </p>
           ) : (
-            businessCards?.map(card => (
-              <Card
-                key={card.id}
-                className="shadow-2xl rounded-lg hover:shadow-4xl transition duration-300 flex flex-col"
-              >
-                <CardHeader className="border-b-2 border-gray-200 rounded-t-lg">
-                  <CardTitle className="text-center">
-                    <h2 className="text-xl font-semibold">{card.name}</h2>
-                    <p className="text-sm text-gray-500">{card.jobTitle}</p>
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent
-                  className="flex-grow flex flex-col items-center pt-10 rounded-b-lg"
-                  style={{
-                    backgroundColor: rgbaThemeColor(card.themeColor)
-                  }}
+            businessCards
+              ?.sort(
+                (a, b) =>
+                  (a.createdAt?.seconds ?? 0) - (b.createdAt?.seconds ?? 0)
+              )
+              .map(card => (
+                <Card
+                  key={card.id}
+                  className="shadow-2xl rounded-lg hover:shadow-4xl transition duration-300 flex flex-col min-h-64"
                 >
-                  <div className="mt-auto flex justify-between w-full">
-                    <Link
-                      to={`/c/${card.id}/edit`}
-                      className="w-full"
-                      aria-label="edit card"
-                    >
-                      <Button variant="outline" className="w-full">
-                        Edit Card
-                      </Button>
-                    </Link>
-                    <Link
-                      to={`/c/${card.id}`}
-                      className="ml-2 w-full"
-                      aria-label="share card"
-                    >
-                      <Button variant="outline" className="w-full">
-                        Share Card
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
+                  <CardHeader className="flex-1 flex items-center justify-center border-b-2 border-gray-200 rounded-t-lg">
+                    <CardTitle className="text-center">
+                      <h2 className="text-xl font-semibold">
+                        {card.name || 'New Card'}
+                      </h2>
+                      <p className="text-sm text-gray-500">{card.jobTitle}</p>
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent
+                    className="flex-1 flex flex-col items-center justify-center rounded-b-lg"
+                    style={{
+                      backgroundColor: `${card.themeColor || '#ffffff'} `,
+                      opacity: 0.8,
+                      backgroundImage: `radial-gradient(${card.themeColor} 0.5px, transparent 0.5px), radial-gradient(${card.themeColor} 0.5px,  ${rgbaThemeColor(card.themeColor)} 0.5px)`,
+                      backgroundSize: '20px 20px',
+                      backgroundPosition: '0 0, 10px 10px'
+                    }}
+                  >
+                    <div className="mt-auto flex justify-between w-full">
+                      <Link
+                        to={`/c/${card.id}/edit`}
+                        className="w-full"
+                        aria-label="edit card"
+                      >
+                        <Button variant="outline" className="w-full">
+                          Edit Card
+                        </Button>
+                      </Link>
+                      <Link
+                        to={`/c/${card.id}`}
+                        className="ml-2 w-full"
+                        aria-label="share card"
+                      >
+                        <Button variant="outline" className="w-full">
+                          Share Card
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
           )}
           <CreateBusinessCard />
         </div>
