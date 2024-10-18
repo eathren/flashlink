@@ -4,7 +4,7 @@ import CardDetail from '@/features/dashboard/components/card-detail'
 
 const firestore = getFirestore()
 
-export const Route = createFileRoute('/_auth/c/$cId')({
+export const Route = createFileRoute('/c/$cId')({
   loader: async ({ params: { cId } }) => {
     const cardDocRef = doc(firestore, 'businessCards', cId)
     const cardDoc = await getDoc(cardDocRef)

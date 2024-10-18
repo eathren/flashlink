@@ -21,9 +21,8 @@ const Dashboard = () => {
     null
   )
   const [loading, setLoading] = useState(true)
-
+  const user = auth.currentUser
   useEffect(() => {
-    const user = auth.currentUser
     if (!user) {
       console.error('User not authenticated')
       setLoading(false)

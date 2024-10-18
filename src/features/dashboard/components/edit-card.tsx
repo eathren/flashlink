@@ -26,7 +26,7 @@ const presetColors = [
 ]
 
 const EditCard = () => {
-  const { cId } = useParams({ from: '/_auth/c/$cId' })
+  const { cId } = useParams({ from: '/_auth/c/$cId/edit' })
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<BusinessCard | undefined>()
   const [isSubmitting, setIsSubmitting] = useState(false)

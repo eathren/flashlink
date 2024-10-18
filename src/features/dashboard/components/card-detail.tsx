@@ -10,7 +10,7 @@ import { BusinessCard } from '../types/card'
 const firestore = getFirestore()
 
 const CardDetail = () => {
-  const { cId } = useParams({ from: '/_auth/c/$cId' })
+  const { cId } = useParams({ from: '/c/$cId' })
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<BusinessCard | undefined>()
 
@@ -18,15 +18,10 @@ const CardDetail = () => {
     const fetchCard = async () => {
       setLoading(true)
       try {
-        const user = auth.currentUser
-        if (!user) throw new Error('User not authenticated')
-
         const cardDocRef = doc(firestore, 'businessCards', cId)
         const cardDoc = await getDoc(cardDocRef)
         if (cardDoc.exists()) {
           const cardData = cardDoc.data() as BusinessCard
-          if (cardData.userId !== user.uid)
-            throw new Error('Access denied: You do not own this card')
           setFormValues(cardData)
         } else {
           throw new Error('Card not found')
@@ -55,7 +50,10 @@ const CardDetail = () => {
   }
 
   return (
-    <Card className="w-full max-w-md p-6 m-auto mt-20">
+    <Card
+      className="w-full max-w-md p-6 m-auto mt-20"
+      style={{ backgroundColor: formValues?.themeColor }}
+    >
       <CardHeader>
         <CardTitle hidden={true} className="text-2xl font-semibold text-center">
           Card Details
