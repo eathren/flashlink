@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import html2canvas from "html2canvas"
-import { useRef } from "react"
-import useCardStore from "@/features/free/stores/use-free-store"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { QRCodeSVG } from "qrcode.react"
+import { Button } from '@/components/ui/button'
+import html2canvas from 'html2canvas'
+import { useRef } from 'react'
+import useCardStore from '@/features/free/stores/use-free-store'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { QRCodeSVG } from 'qrcode.react'
 
 const PreviewCard = () => {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -12,13 +12,13 @@ const PreviewCard = () => {
   const downloadCard = () => {
     if (cardRef.current) {
       html2canvas(cardRef.current, {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: '#FFFFFF',
         height: cardRef.current.offsetHeight,
-        width: cardRef.current.offsetWidth,
-      }).then((canvas) => {
-        const link = document.createElement("a")
-        link.href = canvas.toDataURL("image/png")
-        link.download = "business-card.png"
+        width: cardRef.current.offsetWidth
+      }).then(canvas => {
+        const link = document.createElement('a')
+        link.href = canvas.toDataURL('image/png')
+        link.download = 'business-card.png'
         link.click()
       })
     }
@@ -26,15 +26,15 @@ const PreviewCard = () => {
 
   return (
     <>
-      <div className="p-0 m-0 border-2 border-gray-300 rounded-lg">
+      <div className="p-0 m-0   rounded-lg">
         <div
           ref={cardRef}
           className="w-full max-w-[400px] max-h-[200px] overflow-hidden mx-auto"
         >
           <Card
-            className="h-full border-none w-full bg-white shadow-none flex"
+            className="h-full border-none rounded-none w-full bg-white shadow-none flex"
             style={{
-              backgroundColor: color,
+              backgroundColor: color
             }}
           >
             <div className="flex-1 p-6">

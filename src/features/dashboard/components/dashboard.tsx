@@ -99,7 +99,9 @@ const Dashboard = () => {
                 <CardContent className="flex flex-col items-center pt-10 ">
                   <div className="mt-auto flex justify-between w-full">
                     <Link to={`/c/${card.id}/edit`} className="w-full">
-                      <Button className="w-full">Edit Card</Button>
+                      <Button variant="outline" className="w-full">
+                        Edit Card
+                      </Button>
                     </Link>
                     <Link to={`/c/${card.id}`} className="ml-2 w-full">
                       <Button className="w-full">Share Card</Button>

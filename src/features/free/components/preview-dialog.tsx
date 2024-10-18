@@ -1,12 +1,13 @@
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import PreviewCard from "@/features/free/components/preview-card"
+  DialogTrigger
+} from '@/components/ui/dialog'
+import PreviewCard from '@/features/free/components/preview-card'
+import { Link } from '@tanstack/react-router'
 
 interface PreviewDialogProps {
   isOpen: boolean
@@ -15,7 +16,7 @@ interface PreviewDialogProps {
 
 const PreviewDialog: React.FC<PreviewDialogProps> = ({
   isOpen,
-  onOpenChange,
+  onOpenChange
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -29,9 +30,22 @@ const PreviewDialog: React.FC<PreviewDialogProps> = ({
           <DialogTitle hidden={true}>Preview</DialogTitle>
         </DialogHeader>
         <PreviewCard />
-        <Button variant="outline" onClick={onOpenChange}>
-          Close
-        </Button>
+        <p className="text-center">
+          Like what you see? Sign up today and get this feature, online sharing,
+          multiple online cards, and more!
+        </p>
+        <div className="flex flex-col space-y-2 mt-4">
+          <span className="flex flex-row space-x-2">
+            <Button variant="outline" onClick={onOpenChange} className="flex-1">
+              Close
+            </Button>
+            <Link to="/sign-up" className="flex-1">
+              <Button variant="default" className="w-full">
+                Sign Up
+              </Button>
+            </Link>
+          </span>
+        </div>
       </DialogContent>
     </Dialog>
   )

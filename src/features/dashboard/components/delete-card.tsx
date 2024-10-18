@@ -62,7 +62,7 @@ const DeleteCard = () => {
             onClick={handleDelete}
             disabled={isDeleting}
           >
-            {isDeleting ? <Spinner /> : 'Delete'}
+            {isDeleting ? <Spinner height={18} width={18} /> : 'Delete'}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,24 +1,24 @@
 import useCardStore, {
   FormData,
-  Layout,
-} from "@/features/free/stores/use-free-store"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+  Layout
+} from '@/features/free/stores/use-free-store'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { HexColorPicker } from "react-colorful"
-import vCard from "vcf"
-import { Textarea } from "@/components/ui/textarea"
-import PreviewDialog from "@/features/free/components/preview-dialog"
-import { useState } from "react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import LinksDialog from "./links-dialog"
+  SelectValue
+} from '@/components/ui/select'
+import { HexColorPicker } from 'react-colorful'
+import vCard from 'vcf'
+import { Textarea } from '@/components/ui/textarea'
+import PreviewDialog from '@/features/free/components/preview-dialog'
+import { useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import LinksDialog from './links-dialog'
 
 function CreateFreeCard() {
   const {
@@ -28,13 +28,13 @@ function CreateFreeCard() {
     color,
     setColor,
     setVcfChecked,
-    vcfChecked,
+    vcfChecked
   } = useCardStore()
   const [isDialogOpen, setDialogOpen] = useState(false)
   const [isLinksDialogOpen, setLinksDialogOpen] = useState(false)
 
   const onOpenChange = () => {
-    setDialogOpen((prev) => !prev)
+    setDialogOpen(prev => !prev)
     if (!isDialogOpen) {
       const vcfData = generateVcf(formData)
       setFormData({ ...formData, vcf: vcfData })
@@ -42,7 +42,7 @@ function CreateFreeCard() {
   }
 
   const onLinksOpenChange = () => {
-    setLinksDialogOpen((prev) => !prev)
+    setLinksDialogOpen(prev => !prev)
   }
 
   const handleChange = (
@@ -60,27 +60,27 @@ function CreateFreeCard() {
     const card = new vCard()
 
     if (formData.name) {
-      card.set("fn", formData.name)
+      card.set('fn', formData.name)
     }
 
     if (formData.company) {
-      card.set("org", formData.company)
+      card.set('org', formData.company)
     }
 
     if (formData.email) {
-      card.set("email", formData.email)
+      card.set('email', formData.email)
     }
 
     if (formData.phone) {
-      card.set("tel", formData.phone)
+      card.set('tel', formData.phone)
     }
 
     if (formData.address) {
-      card.set("adr", formData.address)
+      card.set('adr', formData.address)
     }
 
-    const contact = card.toString("4.0")
-    console.log("Generated VCF:", contact)
+    const contact = card.toString('4.0')
+    console.log('Generated VCF:', contact)
     return contact
   }
 
@@ -94,6 +94,10 @@ function CreateFreeCard() {
           <CardTitle hidden={true}>Create Your Card</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-2">
+          <p className="text-gray-500">
+            This card will be downloaded as a PNG image. Click review to see
+            your final card.
+          </p>
           <Input
             type="text"
             name="name"
@@ -126,14 +130,14 @@ function CreateFreeCard() {
             type="text"
             name="address"
             placeholder="Address"
-            value={formData.address ?? ""}
+            value={formData.address ?? ''}
             onChange={handleChange}
           />
           <Input
             type="text"
             name="company"
             placeholder="Company"
-            value={formData.company ?? ""}
+            value={formData.company ?? ''}
             onChange={handleChange}
           />
           <Textarea
@@ -153,19 +157,19 @@ function CreateFreeCard() {
             <Input
               type="text"
               value={color}
-              onChange={(e) => setColor(e.target.value)}
+              onChange={e => setColor(e.target.value)}
               className="mt-2"
             />
           </div>
 
-          <span className="space-x-2">
+          <span className="space-x-2 flex items-center">
             <Checkbox
               checked={vcfChecked}
-              onCheckedChange={(checked) => setVcfChecked(!!checked as boolean)}
-            ></Checkbox>
+              onCheckedChange={checked => setVcfChecked(!!checked as boolean)}
+            />
             <Label htmlFor="vcf">Create QR Code for Scannable Contact</Label>
           </span>
-          <Select onValueChange={(value) => setLayout(value as Layout)}>
+          <Select onValueChange={value => setLayout(value as Layout)}>
             <SelectTrigger>
               <SelectValue placeholder="Choose Layout" />
             </SelectTrigger>

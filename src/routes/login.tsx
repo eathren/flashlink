@@ -49,7 +49,6 @@ function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       toast.success('Logged in successfully')
-      console.log(search, search.redirect)
       const redirectUrl = search.redirect || '/'
       navigate({ to: redirectUrl })
     } catch (error) {
@@ -120,6 +119,11 @@ function LoginPage() {
             Don't have an account?{' '}
             <Link to="/sign-up" className="text-blue-600">
               Sign up
+            </Link>
+          </p>
+          <p className="mt-2 text-center">
+            <Link to="/reset-password" className="text-blue-600">
+              Forgot Password?
             </Link>
           </p>
         </CardContent>

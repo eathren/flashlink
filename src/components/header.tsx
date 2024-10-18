@@ -26,12 +26,6 @@ const Header = () => {
           </Link>
         </div>
         <nav className="flex gap-4">
-          <Link
-            to="/pricing"
-            className="text-gray-700 hover:text-blue-500 transition-colors"
-          >
-            Pricing
-          </Link>
           {user ? (
             <button
               onClick={handleLogout}
@@ -41,6 +35,12 @@ const Header = () => {
             </button>
           ) : (
             <>
+              <Link
+                to="/pricing"
+                className="text-gray-700 hover:text-blue-500 transition-colors"
+              >
+                Pricing
+              </Link>
               <Link
                 to="/sign-up"
                 className="text-gray-700 hover:text-blue-500 transition-colors"

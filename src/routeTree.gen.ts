@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SignUpImport } from './routes/sign-up'
+import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as PricingImport } from './routes/pricing'
 import { Route as LoginImport } from './routes/login'
 import { Route as CreateFreeImport } from './routes/create-free'
@@ -26,52 +27,57 @@ import { Route as AuthCCIdEditImport } from './routes/_auth/c.$cId.edit'
 
 const SignUpRoute = SignUpImport.update({
   path: '/sign-up',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
+} as any)
+
+const ResetPasswordRoute = ResetPasswordImport.update({
+  path: '/reset-password',
+  getParentRoute: () => rootRoute
 } as any)
 
 const PricingRoute = PricingImport.update({
   path: '/pricing',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const CreateFreeRoute = CreateFreeImport.update({
   path: '/create-free',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const CreateFreeIndexRoute = CreateFreeIndexImport.update({
   path: '/',
-  getParentRoute: () => CreateFreeRoute,
+  getParentRoute: () => CreateFreeRoute
 } as any)
 
 const CreateFreePreviewRoute = CreateFreePreviewImport.update({
   path: '/preview',
-  getParentRoute: () => CreateFreeRoute,
+  getParentRoute: () => CreateFreeRoute
 } as any)
 
 const CCIdRoute = CCIdImport.update({
   path: '/c/$cId',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AuthCCIdEditRoute = AuthCCIdEditImport.update({
   path: '/c/$cId/edit',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRoute
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -111,6 +117,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingImport
+      parentRoute: typeof rootRoute
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordImport
       parentRoute: typeof rootRoute
     }
     '/sign-up': {
@@ -158,7 +171,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdEditRoute: AuthCCIdEditRoute,
+  AuthCCIdEditRoute: AuthCCIdEditRoute
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -170,11 +183,11 @@ interface CreateFreeRouteChildren {
 
 const CreateFreeRouteChildren: CreateFreeRouteChildren = {
   CreateFreePreviewRoute: CreateFreePreviewRoute,
-  CreateFreeIndexRoute: CreateFreeIndexRoute,
+  CreateFreeIndexRoute: CreateFreeIndexRoute
 }
 
 const CreateFreeRouteWithChildren = CreateFreeRoute._addFileChildren(
-  CreateFreeRouteChildren,
+  CreateFreeRouteChildren
 )
 
 export interface FileRoutesByFullPath {
@@ -183,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/create-free': typeof CreateFreeRouteWithChildren
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
   '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
@@ -195,6 +209,7 @@ export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
   '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
@@ -209,6 +224,7 @@ export interface FileRoutesById {
   '/create-free': typeof CreateFreeRouteWithChildren
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
   '/c/$cId': typeof CCIdRoute
   '/create-free/preview': typeof CreateFreePreviewRoute
@@ -224,6 +240,7 @@ export interface FileRouteTypes {
     | '/create-free'
     | '/login'
     | '/pricing'
+    | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
     | '/create-free/preview'
@@ -235,6 +252,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/pricing'
+    | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
     | '/create-free/preview'
@@ -247,6 +265,7 @@ export interface FileRouteTypes {
     | '/create-free'
     | '/login'
     | '/pricing'
+    | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
     | '/create-free/preview'
@@ -261,6 +280,7 @@ export interface RootRouteChildren {
   CreateFreeRoute: typeof CreateFreeRouteWithChildren
   LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignUpRoute: typeof SignUpRoute
   CCIdRoute: typeof CCIdRoute
 }
@@ -271,8 +291,9 @@ const rootRouteChildren: RootRouteChildren = {
   CreateFreeRoute: CreateFreeRouteWithChildren,
   LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignUpRoute: SignUpRoute,
-  CCIdRoute: CCIdRoute,
+  CCIdRoute: CCIdRoute
 }
 
 export const routeTree = rootRoute
@@ -292,6 +313,7 @@ export const routeTree = rootRoute
         "/create-free",
         "/login",
         "/pricing",
+        "/reset-password",
         "/sign-up",
         "/c/$cId"
       ]
@@ -317,6 +339,9 @@ export const routeTree = rootRoute
     },
     "/pricing": {
       "filePath": "pricing.tsx"
+    },
+    "/reset-password": {
+      "filePath": "reset-password.tsx"
     },
     "/sign-up": {
       "filePath": "sign-up.tsx"
