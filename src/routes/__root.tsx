@@ -14,9 +14,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <div className="bg-gray-200 min-h-screen">
         <Header />
         <hr />
-        <div className=" ">
+        <div className=" px-2 ">
           <Outlet />
         </div>
+
         {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />}
       </div>
     )

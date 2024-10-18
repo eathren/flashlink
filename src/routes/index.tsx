@@ -9,15 +9,15 @@ import Feature from '@/components/ui/feature'
 
 const Index = () => {
   return (
-    <div className="flex flex-col bg-red-200 min-h-screen">
+    <div className="flex flex-col bg-gray-200 min-h-screen">
       {/* Header Section */}
-      <header className=" text-center py-20">
-        <div>
+      <header className=" text-center py-20 ">
+        <div className="mb-10">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400   to-purple-600 text-5xl">
             Digital Business Cards Made in a Flash
           </span>
         </div>
-        <Link to="create-free">
+        <Link to="sign-up">
           <Button variant="default" className="mt-6 h-20 rounded-xl text-2xl  ">
             Try it for Free
           </Button>
@@ -25,7 +25,7 @@ const Index = () => {
       </header>
 
       {/* Features Section */}
-      <section className="flex-1 bg-red-200 py-20">
+      <section className="flex-1 bg-gray-200 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -58,7 +58,7 @@ const Index = () => {
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-red-800 text-white text-center py-4">
+      <footer className="bg-theme-500 text-white text-center py-4">
         <p>&copy; {new Date().getFullYear()} FlashLink. All Rights Reserved.</p>
       </footer>
     </div>
