@@ -15,10 +15,10 @@ export const Route = createFileRoute('/c/$cId')({
     const cardData = cardDoc.data()
 
     return {
-      card: cardData
+      card: cardData,
     }
   },
-  component: CardDetailPage
+  component: CardDetailPage,
 })
 
 function CardDetailPage() {

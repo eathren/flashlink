@@ -10,10 +10,10 @@ import {
 import { auth } from '@/firebase'
 import CreateBusinessCard from './create-business-card'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { BusinessCard } from '../types/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const firestore = getFirestore()
 
@@ -22,9 +22,9 @@ const Dashboard = () => {
     null
   )
   const [loading, setLoading] = useState(true)
-  const user = auth.currentUser
 
   useEffect(() => {
+    const user = auth.currentUser
     if (!user) {
       console.error('User not authenticated')
       setLoading(false)
@@ -75,7 +75,12 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
       {loading ? (
-        <Spinner />
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-auto">
+          <Skeleton className="h-64 w-64 rounded-xl" />
+          <Skeleton className="h-64 w-64 rounded-xl" />
+          <Skeleton className="h-64 w-64 rounded-xl" />
+          <Skeleton className="h-64 w-64 rounded-xl" />
+        </div>
       ) : (
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-auto">
           {businessCards?.length === 0 ? (

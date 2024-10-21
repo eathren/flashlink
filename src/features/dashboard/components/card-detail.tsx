@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Loader } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../types/card'
 import { QRCodeSVG } from 'qrcode.react'
@@ -27,6 +26,7 @@ import {
   IconCash
 } from '@tabler/icons-react'
 import FieldWithIcon from './field-with-icon'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const firestore = getFirestore()
 
@@ -60,7 +60,13 @@ const CardDetail = () => {
     fetchCard()
   }, [cId])
 
-  if (loading) return <Loader />
+  if (loading) {
+    return (
+      <div className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">
+        <Skeleton className="h-full w-full rounded-xl" />
+      </div>
+    )
+  }
 
   return (
     <Card className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createLazyFileRoute, Link } from '@tanstack/react-router'
 import { auth } from '@/firebase'
 import { User, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, Suspense } from 'react'
@@ -84,7 +84,7 @@ const Root = () => {
   return user ? <Dashboard /> : <Index />
 }
 
-export const Route = createFileRoute('/')({
+export const Route = createLazyFileRoute('/')({
   component: () => (
     <Suspense fallback={<Loader />}>
       <Root />

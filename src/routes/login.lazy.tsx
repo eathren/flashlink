@@ -1,6 +1,5 @@
 import {
-  createFileRoute,
-  redirect,
+  createLazyFileRoute,
   useNavigate,
   useSearch
 } from '@tanstack/react-router'
@@ -14,24 +13,7 @@ import { Link } from '@tanstack/react-router'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 
-export const Route = createFileRoute('/login')({
-  beforeLoad: async () => {
-    return new Promise<void>((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        if (user) {
-          unsubscribe()
-          reject(
-            redirect({
-              to: '/'
-            })
-          )
-        } else {
-          unsubscribe()
-          resolve()
-        }
-      })
-    })
-  },
+export const Route = createLazyFileRoute('/login')({
   component: LoginPage
 })
 

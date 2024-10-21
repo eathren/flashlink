@@ -5,11 +5,11 @@ import { auth } from '@/firebase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../types/card'
 import { Check } from 'tabler-icons-react'
 import CardDelete from './delete-card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const firestore = getFirestore()
 const presetColors = [
@@ -123,7 +123,11 @@ const EditCard = () => {
   }
 
   if (loading) {
-    return <Loader />
+    return (
+      <div className="w-full max-w-md p-6 m-auto mt-10 ">
+        <Skeleton className="h-full w-full rounded-xl" />
+      </div>
+    )
   }
   return (
     <Card className="w-full max-w-md p-6 m-auto mt-10 ">
