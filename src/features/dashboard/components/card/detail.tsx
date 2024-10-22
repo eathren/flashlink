@@ -3,8 +3,7 @@ import { useParams } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import toast from 'react-hot-toast'
-import { BusinessCard } from '../types/card'
-import { QRCodeSVG } from 'qrcode.react'
+import { BusinessCard } from '../../types/card'
 import {
   IconMail,
   IconPhone,
@@ -25,7 +24,7 @@ import {
   IconBrandPaypal,
   IconCash
 } from '@tabler/icons-react'
-import FieldWithIcon from './field-with-icon'
+import FieldWithIcon from '../field-with-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const firestore = getFirestore()
@@ -91,13 +90,6 @@ const CardDetail = () => {
                   {formValues.companyName}
                 </h2>
                 <h2 className="text-xl font-semibold">{formValues.jobTitle}</h2>
-              </div>
-              <div className="flex justify-end ">
-                <QRCodeSVG
-                  value={`https://flashlink.io/c/${cId}`}
-                  size={60}
-                  className="mb-4"
-                />
               </div>
             </div>
             <div>

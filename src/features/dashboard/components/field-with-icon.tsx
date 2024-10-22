@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+import toast from 'react-hot-toast'
 
 interface FieldWithIconProps {
   icon: React.ReactNode
@@ -13,9 +14,15 @@ const FieldWithIcon: React.FC<FieldWithIconProps> = ({
   themeColor
 }) => {
   if (!text) return null
-
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(text)
+    toast.success('Text copied to clipboard!')
+  }
   return (
-    <div className="flex items-center py-2 border-b border-black border-opacity-10 space-x-4">
+    <div
+      className="flex items-center py-2 hover:bg-gray-100 p-2 rounded-md  border-black border-opacity-10 space-x-4"
+      onClick={handleCopyToClipboard}
+    >
       <div
         style={{ backgroundColor: themeColor }}
         className={clsx(

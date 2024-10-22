@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from './dropdown-menu'
+import { UserCircle } from 'tabler-icons-react'
 
 const Header = () => {
   const { user } = useAuth()
@@ -53,6 +54,11 @@ const Header = () => {
                   <Avatar>{getAvatarContent()}</Avatar>
                 </button>
               </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  <UserCircle /> Account
+                </DropdownMenuItem>
+              </DropdownMenuContent>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleLogout}>
                   Logout

@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
-import CardDetail from '@/features/dashboard/components/card-detail'
+import CardDetail from '@/features/dashboard/components/card/detail'
+import CardShare from '@/features/dashboard/components/card/share'
 
 const firestore = getFirestore()
 
@@ -15,14 +16,15 @@ export const Route = createFileRoute('/c/$cId')({
     const cardData = cardDoc.data()
 
     return {
-      card: cardData,
+      card: cardData
     }
   },
-  component: CardDetailPage,
+  component: CardDetailPage
 })
 
 function CardDetailPage() {
-  return <CardDetail />
+  const { share } = Route.useSearch<{ share?: boolean }>()
+  return share ? <CardShare /> : <CardDetail />
 }
 
 export default CardDetailPage

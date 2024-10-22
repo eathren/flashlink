@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { auth } from '@/firebase'
-import EditCard from '@/features/dashboard/components/edit-card'
+import EditCard from '@/features/dashboard/components/card/edit'
 
 const firestore = getFirestore()
 
@@ -24,10 +24,10 @@ export const Route = createFileRoute('/_auth/c/$cId/edit')({
     }
 
     return {
-      card: cardData,
+      card: cardData
     }
   },
-  component: EditCardPage,
+  component: EditCardPage
 })
 
 function EditCardPage() {

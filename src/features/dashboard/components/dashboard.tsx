@@ -8,7 +8,7 @@ import {
   Timestamp
 } from 'firebase/firestore'
 import { auth } from '@/firebase'
-import CreateBusinessCard from './create-business-card'
+import CreateBusinessCard from './card/create'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
@@ -98,7 +98,7 @@ const Dashboard = () => {
                   key={card.id}
                   className="shadow-2xl rounded-lg hover:shadow-4xl transition duration-300 flex flex-col min-h-64"
                 >
-                  <CardHeader className="flex-1 flex items-center justify-center border-b-2 border-gray-200 rounded-t-lg">
+                  <CardHeader className=" relative flex-1 flex items-center justify-center border-b-2 border-gray-200 rounded-t-lg">
                     <CardTitle className="text-center">
                       <h2 className="text-xl font-semibold">
                         {card.name || 'New Card'}
@@ -117,25 +117,34 @@ const Dashboard = () => {
                       backgroundPosition: '0 0, 10px 10px'
                     }}
                   >
-                    <div className="mt-auto flex justify-between w-full">
+                    <div className="mt-auto  flex justify-between w-full">
                       <Link
                         to={`/c/${card.id}/edit`}
                         className="w-full"
                         aria-label="edit card"
                       >
                         <Button variant="outline" className="w-full">
-                          Edit Card
+                          Edit
                         </Button>
                       </Link>
                       <Link
+                        to={`/c/${card.id}?share=true`}
+                        className="ml-2 w-full"
+                        aria-label="share card"
+                      >
+                        <Button variant="outline" className="w-full">
+                          Share
+                        </Button>
+                      </Link>
+                      {/* <Link
                         to={`/c/${card.id}`}
                         className="ml-2 w-full"
                         aria-label="share card"
                       >
                         <Button variant="outline" className="w-full">
-                          Share Card
+                          Preview
                         </Button>
-                      </Link>
+                      </Link> */}
                     </div>
                   </CardContent>
                 </Card>
