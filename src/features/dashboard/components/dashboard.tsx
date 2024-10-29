@@ -82,7 +82,7 @@ const Dashboard = () => {
           <Skeleton className="h-64 w-64 rounded-xl" />
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-auto">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-4 overflow-auto">
           {businessCards?.length === 0 ? (
             <p className="text-center text-gray-700 col-span-full">
               No business cards found.
@@ -128,6 +128,15 @@ const Dashboard = () => {
                         </Button>
                       </Link>
                       <Link
+                        to={`/c/${card.id}`}
+                        className="ml-2 w-full"
+                        aria-label="share card"
+                      >
+                        <Button variant="outline" className="w-full">
+                          Preview
+                        </Button>
+                      </Link>
+                      <Link
                         to={`/c/${card.id}?share=true`}
                         className="ml-2 w-full"
                         aria-label="share card"
@@ -136,15 +145,6 @@ const Dashboard = () => {
                           Share
                         </Button>
                       </Link>
-                      {/* <Link
-                        to={`/c/${card.id}`}
-                        className="ml-2 w-full"
-                        aria-label="share card"
-                      >
-                        <Button variant="outline" className="w-full">
-                          Preview
-                        </Button>
-                      </Link> */}
                     </div>
                   </CardContent>
                 </Card>
