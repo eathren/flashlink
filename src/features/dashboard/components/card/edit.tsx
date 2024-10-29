@@ -33,7 +33,7 @@ import InputWithIcon from '../input-with-icon'
 
 const firestore = getFirestore()
 const presetColors = [
-  '#FFFFFF', // White
+  '#D3D3D3', // Grey
   '#FF5733', // Red
   '#33FF57', // Green
   '#3357FF', // Blue
@@ -44,7 +44,8 @@ const presetColors = [
   '#FF3380', // Magenta
   '#33FFD7', // Aqua
   '#FFDA33', // Yellow
-  '#33A5FF' // Sky Blue
+  '#33A5FF', // Sky Blue
+  '#848884' // Red
 ]
 
 const EditCard = () => {

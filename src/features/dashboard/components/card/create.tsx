@@ -41,7 +41,8 @@ const CreateBusinessCard = () => {
       const cardDocRef = doc(businessCardsCollectionRef)
       await setDoc(cardDocRef, {
         createdAt: Timestamp.now(),
-        userId: user.uid
+        userId: user.uid,
+        themeColor: '#D3D3D3'
       })
 
       toast.success('Business card created successfully')
