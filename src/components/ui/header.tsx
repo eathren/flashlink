@@ -55,11 +55,9 @@ const Header = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <UserCircle /> Account
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-              <DropdownMenuContent align="end">
+                </DropdownMenuItem> */}
                 <DropdownMenuItem onClick={handleLogout}>
                   Logout
                 </DropdownMenuItem>
