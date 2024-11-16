@@ -1,5 +1,4 @@
-import { create } from "zustand"
-import { createJSONStorage, persist } from "zustand/middleware"
+import { create } from 'zustand'
 
 export interface FormData {
   name?: string
@@ -22,9 +21,9 @@ export interface FormData {
 }
 
 export enum Layout {
-  left = "left",
-  center = "center",
-  right = "right",
+  left = 'left',
+  center = 'center',
+  right = 'right'
 }
 
 interface CardStore {
@@ -40,41 +39,33 @@ interface CardStore {
   setShowIcons: (showIcons: boolean) => void
 }
 
-const useCardStore = create<CardStore>()(
-  persist(
-    (set) => ({
-      formData: {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        company: "",
-        bio: "",
-        vcf: "",
-        links: {
-          linkedin: "",
-          discord: "",
-          website: "",
-          twitter: "",
-          github: "",
-        },
-      },
-      setFormData: (data) =>
-        set((state) => ({ formData: { ...state.formData, ...data } })),
-      layout: Layout.left,
-      setLayout: (layout) => set({ layout }),
-      vcfChecked: false,
-      setVcfChecked: (checked) => set({ vcfChecked: checked }),
-      color: "#ffffff",
-      setColor: (color) => set({ color }),
-      showIcons: false,
-      setShowIcons: (showIcons) => set({ showIcons }),
-    }),
-    {
-      name: "card-storage",
-      storage: createJSONStorage(() => sessionStorage),
+const useCardStore = create<CardStore>()(set => ({
+  formData: {
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    company: '',
+    bio: '',
+    vcf: '',
+    links: {
+      linkedin: '',
+      discord: '',
+      website: '',
+      twitter: '',
+      github: ''
     }
-  )
-)
+  },
+  setFormData: data =>
+    set(state => ({ formData: { ...state.formData, ...data } })),
+  layout: Layout.left,
+  setLayout: layout => set({ layout }),
+  vcfChecked: false,
+  setVcfChecked: checked => set({ vcfChecked: checked }),
+  color: '#ffffff',
+  setColor: color => set({ color }),
+  showIcons: false,
+  setShowIcons: showIcons => set({ showIcons })
+}))
 
 export default useCardStore

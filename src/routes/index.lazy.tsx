@@ -6,10 +6,12 @@ import { useState, useEffect, Suspense } from 'react'
 import { Loader } from '@/components/ui/spinner'
 import Dashboard from '@/features/dashboard/components/dashboard'
 import Feature from '@/components/ui/feature'
+import Header from '@/components/ui/header'
 
 const Index = () => {
   return (
     <div className="flex flex-col bg-gray-200 min-h-screen">
+      <Header />
       {/* Header Section */}
       <header className=" text-center py-20 ">
         <div className="mb-10">
@@ -81,7 +83,14 @@ const Root = () => {
     return <Loader />
   }
 
-  return user ? <Dashboard /> : <Index />
+  return user ? (
+    <div>
+      <Header />
+      <Dashboard />{' '}
+    </div>
+  ) : (
+    <Index />
+  )
 }
 
 export const Route = createLazyFileRoute('/')({

@@ -61,14 +61,14 @@ const CardDetail = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">
+      <div className="w-full max-w-2xl m-auto min-h-screen shadow-xl border border-gray-200 rounded-xl">
         <Skeleton className="h-full w-full rounded-xl" />
       </div>
     )
   }
 
   return (
-    <Card className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">
+    <Card className="w-full max-w-lg m-auto min-h-screen shadow-xl border border-gray-200 rounded-xl">
       <CardHeader
         style={{ backgroundColor: formValues?.themeColor }}
         className="h-10 mb-10 rounded-t-xl"
