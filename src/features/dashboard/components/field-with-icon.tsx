@@ -20,19 +20,21 @@ const FieldWithIcon: React.FC<FieldWithIconProps> = ({
   }
   return (
     <div
-      className="flex items-center py-2 hover:bg-gray-100 p-2 rounded-md  border-black border-opacity-10 space-x-4"
+      className="flex items-center py-2 hover:bg-gray-100 p-2 rounded-md border-black border-opacity-10 space-x-4"
       onClick={handleCopyToClipboard}
     >
       <div
         style={{ backgroundColor: themeColor }}
         className={clsx(
-          'rounded-full p-2 flex items-center justify-center  ',
-          themeColor != '#ffffff' && 'text-white'
+          'rounded-full p-2 flex items-center justify-center',
+          themeColor !== '#ffffff' && 'text-white'
         )}
       >
         {icon}
       </div>
-      <span className="text-gray-700 ml-2 font-semibold">{text}</span>
+      <span className="text-gray-700 ml-2 font-semibold break-all whitespace-normal">
+        {text}
+      </span>
     </div>
   )
 }

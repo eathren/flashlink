@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LayoutHeaderImport } from './routes/_layoutHeader'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as CCIdImport } from './routes/c.$cId'
 import { Route as AuthCCIdEditImport } from './routes/_auth/c.$cId.edit'
@@ -32,61 +33,68 @@ const CreateFreePreviewLazyImport = createFileRoute('/create-free/preview')()
 
 const SignUpLazyRoute = SignUpLazyImport.update({
   path: '/sign-up',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/sign-up.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/sign-up.lazy').then((d) => d.Route))
 
 const ResetPasswordLazyRoute = ResetPasswordLazyImport.update({
   path: '/reset-password',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/reset-password.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/reset-password.lazy').then((d) => d.Route),
+)
 
 const PricingLazyRoute = PricingLazyImport.update({
   path: '/pricing',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/pricing.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/pricing.lazy').then((d) => d.Route))
 
 const LoginLazyRoute = LoginLazyImport.update({
   path: '/login',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/login.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 
 const CreateFreeLazyRoute = CreateFreeLazyImport.update({
   path: '/create-free',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/create-free.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/create-free.lazy').then((d) => d.Route))
+
+const LayoutHeaderRoute = LayoutHeaderImport.update({
+  id: '/_layoutHeader',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
-  getParentRoute: () => rootRoute
-} as any).lazy(() => import('./routes/index.lazy').then(d => d.Route))
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
 const CreateFreeIndexLazyRoute = CreateFreeIndexLazyImport.update({
   path: '/',
-  getParentRoute: () => CreateFreeLazyRoute
+  getParentRoute: () => CreateFreeLazyRoute,
 } as any).lazy(() =>
-  import('./routes/create-free/index.lazy').then(d => d.Route)
+  import('./routes/create-free/index.lazy').then((d) => d.Route),
 )
 
 const CreateFreePreviewLazyRoute = CreateFreePreviewLazyImport.update({
   path: '/preview',
-  getParentRoute: () => CreateFreeLazyRoute
+  getParentRoute: () => CreateFreeLazyRoute,
 } as any).lazy(() =>
-  import('./routes/create-free/preview.lazy').then(d => d.Route)
+  import('./routes/create-free/preview.lazy').then((d) => d.Route),
 )
 
 const CCIdRoute = CCIdImport.update({
   path: '/c/$cId',
-  getParentRoute: () => rootRoute
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AuthCCIdEditRoute = AuthCCIdEditImport.update({
   path: '/c/$cId/edit',
-  getParentRoute: () => AuthRoute
+  getParentRoute: () => AuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -105,6 +113,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/_layoutHeader': {
+      id: '/_layoutHeader'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutHeaderImport
       parentRoute: typeof rootRoute
     }
     '/create-free': {
@@ -180,7 +195,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdEditRoute: AuthCCIdEditRoute
+  AuthCCIdEditRoute: AuthCCIdEditRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -192,16 +207,16 @@ interface CreateFreeLazyRouteChildren {
 
 const CreateFreeLazyRouteChildren: CreateFreeLazyRouteChildren = {
   CreateFreePreviewLazyRoute: CreateFreePreviewLazyRoute,
-  CreateFreeIndexLazyRoute: CreateFreeIndexLazyRoute
+  CreateFreeIndexLazyRoute: CreateFreeIndexLazyRoute,
 }
 
 const CreateFreeLazyRouteWithChildren = CreateFreeLazyRoute._addFileChildren(
-  CreateFreeLazyRouteChildren
+  CreateFreeLazyRouteChildren,
 )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof LayoutHeaderRoute
   '/create-free': typeof CreateFreeLazyRouteWithChildren
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
@@ -215,7 +230,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof LayoutHeaderRoute
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
   '/reset-password': typeof ResetPasswordLazyRoute
@@ -230,6 +245,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/_layoutHeader': typeof LayoutHeaderRoute
   '/create-free': typeof CreateFreeLazyRouteWithChildren
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
@@ -271,6 +287,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/_layoutHeader'
     | '/create-free'
     | '/login'
     | '/pricing'
@@ -286,6 +303,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AuthRoute: typeof AuthRouteWithChildren
+  LayoutHeaderRoute: typeof LayoutHeaderRoute
   CreateFreeLazyRoute: typeof CreateFreeLazyRouteWithChildren
   LoginLazyRoute: typeof LoginLazyRoute
   PricingLazyRoute: typeof PricingLazyRoute
@@ -297,12 +315,13 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AuthRoute: AuthRouteWithChildren,
+  LayoutHeaderRoute: LayoutHeaderRoute,
   CreateFreeLazyRoute: CreateFreeLazyRouteWithChildren,
   LoginLazyRoute: LoginLazyRoute,
   PricingLazyRoute: PricingLazyRoute,
   ResetPasswordLazyRoute: ResetPasswordLazyRoute,
   SignUpLazyRoute: SignUpLazyRoute,
-  CCIdRoute: CCIdRoute
+  CCIdRoute: CCIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -319,6 +338,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
+        "/_layoutHeader",
         "/create-free",
         "/login",
         "/pricing",
@@ -335,6 +355,9 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/c/$cId/edit"
       ]
+    },
+    "/_layoutHeader": {
+      "filePath": "_layoutHeader.tsx"
     },
     "/create-free": {
       "filePath": "create-free.lazy.tsx",

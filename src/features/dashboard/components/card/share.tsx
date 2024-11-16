@@ -62,7 +62,7 @@ const CardShare = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-2xl m-auto mt-10 shadow-xl border border-gray-200 rounded-xl">
+      <div className="w-full max-w-2xl m-auto  min-h-screen shadow-xl border border-gray-200 rounded-xl">
         <Skeleton className="h-full w-full rounded-xl" />
       </div>
     )
@@ -75,7 +75,7 @@ const CardShare = () => {
           ? `8px solid ${formValues?.themeColor}`
           : ''
       }}
-      className="w-full max-w-md m-auto mt-10 shadow-xl border border-gray-200 rounded-xl"
+      className="w-full max-w-md m-auto  min-h-screen shadow-xl border border-gray-200 rounded-xl"
     >
       <CardHeader className="p-4 rounded-t-xl">
         <CardTitle className="text-2xl font-semibold text-center text-white">

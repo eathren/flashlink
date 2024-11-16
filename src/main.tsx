@@ -5,6 +5,7 @@ import App from '@/App'
 import { Loader } from './components/ui/spinner'
 import { Toaster } from 'react-hot-toast'
 import { Helmet } from 'react-helmet'
+import '@/firebase'
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
