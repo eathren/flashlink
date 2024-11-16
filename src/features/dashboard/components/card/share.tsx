@@ -31,7 +31,7 @@ import FieldWithIcon from '../field-with-icon'
 const firestore = getFirestore()
 
 const CardShare = () => {
-  const { cId } = useParams({ from: '/c/$cId' })
+  const { sId } = useParams({ from: '/s/$sId' })
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<BusinessCard | undefined>()
 
@@ -39,7 +39,7 @@ const CardShare = () => {
     const fetchCard = async () => {
       setLoading(true)
       try {
-        const cardDocRef = doc(firestore, 'businessCards', cId)
+        const cardDocRef = doc(firestore, 'businessCards', sId)
         const cardDoc = await getDoc(cardDocRef)
         if (cardDoc.exists()) {
           const cardData = cardDoc.data() as BusinessCard
@@ -58,7 +58,7 @@ const CardShare = () => {
     }
 
     fetchCard()
-  }, [cId])
+  }, [sId])
 
   if (loading) {
     return (
@@ -80,7 +80,7 @@ const CardShare = () => {
       <CardHeader className="p-4 rounded-t-xl">
         <CardTitle className="text-2xl font-semibold text-center text-white">
           <QRCodeSVG
-            value={`https://flashlink.io/c/${cId}`}
+            value={`https://flashlink.io/c/${sId}`}
             size={200}
             className="mb-4 mx-auto"
           />

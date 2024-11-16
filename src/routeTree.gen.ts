@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutHeaderImport } from './routes/_layoutHeader'
 import { Route as AuthImport } from './routes/_auth'
+import { Route as SSIdImport } from './routes/s.$sId'
 import { Route as CCIdImport } from './routes/c.$cId'
 import { Route as AuthCCIdEditImport } from './routes/_auth/c.$cId.edit'
 
@@ -95,6 +96,12 @@ const CreateFreePreviewLazyRoute = CreateFreePreviewLazyImport.update({
   import('./routes/create-free/preview.lazy').then((d) => d.Route),
 )
 
+const SSIdRoute = SSIdImport.update({
+  id: '/s/$sId',
+  path: '/s/$sId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CCIdRoute = CCIdImport.update({
   id: '/c/$cId',
   path: '/c/$cId',
@@ -174,6 +181,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CCIdImport
       parentRoute: typeof rootRoute
     }
+    '/s/$sId': {
+      id: '/s/$sId'
+      path: '/s/$sId'
+      fullPath: '/s/$sId'
+      preLoaderRoute: typeof SSIdImport
+      parentRoute: typeof rootRoute
+    }
     '/create-free/preview': {
       id: '/create-free/preview'
       path: '/preview'
@@ -233,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordLazyRoute
   '/sign-up': typeof SignUpLazyRoute
   '/c/$cId': typeof CCIdRoute
+  '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free/': typeof CreateFreeIndexLazyRoute
   '/c/$cId/edit': typeof AuthCCIdEditRoute
@@ -246,6 +261,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordLazyRoute
   '/sign-up': typeof SignUpLazyRoute
   '/c/$cId': typeof CCIdRoute
+  '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free': typeof CreateFreeIndexLazyRoute
   '/c/$cId/edit': typeof AuthCCIdEditRoute
@@ -262,6 +278,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordLazyRoute
   '/sign-up': typeof SignUpLazyRoute
   '/c/$cId': typeof CCIdRoute
+  '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free/': typeof CreateFreeIndexLazyRoute
   '/_auth/c/$cId/edit': typeof AuthCCIdEditRoute
@@ -278,6 +295,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
+    | '/s/$sId'
     | '/create-free/preview'
     | '/create-free/'
     | '/c/$cId/edit'
@@ -290,6 +308,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
+    | '/s/$sId'
     | '/create-free/preview'
     | '/create-free'
     | '/c/$cId/edit'
@@ -304,6 +323,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-up'
     | '/c/$cId'
+    | '/s/$sId'
     | '/create-free/preview'
     | '/create-free/'
     | '/_auth/c/$cId/edit'
@@ -320,6 +340,7 @@ export interface RootRouteChildren {
   ResetPasswordLazyRoute: typeof ResetPasswordLazyRoute
   SignUpLazyRoute: typeof SignUpLazyRoute
   CCIdRoute: typeof CCIdRoute
+  SSIdRoute: typeof SSIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -332,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordLazyRoute: ResetPasswordLazyRoute,
   SignUpLazyRoute: SignUpLazyRoute,
   CCIdRoute: CCIdRoute,
+  SSIdRoute: SSIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -352,7 +374,8 @@ export const routeTree = rootRoute
         "/pricing",
         "/reset-password",
         "/sign-up",
-        "/c/$cId"
+        "/c/$cId",
+        "/s/$sId"
       ]
     },
     "/": {
@@ -388,6 +411,9 @@ export const routeTree = rootRoute
     },
     "/c/$cId": {
       "filePath": "c.$cId.tsx"
+    },
+    "/s/$sId": {
+      "filePath": "s.$sId.tsx"
     },
     "/create-free/preview": {
       "filePath": "create-free/preview.lazy.tsx",
