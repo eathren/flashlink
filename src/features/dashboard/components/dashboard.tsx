@@ -130,7 +130,7 @@ const Dashboard = () => {
                       <Link
                         to={`/c/${card.id}`}
                         className="ml-2 w-full"
-                        aria-label="share card"
+                        aria-label="preview card"
                       >
                         <Button variant="outline" className="w-full">
                           Preview

@@ -19,11 +19,19 @@ export const Route = createFileRoute('/c/$cId')({
       card: cardData
     }
   },
+  validateSearch: search => {
+    return {
+      share:
+        search.share === true || search.share === false
+          ? search.share
+          : undefined
+    }
+  },
   component: CardDetailPage
 })
 
 function CardDetailPage() {
-  const searchParams = Route.useSearch<{ share: boolean }>()
+  const searchParams = Route.useSearch<{ share?: boolean }>()
   const share = searchParams.share === true
   return share ? <CardShare /> : <CardDetail />
 }
