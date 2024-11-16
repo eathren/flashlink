@@ -23,8 +23,8 @@ export const Route = createFileRoute('/c/$cId')({
 })
 
 function CardDetailPage() {
-  const searchParams = Route.useSearch<{ share?: string }>()
-  const share = searchParams.share === 'true'
+  const searchParams = Route.useSearch<{ share: boolean }>()
+  const share = searchParams.share === true
   return share ? <CardShare /> : <CardDetail />
 }
 

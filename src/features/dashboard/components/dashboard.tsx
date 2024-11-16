@@ -141,7 +141,7 @@ const Dashboard = () => {
                         className="ml-2 w-full"
                         aria-label="share card"
                         search={{
-                          share: 'true'
+                          share: true
                         }}
                       >
                         <Button variant="outline" className="w-full">
