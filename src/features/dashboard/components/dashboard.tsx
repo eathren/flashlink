@@ -137,9 +137,12 @@ const Dashboard = () => {
                         </Button>
                       </Link>
                       <Link
-                        to={`/c/${card.id}?share=true`}
+                        to={`/c/${card.id}`}
                         className="ml-2 w-full"
                         aria-label="share card"
+                        search={{
+                          share: 'true'
+                        }}
                       >
                         <Button variant="outline" className="w-full">
                           Share

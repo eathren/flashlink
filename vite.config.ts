@@ -4,14 +4,12 @@ import path from 'path'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
-
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     TanStackRouterVite(),
     VitePWA({
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       registerType: 'autoUpdate',
       manifest: {
         name: 'Flashlink',
@@ -31,7 +29,7 @@ export default defineConfig({
           },
           {
             src: 'apple-touch-icon.png',
-            sizes: '192x192',
+            sizes: '180x180',
             type: 'image/png'
           }
         ]
@@ -40,8 +38,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../src')
+      '@': path.resolve(__dirname, './src')
     }
-  },
-  publicDir: path.resolve(__dirname, '../public')
+  }
 })

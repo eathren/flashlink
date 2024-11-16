@@ -1,7 +1,7 @@
 import { routeTree } from '@/routeTree.gen'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { useAuth } from './hooks/use-auth'
-import './firebase'
+import '@/firebase'
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',

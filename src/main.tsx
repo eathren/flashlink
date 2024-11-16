@@ -1,11 +1,10 @@
 import { StrictMode, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from '@/App'
 import { Loader } from './components/ui/spinner'
 import { Toaster } from 'react-hot-toast'
 import { Helmet } from 'react-helmet'
-import '@/firebase'
+import App from './App'
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
