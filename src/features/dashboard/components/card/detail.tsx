@@ -4,27 +4,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import toast from 'react-hot-toast'
 import { BusinessCard } from '../../types/card'
-import {
-  IconMail,
-  IconPhone,
-  IconLink,
-  IconMapPin,
-  IconBrandLinkedin,
-  IconBrandInstagram,
-  IconBrandFacebook,
-  IconBrandYoutube,
-  IconBrandSnapchat,
-  IconBrandTiktok,
-  IconBrandTwitch,
-  IconBrandWhatsapp,
-  IconBrandDiscord,
-  IconBrandSkype,
-  IconBrandTelegram,
-  IconBrandGithub,
-  IconBrandPaypal,
-  IconCash
-} from '@tabler/icons-react'
-import FieldWithIcon from '../field-with-icon'
+
 import { Skeleton } from '@/components/ui/skeleton'
 
 const firestore = getFirestore()
@@ -61,23 +41,23 @@ const CardDetail = () => {
 
   if (loading) {
     return (
-      <div className="w-full max-w-lg m-auto min-h-screen shadow-xl border border-gray-200 rounded-xl">
-        <Skeleton className="h-full w-full rounded-xl" />
+      <div className="w-full max-w-lg m-auto min-h-screen shadow-xl border border-gray-200 ">
+        <Skeleton className="h-full w-full " />
       </div>
     )
   }
 
   return (
-    <Card className="w-full max-w-lg m-auto min-h-screen shadow-xl border border-gray-200 rounded-xl">
+    <Card className="w-full max-w-lg m-auto min-h-screen rounded-none shadow-xl border border-gray-200 ">
       <CardHeader
         style={{ backgroundColor: formValues?.themeColor }}
-        className="h-10 mb-10 rounded-t-xl"
+        className="h-10 mb-10 "
       >
         <CardTitle
           hidden={true}
           className="text-2xl font-semibold text-center mb-4"
         >
-          {formValues?.name || 'Card Details'}
+          {/* {formValues?.name || 'Card Details'} */}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -85,14 +65,14 @@ const CardDetail = () => {
           <div className="space-y-4">
             <div className="grid  gap-4">
               <div>
-                <h1 className="text-2xl font-bold"> {formValues.name} </h1>
+                {/* <h1 className="text-2xl font-bold"> {formValues.name} </h1> */}
                 <h2 className="text-xl font-semibold">
-                  {formValues.companyName}
+                  {/* {formValues.companyName} */}
                 </h2>
-                <h2 className="text-xl font-semibold">{formValues.jobTitle}</h2>
+                {/* <h2 className="text-xl font-semibold">{formValues.jobTitle}</h2> */}
               </div>
             </div>
-            <div>
+            {/* <div>
               <FieldWithIcon
                 themeColor={formValues.themeColor}
                 icon={<IconMail />}
@@ -182,8 +162,8 @@ const CardDetail = () => {
                 themeColor={formValues.themeColor}
                 icon={<IconCash />}
                 text={formValues.links?.cashapp}
-              />
             </div>
+              /> */}
           </div>
         ) : (
           <p className="text-center text-gray-500">

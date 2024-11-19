@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, useNavigate } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
 import {
   Dialog,
@@ -14,21 +14,23 @@ import {
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
+import { TrashIcon } from 'lucide-react'
 
 const firestore = getFirestore()
 
-const DeleteCard = () => {
-  const { cId } = useParams({ from: '/_auth/c/$cId/edit' })
+interface DeleteCardProps {
+  cardId: string
+}
 
+const DeleteCard: React.FC<DeleteCardProps> = ({ cardId }) => {
   const navigate = useNavigate()
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      const cardDocRef = doc(firestore, 'businessCards', cId)
+      const cardDocRef = doc(firestore, 'businessCards', cardId)
       await deleteDoc(cardDocRef)
-      toast.success('Business card deleted successfully')
       navigate({ to: '/' }) // Redirect to the home page or another appropriate page
     } catch (error) {
       console.error(error)
@@ -43,7 +45,10 @@ const DeleteCard = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete Card</Button>
+        <Button variant="ghost">
+          <TrashIcon className="h-5 w-5  mr-2" />
+          Delete Card
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

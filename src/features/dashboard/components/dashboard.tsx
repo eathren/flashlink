@@ -14,6 +14,13 @@ import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { BusinessCard } from '../types/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import DeleteCard from './card/delete'
 
 const firestore = getFirestore()
 
@@ -41,14 +48,14 @@ const Dashboard = () => {
           const data = doc.data()
           return {
             id: doc.id,
-            jobTitle: data.jobTitle,
-            name: data.name,
+            profile: data?.profile,
+            themeColor: data.themeColor,
             createdAt:
               data.createdAt instanceof Timestamp
                 ? data.createdAt
                 : Timestamp.now(),
-            themeColor: data.themeColor
-          }
+            fields: data.fields
+          } as BusinessCard
         })
 
         setBusinessCards(cards)
@@ -84,9 +91,7 @@ const Dashboard = () => {
       ) : (
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-4 overflow-auto">
           {businessCards?.length === 0 ? (
-            <p className="text-center text-gray-700 col-span-full">
-              No business cards found.
-            </p>
+            <p className="text-center text-gray-700 col-span-full"></p>
           ) : (
             businessCards
               ?.sort(
@@ -98,13 +103,25 @@ const Dashboard = () => {
                   key={card.id}
                   className="shadow-2xl rounded-lg hover:shadow-4xl transition duration-300 flex flex-col min-h-64"
                 >
-                  <CardHeader className=" relative flex-1 flex items-center justify-center border-b-2 border-gray-200 rounded-t-lg">
+                  <CardHeader className="relative flex-1 flex items-center justify-center border-b-2 border-gray-200 rounded-t-lg">
                     <CardTitle className="text-center">
                       <h2 className="text-xl font-semibold">
-                        {card.name || 'New Card'}
+                        {card?.profile?.name || 'New Card'}
                       </h2>
-                      <p className="text-sm text-gray-500">{card.jobTitle}</p>
+                      <p className="text-sm text-gray-500">
+                        {card?.profile?.jobTitle}
+                      </p>
                     </CardTitle>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100">
+                          <DotsHorizontalIcon className="h-5 w-5 text-gray-500" />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DeleteCard cardId={card.id} />
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </CardHeader>
 
                   <CardContent

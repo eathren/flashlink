@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { auth } from '@/firebase'
+import Header from '@/components/ui/header'
 import EditCard from '@/features/dashboard/components/card/edit'
 
 const firestore = getFirestore()
@@ -31,7 +32,12 @@ export const Route = createFileRoute('/_auth/c/$cId/edit')({
 })
 
 function EditCardPage() {
-  return <EditCard />
+  return (
+    <div>
+      <Header />
+      <EditCard />
+    </div>
+  )
 }
 
 export default EditCardPage

@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CirclePlus } from 'tabler-icons-react'
 import { Spinner } from '@/components/ui/spinner'
+import { BusinessCard } from '../../types/card'
 
 const firestore = getFirestore()
 
@@ -39,11 +40,15 @@ const CreateBusinessCard = () => {
 
       const businessCardsCollectionRef = collection(firestore, 'businessCards')
       const cardDocRef = doc(businessCardsCollectionRef)
-      await setDoc(cardDocRef, {
-        createdAt: Timestamp.now(),
+      const newCard: BusinessCard = {
+        id: cardDocRef.id,
         userId: user.uid,
-        themeColor: '#D3D3D3'
-      })
+        profileId: '',
+        themeColor: '#D3D3D3',
+        createdAt: Timestamp.now(),
+        fields: []
+      }
+      await setDoc(cardDocRef, newCard)
 
       toast.success('Business card created successfully')
     } catch (error) {
