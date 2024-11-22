@@ -1,6 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
+import { CardInformation } from '@/features/dashboard/types/card'
 
 interface InputForProfileProps {
   name: string
@@ -8,7 +9,7 @@ interface InputForProfileProps {
   jobTitle: string
   pronouns: string
   bio: string
-  onProfileChange: (key: string, value: string) => void
+  onProfileChange: (key: keyof CardInformation, value: string) => void
 }
 
 export const InputForProfile: React.FC<InputForProfileProps> = ({
@@ -26,7 +27,7 @@ export const InputForProfile: React.FC<InputForProfileProps> = ({
         <Input
           type="text"
           value={name}
-          onChange={e => onProfileChange('name', e.target.value)}
+          onChange={e => onProfileChange('firstName', e.target.value)}
           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
         />
       </div>

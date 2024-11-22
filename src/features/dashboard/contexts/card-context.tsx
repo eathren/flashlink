@@ -5,7 +5,7 @@ import {
   CardAffiliation,
   CardLink
 } from '../types/card'
-import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useParams } from '@tanstack/react-router'
 import { auth } from '@/firebase'
 import toast from 'react-hot-toast'
@@ -15,6 +15,7 @@ interface CardContextType {
   setCard: React.Dispatch<React.SetStateAction<BusinessCard | undefined>>
   getProfile: () => CardInformation | undefined
   setProfile: (profile: CardInformation) => void
+  updateProfileField: (key: keyof CardInformation, value: string) => void
   getAffiliation: () => CardAffiliation | undefined
   setAffiliation: (affiliation: CardAffiliation) => void
   getThemeColor: () => string | undefined
@@ -26,6 +27,8 @@ interface CardContextType {
     key: keyof CardLink,
     value: string | boolean
   ) => void
+  submitCard: () => Promise<void>
+  loading: boolean
 }
 
 export const CardContext = createContext<CardContextType | undefined>(undefined)
@@ -77,6 +80,19 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
     setCard(prevCard => (prevCard ? { ...prevCard, profile } : prevCard))
   }
 
+  const updateProfileField = (key: keyof CardInformation, value: string) => {
+    setCard(prevCard => {
+      if (!prevCard || !prevCard.profile) return prevCard
+      return {
+        ...prevCard,
+        profile: {
+          ...prevCard.profile,
+          [key]: value
+        }
+      }
+    })
+  }
+
   const getAffiliation = () => card?.affiliation
 
   const setAffiliation = (affiliation: CardAffiliation) => {
@@ -116,6 +132,29 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
     })
   }
 
+  const submitCard = async () => {
+    if (!card) return
+    try {
+      const user = auth.currentUser
+      if (!user) {
+        throw new Error('User not authenticated')
+      }
+
+      const filteredFormValues = Object.fromEntries(
+        Object.entries(card).filter(([, v]) => v !== undefined)
+      )
+
+      const cardDocRef = doc(getFirestore(), 'businessCards', cId)
+      await updateDoc(cardDocRef, filteredFormValues)
+      toast.success('Business card updated successfully')
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        error instanceof Error ? error.message : 'An unknown error occurred'
+      )
+    }
+  }
+
   return (
     <CardContext.Provider
       value={{
@@ -123,13 +162,16 @@ export const CardProvider: React.FC<{ children: ReactNode }> = ({
         setCard,
         getProfile,
         setProfile,
+        updateProfileField,
         getAffiliation,
         setAffiliation,
         getThemeColor,
         setThemeColor,
         getLinks,
         setLinks,
-        updateLink
+        updateLink,
+        submitCard,
+        loading
       }}
     >
       {loading ? <div>Loading...</div> : children}

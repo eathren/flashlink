@@ -22,6 +22,7 @@ import {
 } from '@tabler/icons-react'
 import { useCard } from '@/features/dashboard/hooks/use-card'
 import { LinksDialog } from './links-dialog'
+import { CardLink } from '@/features/dashboard/types/card'
 
 const iconMap = {
   discord: <IconBrandDiscord />,
@@ -49,7 +50,7 @@ const Links: React.FC = () => {
   const links = getLinks()
   const [availableLinks, setAvailableLinks] = useState(linkConfig)
 
-  const handleAddLink = (category: string, link: any) => {
+  const handleAddLink = (category: string, link: CardLink) => {
     if (!links) return
     const newLink = {
       title: link.title,

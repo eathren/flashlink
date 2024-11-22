@@ -5,6 +5,7 @@ import { useCard } from '@/features/dashboard/hooks/use-card'
 import { CardProvider } from '@/features/dashboard/contexts/card-context'
 import Profile from './profile'
 import Links from './links'
+import { Button } from '@/components/ui/button'
 
 const presetColors = [
   '#D3D3D3', // Grey
@@ -24,7 +25,17 @@ const presetColors = [
 
 const EditCardContents = () => {
   const [activeTab, setActiveTab] = useState('profile')
-
+  const { card, updateProfileField, setThemeColor, submitCard } = useCard()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    try {
+      await submitCard()
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   return (
     <Card className="w-full max-w-4xl m-auto min-h-screen rounded-none shadow-xl border border-gray-200 mt-10">
       <CardContent>
@@ -44,10 +55,12 @@ const EditCardContents = () => {
             <Profile />
           </TabsContent>
           <TabsContent value="links">
-            {' '}
             <Links />{' '}
           </TabsContent>
         </Tabs>
+        <Button onClick={handleSubmit} loading={isSubmitting} className="mt-4">
+          Save
+        </Button>
       </CardContent>
     </Card>
   )
