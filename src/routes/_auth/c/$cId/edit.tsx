@@ -31,13 +31,11 @@ export const Route = createFileRoute('/_auth/c/$cId/edit')({
   component: EditCardPage
 })
 
-function EditCardPage() {
+function EditCardPage({ loaderData }) {
   return (
-    <div>
+    <>
       <Header />
       <EditCard />
-    </div>
+    </>
   )
 }
-
-export default EditCardPage

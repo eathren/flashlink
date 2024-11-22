@@ -4,6 +4,10 @@ import CardDetail from '@/features/dashboard/components/card/detail'
 
 const firestore = getFirestore()
 
+const CardDetailPage = () => {
+  return <CardDetail />
+}
+
 export const Route = createFileRoute('/c/$cId')({
   loader: async ({ params: { cId } }) => {
     const cardDocRef = doc(firestore, 'businessCards', cId)
@@ -18,5 +22,5 @@ export const Route = createFileRoute('/c/$cId')({
       card: cardData
     }
   },
-  component: CardDetail
+  component: CardDetailPage
 })

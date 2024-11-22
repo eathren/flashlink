@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input'
 import clsx from 'clsx'
 import React from 'react'
 
@@ -40,7 +41,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
         >
           {icon}
         </div>
-        <input
+        <Input
           type="text"
           id={`${id}-title`}
           name={`${name}-title`}
@@ -50,7 +51,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
           className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-      <input
+      <Input
         type="text"
         id={`${id}-value`}
         name={`${name}-value`}
@@ -60,7 +61,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
         className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <label className="flex items-center space-x-2">
-        <input
+        <Input
           type="checkbox"
           id={`${id}-shown`}
           name={`${name}-shown`}

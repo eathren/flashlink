@@ -43,7 +43,8 @@ const CreateBusinessCard = () => {
       const newCard: BusinessCard = {
         id: cardDocRef.id,
         userId: user.uid,
-        profileId: '',
+        profile: {},
+        links: [],
         themeColor: '#D3D3D3',
         createdAt: Timestamp.now(),
         fields: []

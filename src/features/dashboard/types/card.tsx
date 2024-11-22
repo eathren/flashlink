@@ -1,36 +1,40 @@
 import { Timestamp } from 'firebase/firestore'
 
-export interface Field {
+export interface CardLink {
   title: string
-  value: string
+  link: string
   shown: boolean
-  order: number
+  order?: number
   icon: JSX.Element
   placeholder: string
 }
 
-export interface CardProfileDetails {
-  name?: string
-  jobTitle?: string
-  companyName?: string
-  email?: string
-  phone?: string
-  address?: string
-  bio?: string
+export interface CardInformation {
+  prefix?: string
+  firstName: string
+  middleName?: string
+  lastName?: string
+  suffix?: string
+  accreditations?: string
+  preferredName?: string
+  maidenName?: string
   pronouns?: string
-  location?: string
+}
+
+export interface CardAffiliation {
+  title?: string
+  department?: string
+  company?: string
+  headline?: string
 }
 
 export interface BusinessCard {
   id: string
   userId: string
-  profileId: string
-  linksId: string
+  profile?: CardInformation
+  affiliation?: CardAffiliation
   themeColor?: string
   createdAt?: Timestamp
   updatedAt?: Timestamp
-}
-
-export interface Links {
-  fields: Field[]
+  links?: CardLink[]
 }

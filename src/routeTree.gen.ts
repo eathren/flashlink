@@ -18,7 +18,7 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as SSIdImport } from './routes/s.$sId'
 import { Route as CCIdImport } from './routes/c.$cId'
-import { Route as AuthCCIdEditImport } from './routes/_auth/c.$cId.edit'
+import { Route as AuthCCIdEditImport } from './routes/_auth/c/$cId/edit'
 
 // Create Virtual Routes
 
@@ -424,7 +424,7 @@ export const routeTree = rootRoute
       "parent": "/create-free"
     },
     "/_auth/c/$cId/edit": {
-      "filePath": "_auth/c.$cId.edit.tsx",
+      "filePath": "_auth/c/$cId/edit.tsx",
       "parent": "/_auth"
     }
   }
