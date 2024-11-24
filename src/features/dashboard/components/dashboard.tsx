@@ -8,11 +8,11 @@ import {
   Timestamp
 } from 'firebase/firestore'
 import { auth } from '@/firebase'
-import CreateBusinessCard from './card/create'
+import CreateBusinessCard from '../../business-card/components/create'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-import { BusinessCard } from '../types/card'
+import { BusinessCard } from '../../business-card/types/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   DropdownMenu,
@@ -20,9 +20,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import DeleteCard from './card/delete'
-
-const firestore = getFirestore()
+import DeleteCard from '../../business-card/components/delete'
+import { checkAndCreateUserDoc, readAllUserCards } from '../api'
 
 const Dashboard = () => {
   const [businessCards, setBusinessCards] = useState<BusinessCard[] | null>(
@@ -38,34 +37,10 @@ const Dashboard = () => {
       return
     }
 
-    const businessCardsCollectionRef = collection(firestore, 'businessCards')
-    const q = query(businessCardsCollectionRef, where('userId', '==', user.uid))
-
-    const unsubscribe = onSnapshot(
-      q,
-      querySnapshot => {
-        const cards = querySnapshot.docs.map(doc => {
-          const data = doc.data()
-          return {
-            id: doc.id,
-            profile: data?.profile,
-            themeColor: data.themeColor,
-            createdAt:
-              data.createdAt instanceof Timestamp
-                ? data.createdAt
-                : Timestamp.now(),
-            fields: data.fields
-          } as BusinessCard
-        })
-
-        setBusinessCards(cards)
-        setLoading(false)
-      },
-      error => {
-        console.error('Error fetching business cards:', error)
-        setLoading(false)
-      }
-    )
+    const unsubscribe = readAllUserCards(user.uid, cards => {
+      setBusinessCards(cards)
+      setLoading(false)
+    })
 
     return () => unsubscribe()
   }, [])
@@ -91,7 +66,9 @@ const Dashboard = () => {
       ) : (
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-4 overflow-auto">
           {businessCards?.length === 0 ? (
-            <p className="text-center text-gray-700 col-span-full"></p>
+            <p className="text-center text-gray-700 col-span-full">
+              No business cards found.
+            </p>
           ) : (
             businessCards
               ?.sort(

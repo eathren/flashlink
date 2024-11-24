@@ -5,7 +5,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { useParams } from '@tanstack/react-router'
 import { auth } from '@/firebase'
 import toast from 'react-hot-toast'
-import { BusinessCard } from '../../types/card'
+import { BusinessCard } from '../types/card'
 
 const firestore = getFirestore()
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
-import CardDetail from '@/features/dashboard/components/card/detail'
+import CardDetail from '@/features/business-card/components/detail'
 
 const firestore = getFirestore()
 

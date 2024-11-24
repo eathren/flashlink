@@ -3,7 +3,7 @@ import { useParams } from '@tanstack/react-router'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import toast from 'react-hot-toast'
-import { BusinessCard } from '../../types/card'
+import { BusinessCard } from '../types/card'
 import { QRCodeSVG } from 'qrcode.react'
 import { Skeleton } from '@/components/ui/skeleton'
 

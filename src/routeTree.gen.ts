@@ -13,12 +13,10 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LayoutHeaderImport } from './routes/_layoutHeader'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as SSIdImport } from './routes/s.$sId'
 import { Route as CCIdImport } from './routes/c.$cId'
-import { Route as AuthCCIdEditImport } from './routes/_auth/c/$cId/edit'
 
 // Create Virtual Routes
 
@@ -64,11 +62,6 @@ const CreateFreeLazyRoute = CreateFreeLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/create-free.lazy').then((d) => d.Route))
 
-const LayoutHeaderRoute = LayoutHeaderImport.update({
-  id: '/_layoutHeader',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AuthRoute = AuthImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
@@ -108,12 +101,6 @@ const CCIdRoute = CCIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthCCIdEditRoute = AuthCCIdEditImport.update({
-  id: '/c/$cId/edit',
-  path: '/c/$cId/edit',
-  getParentRoute: () => AuthRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -130,13 +117,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
-    }
-    '/_layoutHeader': {
-      id: '/_layoutHeader'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutHeaderImport
       parentRoute: typeof rootRoute
     }
     '/create-free': {
@@ -202,27 +182,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFreeIndexLazyImport
       parentRoute: typeof CreateFreeLazyImport
     }
-    '/_auth/c/$cId/edit': {
-      id: '/_auth/c/$cId/edit'
-      path: '/c/$cId/edit'
-      fullPath: '/c/$cId/edit'
-      preLoaderRoute: typeof AuthCCIdEditImport
-      parentRoute: typeof AuthImport
-    }
   }
 }
 
 // Create and export the route tree
-
-interface AuthRouteChildren {
-  AuthCCIdEditRoute: typeof AuthCCIdEditRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthCCIdEditRoute: AuthCCIdEditRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface CreateFreeLazyRouteChildren {
   CreateFreePreviewLazyRoute: typeof CreateFreePreviewLazyRoute
@@ -240,7 +203,7 @@ const CreateFreeLazyRouteWithChildren = CreateFreeLazyRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof LayoutHeaderRoute
+  '': typeof AuthRoute
   '/create-free': typeof CreateFreeLazyRouteWithChildren
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
@@ -250,12 +213,11 @@ export interface FileRoutesByFullPath {
   '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free/': typeof CreateFreeIndexLazyRoute
-  '/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof LayoutHeaderRoute
+  '': typeof AuthRoute
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
   '/reset-password': typeof ResetPasswordLazyRoute
@@ -264,14 +226,12 @@ export interface FileRoutesByTo {
   '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free': typeof CreateFreeIndexLazyRoute
-  '/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteWithChildren
-  '/_layoutHeader': typeof LayoutHeaderRoute
+  '/_auth': typeof AuthRoute
   '/create-free': typeof CreateFreeLazyRouteWithChildren
   '/login': typeof LoginLazyRoute
   '/pricing': typeof PricingLazyRoute
@@ -281,7 +241,6 @@ export interface FileRoutesById {
   '/s/$sId': typeof SSIdRoute
   '/create-free/preview': typeof CreateFreePreviewLazyRoute
   '/create-free/': typeof CreateFreeIndexLazyRoute
-  '/_auth/c/$cId/edit': typeof AuthCCIdEditRoute
 }
 
 export interface FileRouteTypes {
@@ -298,7 +257,6 @@ export interface FileRouteTypes {
     | '/s/$sId'
     | '/create-free/preview'
     | '/create-free/'
-    | '/c/$cId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -311,12 +269,10 @@ export interface FileRouteTypes {
     | '/s/$sId'
     | '/create-free/preview'
     | '/create-free'
-    | '/c/$cId/edit'
   id:
     | '__root__'
     | '/'
     | '/_auth'
-    | '/_layoutHeader'
     | '/create-free'
     | '/login'
     | '/pricing'
@@ -326,14 +282,12 @@ export interface FileRouteTypes {
     | '/s/$sId'
     | '/create-free/preview'
     | '/create-free/'
-    | '/_auth/c/$cId/edit'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRouteWithChildren
-  LayoutHeaderRoute: typeof LayoutHeaderRoute
+  AuthRoute: typeof AuthRoute
   CreateFreeLazyRoute: typeof CreateFreeLazyRouteWithChildren
   LoginLazyRoute: typeof LoginLazyRoute
   PricingLazyRoute: typeof PricingLazyRoute
@@ -345,8 +299,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRouteWithChildren,
-  LayoutHeaderRoute: LayoutHeaderRoute,
+  AuthRoute: AuthRoute,
   CreateFreeLazyRoute: CreateFreeLazyRouteWithChildren,
   LoginLazyRoute: LoginLazyRoute,
   PricingLazyRoute: PricingLazyRoute,
@@ -368,7 +321,6 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
-        "/_layoutHeader",
         "/create-free",
         "/login",
         "/pricing",
@@ -382,13 +334,7 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/_auth": {
-      "filePath": "_auth.tsx",
-      "children": [
-        "/_auth/c/$cId/edit"
-      ]
-    },
-    "/_layoutHeader": {
-      "filePath": "_layoutHeader.tsx"
+      "filePath": "_auth.tsx"
     },
     "/create-free": {
       "filePath": "create-free.lazy.tsx",
@@ -422,10 +368,6 @@ export const routeTree = rootRoute
     "/create-free/": {
       "filePath": "create-free/index.lazy.tsx",
       "parent": "/create-free"
-    },
-    "/_auth/c/$cId/edit": {
-      "filePath": "_auth/c/$cId/edit.tsx",
-      "parent": "/_auth"
     }
   }
 }

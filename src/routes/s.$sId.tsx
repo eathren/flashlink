@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import CardShare from '@/features/dashboard/components/card/share'
+import CardShare from '@/features/business-card/components/share'
 import { doc, getDoc, getFirestore } from 'firebase/firestore'
 const firestore = getFirestore()
 

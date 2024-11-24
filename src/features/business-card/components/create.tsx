@@ -1,20 +1,10 @@
 import { useState } from 'react'
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  collection,
-  getDoc,
-  Timestamp
-} from 'firebase/firestore'
 import { auth } from '@/firebase'
 import toast from 'react-hot-toast'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CirclePlus } from 'tabler-icons-react'
 import { Spinner } from '@/components/ui/spinner'
-import { BusinessCard } from '../../types/card'
-
-const firestore = getFirestore()
+import { createCard } from '@/features/dashboard/api'
 
 const CreateBusinessCard = () => {
   const [loading, setLoading] = useState(false)
@@ -27,31 +17,7 @@ const CreateBusinessCard = () => {
         throw new Error('User not authenticated')
       }
 
-      const userDocRef = doc(firestore, 'users', user.uid)
-      const userDoc = await getDoc(userDocRef)
-
-      // Check if user document exists, if not, create it
-      if (!userDoc.exists()) {
-        await setDoc(userDocRef, {
-          uid: user.uid,
-          email: user.email
-        })
-      }
-
-      const businessCardsCollectionRef = collection(firestore, 'businessCards')
-      const cardDocRef = doc(businessCardsCollectionRef)
-      const newCard: BusinessCard = {
-        id: cardDocRef.id,
-        userId: user.uid,
-        profile: {},
-        links: [],
-        themeColor: '#D3D3D3',
-        createdAt: Timestamp.now(),
-        fields: []
-      }
-      await setDoc(cardDocRef, newCard)
-
-      toast.success('Business card created successfully')
+      await createCard()
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {

@@ -15,23 +15,22 @@ import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { TrashIcon } from 'lucide-react'
-
-const firestore = getFirestore()
+import { deleteSingleCard } from '../api'
 
 interface DeleteCardProps {
   cardId: string
 }
 
 const DeleteCard: React.FC<DeleteCardProps> = ({ cardId }) => {
-  const navigate = useNavigate()
   const [isDeleting, setIsDeleting] = useState(false)
+  const navigate = useNavigate()
 
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      const cardDocRef = doc(firestore, 'businessCards', cardId)
-      await deleteDoc(cardDocRef)
-      navigate({ to: '/' }) // Redirect to the home page or another appropriate page
+      await deleteSingleCard(cardId)
+      toast.success('Card deleted successfully')
+      navigate('/dashboard')
     } catch (error) {
       console.error(error)
       toast.error(

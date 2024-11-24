@@ -11,7 +11,7 @@ export interface CardLink {
 
 export interface CardInformation {
   prefix?: string
-  firstName: string
+  firstName?: string
   middleName?: string
   lastName?: string
   suffix?: string
@@ -37,4 +37,5 @@ export interface BusinessCard {
   createdAt?: Timestamp
   updatedAt?: Timestamp
   links?: CardLink[]
+  isDeleted: boolean
 }
